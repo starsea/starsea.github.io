@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: octopress | Starsea's Note]]></title>
+  <title><![CDATA[Category: Octopress | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/octopress/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-05-09T17:04:15+08:00</updated>
+  <updated>2014-05-09T22:30:15+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[install octopress on mac os x 10.9]]></title>
+    <title type="html"><![CDATA[Install Octopress on Mac Os X 10.9]]></title>
     <link href="http://starsea.github.io/posts/install-octopress-on-mac-os-x-10-dot-9/"/>
     <updated>2014-05-09T14:53:37+08:00</updated>
     <id>http://starsea.github.io/posts/install-octopress-on-mac-os-x-10-dot-9</id>
