@@ -4,7 +4,7 @@
   <title><![CDATA[Starsea's Note]]></title>
   <link href="http://starsea.github.io/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-05-09T12:04:34+08:00</updated>
+  <updated>2014-05-09T15:24:59+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -12,6 +12,50 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Install Octopress on Mac Os X 10.9]]></title>
+    <link href="http://starsea.github.io/posts/install-octopress-on-mac-os-x-10-dot-9/"/>
+    <updated>2014-05-09T14:53:37+08:00</updated>
+    <id>http://starsea.github.io/posts/install-octopress-on-mac-os-x-10-dot-9</id>
+    <content type="html"><![CDATA[<p>安装方法就不多说了 详情见参考文献 说下注意初学者难理解的地方</p>
+
+<p>整个项目分为两个部分 一部分是博客的源码 也就是source分支(除开<code>_deploy</code>目录之外的其他所有文件)<br/>
+还有一部分是网站的静态资源(打开网站你看到的全部都是静态资源 所有的页面都是纯html页面) 这部分属于master分支 也就是<code>_deploy</code>整个目录 你可以这样看看</p>
+
+<pre><code>[haidx@mbp:~/repo/octopress]$ cd _deploy/
+[haidx@mbp:~/repo/octopress/_deploy]$ git status
+# On branch master
+nothing to commit, working directory clean
+[haidx@mbp:~/repo/octopress/_deploy]$
+</code></pre>
+
+<p>安装好之后 运行 <code>rake new_post["myTitle"]</code> 会自动生成一个 markdown 文件</p>
+
+<p>文章生成在目录下的<code>source/_posts</code>目录下。文章是markdown格式的。可以通过 <code>Mou</code> 软件来编辑保存。</p>
+
+<p><code>rake generate</code> 根据 <code>_config.yml</code> 和 <code>source/_posts</code>下的 markdown 文件生成网站所有需要的静态资源.</p>
+
+<p><code>rake deploy</code> 这个命令是把网站所有生成的静态资源放到 _deploy 目录下,然后把该目录下得所有文件推送到github的 master 分支.</p>
+
+<p>发布之后运行<code>git status</code>之后发现还是有很多修改文件 , 没错 因为 <code>rake deploy</code> 并没有 push source 分支过去. 如有需要 可以手动 push</p>
+
+<pre><code>git add .
+git commit -m 'Initial source commit'
+git push origin source
+</code></pre>
+
+<p>[参考]</p>
+
+<ul>
+<li><a href="http://yang3wei.github.io/blog/2013/01/28/zhuan-zai-zai-github-shang-shi-yong-octopress/">zhuan-zai-zai-github-shang-shi-yong-octopress</a></li>
+<li><a href="http://www.ikitweb.com/blog/2014/04/11/install-ocotpress-on-mac-and-host-website-on-github/">install-ocotpress-on-mac-and-host-website-on-github</a></li>
+<li><a href="http://blog.csdn.net/jackystudio/article/details/16353865">像黑客一样写博客</a></li>
+<li><a href="http://blog.segmentfault.com/yaashion_xiang/1190000000364677">http://blog.segmentfault.com/yaashion_xiang/1190000000364677</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Git_read_note_1]]></title>
