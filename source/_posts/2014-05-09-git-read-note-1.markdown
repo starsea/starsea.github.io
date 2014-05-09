@@ -5,67 +5,17 @@ date: 2014-05-09 11:18:15 +0800
 comments: true
 categories: Git
 ---
-
+设置参数
 `git config —global  user.name 'starsea'`  
 
-   *  system 编辑 /etc/gitconfig
-   *  global 编辑 ~/.gitconfig
-   *  不带参数 编辑 .git/config 
+- system 编辑 /etc/gitconfig
+- global 编辑 ~/.gitconfig
+- 不带参数 编辑 .git/config 
 
+以上依次覆盖配置参数
 
-依次**覆盖**配置参数
-
-
-##获取配置
-
-	[haidx@mbp:~/www/cmp]$ git config --list
-	user.email=xxx@gmail.com
-	user.name=starsea
-	core.excludesfile=/Users/haidx/.gitignore
-	core.autocrlf=input
-	alias.lg=log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
-	core.repositoryformatversion=0
-	core.filemode=true
-	core.bare=false
-	core.logallrefupdates=true
-	core.ignorecase=true
-	core.precomposeunicode=false
-	remote.origin.url=git@github.com:starsea/cmp.git
-	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
-	branch.master.remote=origin
-	branch.master.merge=refs/heads/master
-
-
-##获取本地配置
-
-	[haidx@mbp:~/www/cmp]$ git config --local --list
-	core.repositoryformatversion=0
-	core.filemode=true
-	core.bare=false
-	core.logallrefupdates=true
-	core.ignorecase=true
-	core.precomposeunicode=false
-	remote.origin.url=git@github.com:starsea/cmp.git
-	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
-	branch.master.remote=origin
-	branch.master.merge=refs/heads/master
-	
-	
-	[haidx@mbp:~/www/cmp]$ cat .git/config
-	[core]
-	     repositoryformatversion = 0
-	     filemode = true
-	     bare = false
-	     logallrefupdates = true
-	     ignorecase = true
-	     precomposeunicode = false
-	[remote "origin"]
-	     url = git@github.com:starsea/cmp.git
-	     fetch = +refs/heads/*:refs/remotes/origin/*
-	[branch "master"]
-	     remote = origin
-	     merge = refs/heads/master
-
+本篇文章将记录  `git config diff igonre add` 等基础命令.
+<!--more-->
 
 ##git add 
 >这是个多功能命令，根据目标文件的状态不同，此命令的效果也不同：可以用它开始跟踪新文件，或者把已跟踪的文件放到暂存区，还能用于合并时把有冲突的文件标记为已解决状态等
@@ -105,6 +55,59 @@ categories: Git
 
 - `git diff` 比较当前文件和暂存区的差异
 - `git diff --cached` 比较暂存区和仓库里的快照差异 
+
+
+##获取配置
+
+	[haidx@mbp:~/www/cmp]$ git config --list
+	user.email=xxx@gmail.com
+	user.name=starsea
+	core.excludesfile=/Users/haidx/.gitignore
+	core.autocrlf=input
+	alias.lg=log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+	core.repositoryformatversion=0
+	core.filemode=true
+	core.bare=false
+	core.logallrefupdates=true
+	core.ignorecase=true
+	core.precomposeunicode=false
+	remote.origin.url=git@github.com:starsea/cmp.git
+	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+	branch.master.remote=origin
+	branch.master.merge=refs/heads/master
+
+
+
+##获取本地配置
+
+	[haidx@mbp:~/www/cmp]$ git config --local --list
+	core.repositoryformatversion=0
+	core.filemode=true
+	core.bare=false
+	core.logallrefupdates=true
+	core.ignorecase=true
+	core.precomposeunicode=false
+	remote.origin.url=git@github.com:starsea/cmp.git
+	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+	branch.master.remote=origin
+	branch.master.merge=refs/heads/master
+	
+	
+	[haidx@mbp:~/www/cmp]$ cat .git/config
+	[core]
+	     repositoryformatversion = 0
+	     filemode = true
+	     bare = false
+	     logallrefupdates = true
+	     ignorecase = true
+	     precomposeunicode = false
+	[remote "origin"]
+	     url = git@github.com:starsea/cmp.git
+	     fetch = +refs/heads/*:refs/remotes/origin/*
+	[branch "master"]
+	     remote = origin
+	     merge = refs/heads/master
+
 
 
 	
