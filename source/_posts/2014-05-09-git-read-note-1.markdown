@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "git_read_note_1"
+title: "Git 阅读笔记(一)"
 date: 2014-05-09 11:18:15 +0800
 comments: true
 categories: Git

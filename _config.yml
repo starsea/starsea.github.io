@@ -4,7 +4,7 @@
 
 url: http://starsea.github.io
 title: Starsea's Note
-subtitle: 记录笔记的地方.
+subtitle: 记笔记的地方.
 author: starsea
 simple_search: https://www.google.com/search
 description:
@@ -19,7 +19,7 @@ date_format: "ordinal"
 subscribe_rss: /atom.xml
 subscribe_email:
 # RSS feeds can list your email address if you like
-email:
+email: starsea820@gmail.com
 
 # ----------------------- #
 #    Jekyll & Plugins     #
@@ -63,7 +63,7 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
 # ----------------------- #
 
 # Github repositories
-github_user:
+github_user: starsea
 github_repo_count: 0
 github_show_profile_link: true
 github_skip_forks: true
@@ -98,3 +98,11 @@ google_analytics_tracking_id:
 
 # Facebook Like
 facebook_like: false
+
+# duoshuo comments
+duoshuo_comments: true
+duoshuo_short_name: starsea
+
+weibo_user: xnxyw # 微博数字 ID 或域名 ID
+#dribbble_user: null
+weibo_share: true # 是否开启微博分享按钮
