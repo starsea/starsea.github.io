@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/octopress/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-05-10T12:31:53+08:00</updated>
+  <updated>2014-05-10T18:16:53+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -23,12 +23,16 @@
 <p>整个项目分为两个部分 一部分是博客的源码 也就是source分支(除开<code>_deploy</code>目录之外的其他所有文件)<br/>
 还有一部分是网站的静态资源(打开网站你看到的全部都是静态资源 所有的页面都是纯html页面) 这部分属于master分支 也就是<code>_deploy</code>整个目录 你可以这样看看</p>
 
+<p>```bash</p>
+
 <pre><code>[haidx@mbp:~/repo/octopress]$ cd _deploy/
 [haidx@mbp:~/repo/octopress/_deploy]$ git status
 # On branch master
 nothing to commit, working directory clean
 [haidx@mbp:~/repo/octopress/_deploy]$
 </code></pre>
+
+<p>```</p>
 
 <p>安装好之后 运行 <code>rake new_post["myTitle"]</code> 会自动生成一个 markdown 文件</p>
 
@@ -40,10 +44,14 @@ nothing to commit, working directory clean
 
 <p>发布之后运行<code>git status</code>之后发现还是有很多修改文件 , 没错 因为 <code>rake deploy</code> 并没有 push source 分支过去. 如有需要 可以手动 push</p>
 
+<p>```bash</p>
+
 <pre><code>git add .
 git commit -m 'Initial source commit'
 git push origin source
 </code></pre>
+
+<p>```</p>
 
 <p>[参考]</p>
 

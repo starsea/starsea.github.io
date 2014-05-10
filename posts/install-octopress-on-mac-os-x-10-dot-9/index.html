@@ -83,12 +83,18 @@
 <p>整个项目分为两个部分 一部分是博客的源码 也就是source分支(除开<code>_deploy</code>目录之外的其他所有文件)<br/>
 还有一部分是网站的静态资源(打开网站你看到的全部都是静态资源 所有的页面都是纯html页面) 这部分属于master分支 也就是<code>_deploy</code>整个目录 你可以这样看看</p>
 
-<pre><code>[haidx@mbp:~/repo/octopress]$ cd _deploy/
-[haidx@mbp:~/repo/octopress/_deploy]$ git status
-# On branch master
-nothing to commit, working directory clean
-[haidx@mbp:~/repo/octopress/_deploy]$
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>haidx@mbp:~/repo/octopress<span class="o">]</span><span class="nv">$ </span><span class="nb">cd </span>_deploy/
+</span><span class='line'><span class="o">[</span>haidx@mbp:~/repo/octopress/_deploy<span class="o">]</span><span class="nv">$ </span>git status
+</span><span class='line'><span class="c"># On branch master</span>
+</span><span class='line'>nothing to commit, working directory clean
+</span><span class='line'><span class="o">[</span>haidx@mbp:~/repo/octopress/_deploy<span class="o">]</span><span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>安装好之后 运行 <code>rake new_post["myTitle"]</code> 会自动生成一个 markdown 文件</p>
 
@@ -100,10 +106,14 @@ nothing to commit, working directory clean
 
 <p>发布之后运行<code>git status</code>之后发现还是有很多修改文件 , 没错 因为 <code>rake deploy</code> 并没有 push source 分支过去. 如有需要 可以手动 push</p>
 
-<pre><code>git add .
-git commit -m 'Initial source commit'
-git push origin source
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git add .
+</span><span class='line'>git commit -m <span class="s1">&#39;Initial source commit&#39;</span>
+</span><span class='line'>git push origin <span class="nb">source</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>[参考]</p>
 
