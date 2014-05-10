@@ -11,12 +11,13 @@ categories: octopress
 整个项目分为两个部分 一部分是博客的源码 也就是source分支(除开`_deploy`目录之外的其他所有文件)  
 还有一部分是网站的静态资源(打开网站你看到的全部都是静态资源 所有的页面都是纯html页面) 这部分属于master分支 也就是`_deploy`整个目录 你可以这样看看
 
+```bash
 	[haidx@mbp:~/repo/octopress]$ cd _deploy/
 	[haidx@mbp:~/repo/octopress/_deploy]$ git status
 	# On branch master
 	nothing to commit, working directory clean
 	[haidx@mbp:~/repo/octopress/_deploy]$
-		
+```
 
 安装好之后 运行 `rake new_post["myTitle"]` 会自动生成一个 markdown 文件
 
@@ -28,10 +29,11 @@ categories: octopress
 
 发布之后运行`git status`之后发现还是有很多修改文件 , 没错 因为 `rake deploy ` 并没有 push source 分支过去. 如有需要 可以手动 push
 
+```bash
 	git add .
 	git commit -m 'Initial source commit'
 	git push origin source
-
+```
 
 [参考]
 
@@ -39,3 +41,4 @@ categories: octopress
 - [install-ocotpress-on-mac-and-host-website-on-github](http://www.ikitweb.com/blog/2014/04/11/install-ocotpress-on-mac-and-host-website-on-github/)
 - [像黑客一样写博客](http://blog.csdn.net/jackystudio/article/details/16353865)
 - http://blog.segmentfault.com/yaashion_xiang/1190000000364677
+- http://biaobiaoqi.me/blog/2013/07/10/decorate-octopress/

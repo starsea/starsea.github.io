@@ -13,7 +13,7 @@ footer: true
 遂有了此 blog.
 
 ##关于我
-* 我在 [wordpres][blog]
+* 我在 [Wordpres][blog]
 * 我在 [Github][]
 
 
