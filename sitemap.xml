@@ -2,23 +2,31 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://starsea.github.io/posts/git-read-note-1/</loc>
-        <lastmod>2014-05-10T11:50:02+08:00</lastmod>
+        <lastmod>2014-05-12T17:31:44+08:00</lastmod>
     </url>
     <url>
         <loc>http://starsea.github.io/posts/install-octopress-on-mac-os-x-10-dot-9/</loc>
-        <lastmod>2014-05-10T19:32:39+08:00</lastmod>
+        <lastmod>2014-05-12T17:06:36+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/</loc>
+        <lastmod>2014-05-12T16:00:52+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://starsea.github.io/posts/ab-ya-li-ce-shi/</loc>
+        <lastmod>2014-05-15T16:20:36+08:00</lastmod>
     </url>
     <url>
         <loc>http://starsea.github.io/about/</loc>
-        <lastmod>2014-05-10T18:15:27+08:00</lastmod>
+        <lastmod>2014-05-12T15:00:28+08:00</lastmod>
     </url>
     <url>
         <loc>http://starsea.github.io/blog/archives/</loc>
-        <lastmod>2014-05-10T19:32:39+08:00</lastmod>
+        <lastmod>2014-05-15T16:20:36+08:00</lastmod>
     </url>
     <url>
         <loc>http://starsea.github.io/</loc>
-        <lastmod>2014-05-10T19:32:39+08:00</lastmod>
+        <lastmod>2014-05-15T16:20:36+08:00</lastmod>
     </url>
     <url>
         <loc>http://starsea.github.io/robots.txt</loc>

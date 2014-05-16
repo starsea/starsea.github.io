@@ -4,7 +4,7 @@
   <title><![CDATA[Starsea's Note]]></title>
   <link href="http://starsea.github.io/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-05-10T20:24:37+08:00</updated>
+  <updated>2014-05-15T16:20:36+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -12,6 +12,176 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[ab 压力测试]]></title>
+    <link href="http://starsea.github.io/posts/ab-ya-li-ce-shi/"/>
+    <updated>2014-05-15T15:23:02+08:00</updated>
+    <id>http://starsea.github.io/posts/ab-ya-li-ce-shi</id>
+    <content type="html"><![CDATA[<p>想必很多人都知道 <code>ab</code> 是干啥的,网上也有很多介绍用 <code>ab</code> 做压力测试的文章,但是大多对其结果介绍的都是稀里糊涂的.这里我们简单介绍下 <code>ab</code> .</p>
+
+<h2>Usage</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ab -n 5000 -c 200 http://thisobj.com/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里表示总共对目标网址发起5000个请求 并发为200 那么也就是说 <code>一共会发起25次,每次并发200的请求.</code></p>
+
+<!--more-->
+
+
+<h3>Run</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>haidx@mbp:~/Documents<span class="o">]</span><span class="nv">$ </span>ab -n 5000 -c 200 http://thisobj.com/
+</span><span class='line'>This is ApacheBench, Version 2.3 &lt;<span class="nv">$Revision</span>: 655654 <span class="nv">$&gt;</span>
+</span><span class='line'>Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+</span><span class='line'>Licensed to The Apache Software Foundation, http://www.apache.org/
+</span><span class='line'>
+</span><span class='line'>Benchmarking thisobj.com <span class="o">(</span>be patient<span class="o">)</span>
+</span><span class='line'>Completed 500 requests
+</span><span class='line'>Completed 1000 requests
+</span><span class='line'>Completed 1500 requests
+</span><span class='line'>Completed 2000 requests
+</span><span class='line'>Completed 2500 requests
+</span><span class='line'>Completed 3000 requests
+</span><span class='line'>Completed 3500 requests
+</span><span class='line'>Completed 4000 requests
+</span><span class='line'>Completed 4500 requests
+</span><span class='line'>Completed 5000 requests
+</span><span class='line'>Finished 5000 requests
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>Server Software:        nginx/1.7.0
+</span><span class='line'>Server Hostname:        thisobj.com
+</span><span class='line'>Server Port:            80
+</span><span class='line'>
+</span><span class='line'>Document Path:          /
+</span><span class='line'>Document Length:        16635 bytes
+</span><span class='line'>
+</span><span class='line'>Concurrency Level:      200
+</span><span class='line'>Time taken <span class="k">for </span>tests:   451.574 seconds
+</span><span class='line'>Complete requests:      5000
+</span><span class='line'>Failed requests:        232
+</span><span class='line'>   <span class="o">(</span>Connect: 0, Receive: 0, Length: 232, Exceptions: 0<span class="o">)</span>
+</span><span class='line'>Write errors:           0
+</span><span class='line'>Non-2xx responses:      232
+</span><span class='line'>Total transferred:      80371251 bytes
+</span><span class='line'>HTML transferred:       79357714 bytes
+</span><span class='line'>Requests per second:    11.07 <span class="o">[</span><span class="c">#/sec] (mean)</span>
+</span><span class='line'>Time per request:       18062.978 <span class="o">[</span>ms<span class="o">]</span> <span class="o">(</span>mean<span class="o">)</span>
+</span><span class='line'>Time per request:       90.315 <span class="o">[</span>ms<span class="o">]</span> <span class="o">(</span>mean, across all concurrent requests<span class="o">)</span>
+</span><span class='line'>Transfer rate:          173.81 <span class="o">[</span>Kbytes/sec<span class="o">]</span> received
+</span><span class='line'>
+</span><span class='line'>Connection Times <span class="o">(</span>ms<span class="o">)</span>
+</span><span class='line'>              min  mean<span class="o">[</span>+/-sd<span class="o">]</span> median   max
+</span><span class='line'>Connect:       71   98  64.6     79    1243
+</span><span class='line'>Processing:   316 17286 11229.2  13360   75174
+</span><span class='line'>Waiting:      244 17189 11246.3  13268   75174
+</span><span class='line'>Total:        389 17384 11230.9  13453   75299
+</span><span class='line'>
+</span><span class='line'>Percentage of the requests served within a certain <span class="nb">time</span> <span class="o">(</span>ms<span class="o">)</span>
+</span><span class='line'>  50%  13453
+</span><span class='line'>  66%  15054
+</span><span class='line'>  75%  15717
+</span><span class='line'>  80%  17968
+</span><span class='line'>  90%  27504
+</span><span class='line'>  95%  44105
+</span><span class='line'>  98%  60217
+</span><span class='line'>  99%  60277
+</span><span class='line'> 100%  75299 <span class="o">(</span>longest request<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里最重要的就是这几个个参数了 <code>Requests per second</code> <code>Time per request</code></p>
+
+<blockquote><p><code>Requests per second</code> 也就是我们常说的 <code>Rps</code> or <code>Qps</code> 表示每秒可以处理的请求个数.
+这里有两个 Time per request 第一个表示<strong>每一次</strong>请求所需要的平均时间, 由于我们这里一次请求包含25个并发,这里一个并发的时间就是第二个参数.(cpu是分时间片轮流执行请求的，多并发的情况下，一个并发上的请求时需要等待这么长时间才能得到下一个时间片。)</p></blockquote>
+
+<p>所以我们可以发现</p>
+
+<blockquote><p>rps = 1000 / (the first time pre request)</p>
+
+<p>the firest time pre requrest = the second time rpe request * 一个请求包含的并发数</p></blockquote>
+
+<h3>参考文献</h3>
+
+<ul>
+<li><a href="http://xinwo.acg.ac/sbc-and-qps/">http://xinwo.acg.ac/sbc-and-qps/</a></li>
+<li><a href="http://www.nginx.cn/110.html">http://www.nginx.cn/110.html</a></li>
+<li><a href="http://www.ha97.com/4617.html">http://www.ha97.com/4617.html</a><p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/ab-ya-li-ce-shi/'><a href="http://starsea.github.io/posts/ab-ya-li-ce-shi/">http://starsea.github.io/posts/ab-ya-li-ce-shi/</a></a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[git rm 与 rm 的区别]]></title>
+    <link href="http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/"/>
+    <updated>2014-05-12T15:04:12+08:00</updated>
+    <id>http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm</id>
+    <content type="html"><![CDATA[<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/'>http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[install octopress on mac os x 10.9]]></title>
