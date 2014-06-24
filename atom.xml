@@ -4,7 +4,7 @@
   <title><![CDATA[Starsea's Note]]></title>
   <link href="http://starsea.github.io/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-05-15T16:20:36+08:00</updated>
+  <updated>2014-06-24T18:48:21+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -12,6 +12,114 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[在本地用 Satis 搭建 Composer Packages 镜像]]></title>
+    <link href="http://starsea.github.io/posts/setting-up-a-local-mirror-for-composer-packages-with-satis/"/>
+    <updated>2014-05-16T10:35:27+08:00</updated>
+    <id>http://starsea.github.io/posts/setting-up-a-local-mirror-for-composer-packages-with-satis</id>
+    <content type="html"><![CDATA[<p>这篇文章将教导你怎么在本地搭建一个<code>composer</code>镜像以节约大量的网络开销时间.</p>
+
+<h2>What Is Satis?</h2>
+
+<p><code>Sitis</code>是我们将要用来对我们的项目镜像各种仓库的应用程序名字.它就像一个代理坐落在 Internet 和你的 Composer 之间. 我们的解决方案将要创建一个本地的一些包的镜像并且通知我们的 composer 来使用它来替代在 Internet 上寻找 sources.</p>
+
+<p>一张图胜过千言万语.</p>
+
+<p><img src="https://cdn.tutsplus.com/net/uploads/2014/01/Architecture.png" alt="satis" /></p>
+
+<p>如果在本地找到了包,那么讲从本地安装,如果没有,那么将默认从 <code>packagist.org</code> 安装.</p>
+
+<!--more-->
+
+
+<h2>Getting Satis</h2>
+
+<p><code>Satis</code> 安装非常简单, 直接通过 composer 安装.首先安装 composer.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl -sS https://getcomposer.org/installer | php
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后安装 satis</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>haidx@mbp:~/repo/test<span class="o">]</span><span class="nv">$ </span>composer  create-project composer/satis --stability<span class="o">=</span>dev --keep-vcs
+</span><span class='line'>Installing composer/satis <span class="o">(</span>dev-master ef2a73a9c4250abcde4349d3d468d3cb5286c529<span class="o">)</span>
+</span><span class='line'>  - Installing composer/satis <span class="o">(</span>dev-master master<span class="o">)</span>
+</span><span class='line'>    Cloning master
+</span><span class='line'>
+</span><span class='line'>Created project in /Users/haidx/repo/test/satis
+</span><span class='line'>Loading composer repositories with package information
+</span><span class='line'>Installing dependencies from lock file
+</span><span class='line'>  - Installing symfony/process <span class="o">(</span>dev-master 0ae3bf5<span class="o">)</span>
+</span><span class='line'>    Cloning 0ae3bf5ff90edbe6e30e645221646479c2f1ef54
+</span><span class='line'>
+</span><span class='line'>  - Installing symfony/finder <span class="o">(</span>v2.4.2<span class="o">)</span>
+</span><span class='line'>    Downloading: 100%
+</span><span class='line'>
+</span><span class='line'>  - Installing symfony/console <span class="o">(</span>dev-master afee085<span class="o">)</span>
+</span><span class='line'>    Cloning afee08520a971c0f073bff89e1d456405e244c37
+</span><span class='line'>
+</span><span class='line'>  - Installing seld/jsonlint <span class="o">(</span>1.1.2<span class="o">)</span>
+</span><span class='line'>    Downloading: 100%
+</span><span class='line'>
+</span><span class='line'>  - Installing justinrainbow/json-schema <span class="o">(</span>1.1.0<span class="o">)</span>
+</span><span class='line'>    Downloading: 100%
+</span><span class='line'>
+</span><span class='line'>  - Installing composer/composer <span class="o">(</span>dev-master 0d4c2bb<span class="o">)</span>
+</span><span class='line'>    Cloning 0d4c2bb7d7a864a9b3e876908e743310cdeaa5e6
+</span><span class='line'>
+</span><span class='line'>  - Installing twig/twig <span class="o">(</span>v1.15.1<span class="o">)</span>
+</span><span class='line'>    Loading from cache
+</span><span class='line'>
+</span><span class='line'>symfony/console suggests installing symfony/event-dispatcher <span class="o">()</span>
+</span><span class='line'>Generating autoload files
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考文献</h2>
+
+<ul>
+<li><a href="http://moquet.net/blog/proxify-composer-php/">http://moquet.net/blog/proxify-composer-php/</a></li>
+<li><a href="http://melp.nl/2013/09/composer-create-a-local-package-repository-to-improve-speed/">http://melp.nl/2013/09/composer-create-a-local-package-repository-to-improve-speed/</a></li>
+<li><a href="http://code.tutsplus.com/tutorials/setting-up-a-local-mirror-for-composer-packages-with-satis--net-36726">http://code.tutsplus.com/tutorials/setting-up-a-local-mirror-for-composer-packages-with-satis&#8211;net-36726</a></li>
+<li><a href="http://getcomposer.ycnets.com/doc/articles/handling-private-packages-with-satis.md">http://getcomposer.ycnets.com/doc/articles/handling-private-packages-with-satis.md</a><p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/setting-up-a-local-mirror-for-composer-packages-with-satis/'><a href="http://starsea.github.io/posts/setting-up-a-local-mirror-for-composer-packages-with-satis/">http://starsea.github.io/posts/setting-up-a-local-mirror-for-composer-packages-with-satis/</a></a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ab 压力测试]]></title>
@@ -32,7 +140,7 @@
 <!--more-->
 
 
-<h3>Run</h3>
+<h2>Run</h2>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -178,8 +286,23 @@
     <link href="http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/"/>
     <updated>2014-05-12T15:04:12+08:00</updated>
     <id>http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm</id>
-    <content type="html"><![CDATA[<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/'>http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
+    <content type="html"><![CDATA[<blockquote><p><code>git rm</code> = <code>rm</code> + 记录 rm 操作</p></blockquote>
 
+<p>也就是说执行 <code>git rm</code>  之后,本地会把目标文件删除,而且版本控制系统还会将这个删除操作记录下来.
+用 <code>rm</code> 来删除文件，仅仅是删除了物理文件，没有将其从 <code>git</code> 的记录中剔除。</p>
+
+<p>而对于用 <code>rm</code> 命令直接删除的文件，执行 <code>git commit -m "abc"</code> 提交时，
+则不会将删除该文件的操作提交上去。
+不过不要紧，即使你已经通过 rm 将某个文件删除掉了，
+也可以再通过 <code>git rm</code> 命令重新将该文件从 <code>git</code> 的记录中删除掉，
+这样的话，在执行 <code>git commit -m "abc"</code> 以后，也能将这个删除操作提交上去。</p>
+
+<p>如果之前不小心用 <code>rm</code> 命令删除了一大批文件呢？
+是的，此时用 <code>git rm</code> 逐个地再删除一次就显得相当蛋疼了。
+所幸还有更方便的处理方案，用如下的方式做提交就没有问题了： <code>git commit -am "abc"</code></p>
+
+<p><code>git rm --cached readme.txt</code>
+删除仓库中的记录 保留本地版本<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/'><a href="http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/">http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/</a></a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p></p>
 ]]></content>
   </entry>
   

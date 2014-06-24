@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/git/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-05-15T16:20:36+08:00</updated>
+  <updated>2014-06-24T18:48:21+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -18,7 +18,23 @@
     <link href="http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/"/>
     <updated>2014-05-12T15:04:12+08:00</updated>
     <id>http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<blockquote><p><code>git rm</code> = <code>rm</code> + 记录 rm 操作</p></blockquote>
+
+<p>也就是说执行 <code>git rm</code>  之后,本地会把目标文件删除,而且版本控制系统还会将这个删除操作记录下来.
+用 <code>rm</code> 来删除文件，仅仅是删除了物理文件，没有将其从 <code>git</code> 的记录中剔除。</p>
+
+<p>而对于用 <code>rm</code> 命令直接删除的文件，执行 <code>git commit -m "abc"</code> 提交时，
+则不会将删除该文件的操作提交上去。
+不过不要紧，即使你已经通过 rm 将某个文件删除掉了，
+也可以再通过 <code>git rm</code> 命令重新将该文件从 <code>git</code> 的记录中删除掉，
+这样的话，在执行 <code>git commit -m "abc"</code> 以后，也能将这个删除操作提交上去。</p>
+
+<p>如果之前不小心用 <code>rm</code> 命令删除了一大批文件呢？
+是的，此时用 <code>git rm</code> 逐个地再删除一次就显得相当蛋疼了。
+所幸还有更方便的处理方案，用如下的方式做提交就没有问题了： <code>git commit -am "abc"</code></p>
+
+<p><code>git rm --cached readme.txt</code>
+删除仓库中的记录 保留本地版本</p>
 ]]></content>
   </entry>
   

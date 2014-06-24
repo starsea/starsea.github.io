@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Composer | Starsea's Note]]></title>
+  <link href="http://starsea.github.io/categories/composer/atom.xml" rel="self"/>
+  <link href="http://starsea.github.io/"/>
+  <updated>2014-06-24T18:48:21+08:00</updated>
+  <id>http://starsea.github.io/</id>
+  <author>
+    <name><![CDATA[starsea]]></name>
+    <email><![CDATA[starsea820@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[在本地用 Satis 搭建 Composer Packages 镜像]]></title>
+    <link href="http://starsea.github.io/posts/setting-up-a-local-mirror-for-composer-packages-with-satis/"/>
+    <updated>2014-05-16T10:35:27+08:00</updated>
+    <id>http://starsea.github.io/posts/setting-up-a-local-mirror-for-composer-packages-with-satis</id>
+    <content type="html"><![CDATA[<p>这篇文章将教导你怎么在本地搭建一个<code>composer</code>镜像以节约大量的网络开销时间.</p>
+
+<h2>What Is Satis?</h2>
+
+<p><code>Sitis</code>是我们将要用来对我们的项目镜像各种仓库的应用程序名字.它就像一个代理坐落在 Internet 和你的 Composer 之间. 我们的解决方案将要创建一个本地的一些包的镜像并且通知我们的 composer 来使用它来替代在 Internet 上寻找 sources.</p>
+
+<p>一张图胜过千言万语.</p>
+
+<p><img src="https://cdn.tutsplus.com/net/uploads/2014/01/Architecture.png" alt="satis" /></p>
+
+<p>如果在本地找到了包,那么讲从本地安装,如果没有,那么将默认从 <code>packagist.org</code> 安装.</p>
+
+<!--more-->
+
+
+<h2>Getting Satis</h2>
+
+<p><code>Satis</code> 安装非常简单, 直接通过 composer 安装.首先安装 composer.
+<code>bash
+curl -sS https://getcomposer.org/installer | php
+</code>
+然后安装 satis
+```bash
+[haidx@mbp:~/repo/test]$ composer  create-project composer/satis &mdash;stability=dev &mdash;keep-vcs
+Installing composer/satis (dev-master ef2a73a9c4250abcde4349d3d468d3cb5286c529)
+  &ndash; Installing composer/satis (dev-master master)</p>
+
+<pre><code>Cloning master
+</code></pre>
+
+<p>Created project in /Users/haidx/repo/test/satis
+Loading composer repositories with package information
+Installing dependencies from lock file
+  &ndash; Installing symfony/process (dev-master 0ae3bf5)</p>
+
+<pre><code>Cloning 0ae3bf5ff90edbe6e30e645221646479c2f1ef54
+</code></pre>
+
+<ul>
+<li><p>Installing symfony/finder (v2.4.2)
+Downloading: 100%</p></li>
+<li><p>Installing symfony/console (dev-master afee085)
+Cloning afee08520a971c0f073bff89e1d456405e244c37</p></li>
+<li><p>Installing seld/jsonlint (1.1.2)
+Downloading: 100%</p></li>
+<li><p>Installing justinrainbow/json-schema (1.1.0)
+Downloading: 100%</p></li>
+<li><p>Installing composer/composer (dev-master 0d4c2bb)
+Cloning 0d4c2bb7d7a864a9b3e876908e743310cdeaa5e6</p></li>
+<li><p>Installing twig/twig (v1.15.1)
+Loading from cache</p></li>
+</ul>
+
+
+<p>symfony/console suggests installing symfony/event-dispatcher ()
+Generating autoload files
+```</p>
+
+<h2>参考文献</h2>
+
+<ul>
+<li><a href="http://moquet.net/blog/proxify-composer-php/">http://moquet.net/blog/proxify-composer-php/</a></li>
+<li><a href="http://melp.nl/2013/09/composer-create-a-local-package-repository-to-improve-speed/">http://melp.nl/2013/09/composer-create-a-local-package-repository-to-improve-speed/</a></li>
+<li><a href="http://code.tutsplus.com/tutorials/setting-up-a-local-mirror-for-composer-packages-with-satis--net-36726">http://code.tutsplus.com/tutorials/setting-up-a-local-mirror-for-composer-packages-with-satis--net-36726</a></li>
+<li><a href="http://getcomposer.ycnets.com/doc/articles/handling-private-packages-with-satis.md">http://getcomposer.ycnets.com/doc/articles/handling-private-packages-with-satis.md</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

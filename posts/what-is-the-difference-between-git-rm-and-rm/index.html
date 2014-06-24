@@ -7,7 +7,8 @@
 	<meta name="author" content="starsea">
 
 	
-	<meta name="description" content="Git Rm 与 Rm 的区别 &nbsp;原文地址：http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| Creative &hellip;">
+	<meta name="description" content="Git Rm 与 Rm 的区别 git rm = rm + 记录 rm 操作 也就是说执行 git rm 之后,本地会把目标文件删除,而且版本控制系统还会将这个删除操作记录下来.
+用 rm 来删除文件，仅仅是删除了物理文件，没有将其从 git 的记录中剔除。 而对于用 rm 命令直接删除的文件， &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,8 +78,23 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 	<h1 class="title" itemprop="name">Git Rm 与 Rm 的区别</h1>
-	<div class="entry-content" itemprop="articleBody"><p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/'>http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
+	<div class="entry-content" itemprop="articleBody"><blockquote><p><code>git rm</code> = <code>rm</code> + 记录 rm 操作</p></blockquote>
 
+<p>也就是说执行 <code>git rm</code>  之后,本地会把目标文件删除,而且版本控制系统还会将这个删除操作记录下来.
+用 <code>rm</code> 来删除文件，仅仅是删除了物理文件，没有将其从 <code>git</code> 的记录中剔除。</p>
+
+<p>而对于用 <code>rm</code> 命令直接删除的文件，执行 <code>git commit -m "abc"</code> 提交时，
+则不会将删除该文件的操作提交上去。
+不过不要紧，即使你已经通过 rm 将某个文件删除掉了，
+也可以再通过 <code>git rm</code> 命令重新将该文件从 <code>git</code> 的记录中删除掉，
+这样的话，在执行 <code>git commit -m "abc"</code> 以后，也能将这个删除操作提交上去。</p>
+
+<p>如果之前不小心用 <code>rm</code> 命令删除了一大批文件呢？
+是的，此时用 <code>git rm</code> 逐个地再删除一次就显得相当蛋疼了。
+所幸还有更方便的处理方案，用如下的方式做提交就没有问题了： <code>git commit -am "abc"</code></p>
+
+<p><code>git rm --cached readme.txt</code>
+删除仓库中的记录 保留本地版本<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/'><a href="http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/">http://starsea.github.io/posts/what-is-the-difference-between-git-rm-and-rm/</a></a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p></p>
 </div>
 
 </article>
