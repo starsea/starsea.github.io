@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: redis | Starsea's Note]]></title>
+  <link href="http://starsea.github.io/categories/redis/atom.xml" rel="self"/>
+  <link href="http://starsea.github.io/"/>
+  <updated>2014-07-09T23:27:23+08:00</updated>
+  <id>http://starsea.github.io/</id>
+  <author>
+    <name><![CDATA[starsea]]></name>
+    <email><![CDATA[starsea820@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[redis的连接释放问题]]></title>
+    <link href="http://starsea.github.io/posts/redis-pconnect/"/>
+    <updated>2014-07-09T22:12:53+08:00</updated>
+    <id>http://starsea.github.io/posts/redis-pconnect</id>
+    <content type="html"><![CDATA[<p>redis连接的时候有 connect 和 pconnect 两种 , 今天做项目时候用的 pconnect 手动 close 之后用 <code>redis-cli info | grep conn</code> 发现连接数并没有释放,感到奇怪,查询了很多资料后得到如下结论.</p>
+
+<p>首先看看官方文档</p>
+
+<h3>pconnect, popen</h3>
+
+<hr />
+
+<p><em><strong>Description</strong></em>: Connects to a Redis instance or reuse a connection already established with <code>pconnect</code>/<code>popen</code>.</p>
+
+<p>The connection will not be closed on <code>close</code> or end of request until the php process ends.
+So be patient on to many open FD&rsquo;s (specially on redis server side) when using persistent
+connections on many servers connecting to one redis server.</p>
+
+<p>Also more than one persistent connection can be made identified by either host + port + timeout
+or host + persistent_id or unix socket + timeout.</p>
+
+<p>This feature is not available in threaded versions. <code>pconnect</code> and <code>popen</code> then working like their non
+persistent equivalents.</p>
+
+<h5><em>Parameters</em></h5>
+
+<p><em>host</em>: string. can be a host, or the path to a unix domain socket<br/>
+<em>port</em>: int, optional<br/>
+<em>timeout</em>: float, value in seconds (optional, default is 0 meaning unlimited)<br/>
+<em>persistent_id</em>: string. identity for the requested persistent connection
+<em>retry_interval</em>: int, value in milliseconds (optional)</p>
+
+<h5><em>Return value</em></h5>
+
+<p><em>BOOL</em>: <code>TRUE</code> on success, <code>FALSE</code> on error.</p>
+
+<h5><em>Example</em></h5>
+
+<p><code>php
+$redis-&gt;pconnect('127.0.0.1', 6379);
+$redis-&gt;pconnect('127.0.0.1'); // port 6379 by default - same connection like before.
+$redis-&gt;pconnect('127.0.0.1', 6379, 2.5); // 2.5 sec timeout and would be another connection than the two before.
+$redis-&gt;pconnect('127.0.0.1', 6379, 2.5, 'x'); // x is sent as persistent_id and would be another connection the the three before.
+$redis-&gt;pconnect('/tmp/redis.sock'); // unix domain socket - would be another connection than the four before.
+</code></p>
+
+<p>这里通过描述可以得知当我们使用 pconnect 的时候执行 close 或者 php 脚本请求结束后并不会关闭连接.</p>
+
+<p>需要注意其实这里有个容易误解的地方: 手动 close 之后并不是不关闭当前连接,而是连接池不释放而已.</p>
+
+<p>```php
+&lt;?php
+$redis = new \Redis();
+$redis->pconnect(&lsquo;127.0.0.1&rsquo;, 6379);</p>
+
+<p>var_dump($redis->ping(), $redis);
+var_dump($redis->get(&lsquo;k1&rsquo;));</p>
+
+<p>$redis->close();</p>
+
+<p>echo &lsquo;===== close=======&rsquo;;</p>
+
+<p>var_dump($redis);
+var_dump($redis->get(&lsquo;k1&rsquo;));</p>
+
+<p>try {</p>
+
+<pre><code>$redis-&gt;ping();
+</code></pre>
+
+<p>} catch (Exception $e) {</p>
+
+<pre><code>var_dump($e-&gt;getMessage());
+</code></pre>
+
+<p>}
+?></p>
+
+<p>```</p>
+
+<p>得到如下结果</p>
+
+<p><img class="/images/posts/<a" src="href="&#109;&#x61;&#x69;&#108;&#116;&#x6f;&#x3a;&#81;&#81;&#50;&#x30;&#x31;&#52;&#48;&#x37;&#x30;&#x39;&#x2d;&#49;&#64;&#50;&#x78;&#x2e;&#112;&#x6e;&#103;">&#x51;&#81;&#50;&#48;&#x31;&#52;&#x30;&#x37;&#x30;&#x39;&#45;&#49;&#64;&#50;&#120;&#x2e;&#112;&#110;&#x67;</a>"></p>
+
+<p>13行去 getkey 的时候抛出一个错误 说是连接已经关闭. 没错 其实这里当前 $redis 变量本身已经释放连接池的占用 其他实列可以使用该链接了. (连接池的连接上限数目和 php-fpm 的进程数目有关系)</p>
+
+<p>这里我们注释掉13行 得到如下结果</p>
+
+<p><img src="/images/posts/QQ20140709-1.png"></p>
+
+<h3>总结:</h3>
+
+<ul>
+<li>pconnect 会在连接池里建立连接 不受close 的影响. close 只影响当前实列是否继续使用该连接 当然 php 脚本结束后 变量销毁 辣么连接肯定已经归还到了连接池.</li>
+<li>connect 在使用的时候会建立一个连接 脚本结束后 或者 使用 close 会销毁连接.</li>
+<li>close 并不会销毁 resource &hellip; = = 只是断开连接而已&hellip; unset 变量才会销毁&hellip;</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>
