@@ -187,8 +187,11 @@ persistent equivalents.</p>
 <li>pconnect 会在连接池里建立连接 不受close 的影响. close 只影响当前实列是否继续使用该连接 当然 php 脚本结束后 变量销毁 辣么连接肯定已经归还到了连接池.</li>
 <li>connect 在使用的时候会建立一个连接 脚本结束后 或者 使用 close 会销毁连接.</li>
 <li>close 并不会销毁 resource &hellip; = = 只是断开连接而已&hellip; unset 变量才会销毁&hellip;</li>
+<li>所以并不是使用了 pconnect 就不要 close 了,如果当前脚本执行时间很长 辣么会一直占用一个连接的.详情请看鸟哥blog</li>
 </ul>
 
+
+<p><a href="http://www.laruence.com/2012/07/25/2662.html">http://www.laruence.com/2012/07/25/2662.html</a></p>
 
 <p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/redis-pconnect/'>http://starsea.github.io/posts/redis-pconnect/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
 
