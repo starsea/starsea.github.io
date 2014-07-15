@@ -6,18 +6,18 @@ comments: true
 categories: Git
 ---
 设置参数
-`git config —global  user.name 'starsea'`  
+`git config —global  user.name 'starsea'`
 
 - system 编辑 /etc/gitconfig
 - global 编辑 ~/.gitconfig
-- 不带参数 编辑 .git/config 
+- 不带参数 编辑 .git/config
 
 以上依次覆盖配置参数
 
 本篇文章将记录  `git config diff igonre add` 等基础命令.
 <!--more-->
 
-##git add 
+##git add
 >这是个多功能命令，根据目标文件的状态不同，此命令的效果也不同：可以用它开始跟踪新文件，或者把已跟踪的文件放到暂存区，还能用于合并时把有冲突的文件标记为已解决状态等
 
 如果已经`git add`一个文件了，再对它进行修改 那么运行`git status`会发现该文件出现**两次**实际上 Git 只不过暂存了你运行 `git add` 命令时的版本，如果现在提交，那么提交的是添加注释前的版本，而非当前工作目录中的版本。所以，运行了 `git add` 之后又作了修订的文件，需要重新运行 `git add` 把最新版本重新暂存起来：
@@ -92,7 +92,7 @@ categories: Git
 	branch.master.remote=origin
 	branch.master.merge=refs/heads/master
 	
-	
+    
 	[haidx@mbp:~/www/cmp]$ cat .git/config
 	[core]
 	     repositoryformatversion = 0
@@ -109,11 +109,6 @@ categories: Git
 	     merge = refs/heads/master
 
 
-
-	
-	
-	
-	
 
 
 
