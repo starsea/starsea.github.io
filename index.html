@@ -103,86 +103,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>sudo command 找不到命令</h3>
-
-<p>编译 nginx 的时候把 nginx 放在了/usr/local/bin 下 用 sudo 执行的时候提示找到不到命令 很奇怪 切换到 root 去执行 nginx 却可以 看了下 root 的path 明明有包含这个路径&hellip;</p>
-
-<p>查了下资料后发现是 sudo 的原因</p>
-
-<p>我们使用 <code>sudo visudo</code> 可以看到</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Preserving HOME has security implications since many programs</span>
-</span><span class='line'><span class="c"># use it when searching for configuration files. Note that HOME</span>
-</span><span class='line'><span class="c"># is already set when the the env_reset option is enabled, so</span>
-</span><span class='line'><span class="c"># this option is only effective for configurations where either</span>
-</span><span class='line'><span class="c"># env_reset is disabled or HOME is present in the env_keep list.</span>
-</span><span class='line'><span class="c">#</span>
-</span><span class='line'>Defaults    always_set_home
-</span><span class='line'>
-</span><span class='line'>Defaults    env_reset
-</span><span class='line'>Defaults    <span class="nv">env_keep</span> <span class="o">=</span>  <span class="s2">&quot;COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR LS_COLORS&quot;</span>
-</span><span class='line'>Defaults    env_keep +<span class="o">=</span> <span class="s2">&quot;MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE&quot;</span>
-</span><span class='line'>Defaults    env_keep +<span class="o">=</span> <span class="s2">&quot;LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES&quot;</span>
-</span><span class='line'>Defaults    env_keep +<span class="o">=</span> <span class="s2">&quot;LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE&quot;</span>
-</span><span class='line'>Defaults    env_keep +<span class="o">=</span> <span class="s2">&quot;LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c">#</span>
-</span><span class='line'><span class="c"># Adding HOME to env_keep may enable a user to run unrestricted</span>
-</span><span class='line'><span class="c"># commands via sudo.</span>
-</span><span class='line'><span class="c">#</span>
-</span><span class='line'><span class="c"># Defaults   env_keep += &quot;HOME&quot;</span>
-</span><span class='line'>
-</span><span class='line'>Defaults    <span class="nv">secure_path</span> <span class="o">=</span> /sbin:/bin:/usr/sbin:/usr/bin
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这里每次调用 sudo 应用的环境变量是..<code>/sbin:/bin:/usr/sbin:/usr/bin</code> 难怪找不到..</p>
-
-<p>一个简单解决方案就是 <code>vi ~/.bashrc</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">alias </span><span class="nv">sudo</span><span class="o">=</span><span class="s2">&quot;sudo env PATH=$PATH&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>因为系统预装的 sudo 在编译时缺省使用了 &mdash;with-secure-path 参数，因此当前用户使用 sudo 时环境变量 $PATH 被覆盖，通过添加上面那行别名设置，就会在执行 sudo 时把当前的 $PATH 的值再套用上，达到想要的[效果][test]。
-当然，最根本的解决办法还是重新编译安装 sudo，编译时不使用 &mdash;with-secure-path 参数即可。</p>
-
-<p>参阅:</p>
-
-<ul>
-<li><a href="http://www.ibm.com/developerworks/cn/aix/library/au-sudo/index.html">充分发挥 sudo 的作用</a></li>
-<li><a href="http://pickerwengs.blogspot.com/2011/10/sudo-command-not-found.html">sudo-command-not-found</a></li>
-</ul>
-
-
-<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/install-centos-on-mac-vagrant/'>http://starsea.github.io/posts/install-centos-on-mac-vagrant/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
-
 
 		
-		
+		<a href="/posts/install-centos-on-mac-vagrant/" class="more-link">Read on &rarr;</a>
 	</div>
 
 

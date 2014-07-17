@@ -94,6 +94,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<!--more-->
+
+
 <h3>sudo command 找不到命令</h3>
 
 <p>编译 nginx 的时候把 nginx 放在了/usr/local/bin 下 用 sudo 执行的时候提示找到不到命令 很奇怪 切换到 root 去执行 nginx 却可以 看了下 root 的path 明明有包含这个路径&hellip;</p>
@@ -158,8 +161,11 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>因为系统预装的 sudo 在编译时缺省使用了 &mdash;with-secure-path 参数，因此当前用户使用 sudo 时环境变量 $PATH 被覆盖，通过添加上面那行别名设置，就会在执行 sudo 时把当前的 $PATH 的值再套用上，达到想要的[效果][test]。
-当然，最根本的解决办法还是重新编译安装 sudo，编译时不使用 &mdash;with-secure-path 参数即可。</p>
+<p>因为系统预装的 sudo 在编译时缺省使用了 &mdash;with-secure-path 参数，因此当前用户使用 sudo 时环境变量 $PATH 被覆盖，通过添加上面那行别名设置，就会在执行 sudo 时把当前的 $PATH 的值再套用上，达到想要的效果。</p>
+
+<p>上面这种 alias 并不是最完美的方式 有时候我们可能会查看一些 sudo 的配置 比如 <code>sudo -l</code> 会翻译成 <code>sudo env PATH=$PATH -l</code> 但是这个命令是无效的&hellip;因为 -l 等参数必须放在env 前面..所以我们还是用<code>sudo visudo</code>手动修改 secure_path 的值把.</p>
+
+<p>当然，最根本的解决办法还是重新编译安装 sudo，编译时不使用 &mdash;with-secure-path 参数即可。有兴趣可以试下</p>
 
 <p>参阅:</p>
 

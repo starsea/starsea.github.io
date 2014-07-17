@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/linux/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-07-17T15:47:15+08:00</updated>
+  <updated>2014-07-17T18:59:07+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -28,6 +28,9 @@ wget http://mirrors.163.com/.help/CentOS6-Base-163.repo
 yum clean all
 yum makecache
 </code></p>
+
+<!--more-->
+
 
 <h3>sudo command 找不到命令</h3>
 
@@ -78,8 +81,11 @@ Defaults    env_keep += &ldquo;LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUT
 alias sudo="sudo env PATH=$PATH"
 </code></p>
 
-<p>因为系统预装的 sudo 在编译时缺省使用了 &mdash;with-secure-path 参数，因此当前用户使用 sudo 时环境变量 $PATH 被覆盖，通过添加上面那行别名设置，就会在执行 sudo 时把当前的 $PATH 的值再套用上，达到想要的[效果][test]。
-当然，最根本的解决办法还是重新编译安装 sudo，编译时不使用 &mdash;with-secure-path 参数即可。</p>
+<p>因为系统预装的 sudo 在编译时缺省使用了 &mdash;with-secure-path 参数，因此当前用户使用 sudo 时环境变量 $PATH 被覆盖，通过添加上面那行别名设置，就会在执行 sudo 时把当前的 $PATH 的值再套用上，达到想要的效果。</p>
+
+<p>上面这种 alias 并不是最完美的方式 有时候我们可能会查看一些 sudo 的配置 比如 <code>sudo -l</code> 会翻译成 <code>sudo env PATH=$PATH -l</code> 但是这个命令是无效的&hellip;因为 -l 等参数必须放在env 前面..所以我们还是用<code>sudo visudo</code>手动修改 secure_path 的值把.</p>
+
+<p>当然，最根本的解决办法还是重新编译安装 sudo，编译时不使用 &mdash;with-secure-path 参数即可。有兴趣可以试下</p>
 
 <p>参阅:</p>
 
