@@ -7,7 +7,7 @@
 	<meta name="author" content="starsea">
 
 	
-	<meta name="description" content="装上 vagrant 了.但是 centos 是 minimal 版的,所以需要做很多东西(不是 mini 版的也需要做很多事 囧rz).其实很多事情都是玩 vps 的时候做过的,但是人老了记性不好,每次都要 google. 所以我觉得还是记录下来比较好. 先添加源吧..啥也不说了 注意 &hellip;">
+	<meta name="description" content="装上 vagrant 了.但是 centos 是 minimal 版的,所以需要做很多东西(不是 mini 版的也需要做很多事 囧rz).其实很多事情都是玩 vps 的时候做过的,但是人老了记性不好,每次都要 google. 所以我觉得还是记录下来比较好. 先添加源吧..啥也不说了 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -79,7 +79,7 @@
 	<h2 class="title">Centos 安装后需要做的很多事情</h2>
 	<div class="entry-content"><p>装上 vagrant 了.但是 centos 是 minimal 版的,所以需要做很多东西(不是 mini 版的也需要做很多事 囧rz).其实很多事情都是玩 vps 的时候做过的,但是人老了记性不好,每次都要 google. 所以我觉得还是记录下来比较好.</p>
 
-<p>先添加源吧..啥也不说了 注意 vagrant 的 root 密码是 vagrant</p>
+<p>先添加源吧..啥也不说了 直接上<a href="http://mirrors.aliyun.com/help/centos" title="阿里云开源镜像">阿里云</a>的开源镜像吧..网易萎了..</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -88,7 +88,7 @@
 <span class='line-number'>5</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 </span><span class='line'><span class="nb">cd</span> /etc/yum.repos.d
-</span><span class='line'>wget http://mirrors.163.com/.help/CentOS6-Base-163.repo
+</span><span class='line'>wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo
 </span><span class='line'>yum clean all
 </span><span class='line'>yum makecache
 </span></code></pre></td></tr></table></div></figure>
