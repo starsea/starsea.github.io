@@ -4,7 +4,7 @@
   <title><![CDATA[Starsea's Note]]></title>
   <link href="http://starsea.github.io/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-07-20T18:01:04+08:00</updated>
+  <updated>2014-07-25T16:05:31+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -12,6 +12,275 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CI 常用 DB 操作]]></title>
+    <link href="http://starsea.github.io/posts/ci-db-operation/"/>
+    <updated>2014-07-25T15:59:40+08:00</updated>
+    <id>http://starsea.github.io/posts/ci-db-operation</id>
+    <content type="html"><![CDATA[<p>CI&hellip;.蛋疼菊紧</p>
+
+<!--more-->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm"> ==================================</span>
+</span><span class='line'><span class="cm"> 查询</span>
+</span><span class='line'><span class="cm"> $query = $this-&gt;db_query(&quot;SELECT * FROM table&quot;);</span>
+</span><span class='line'><span class="cm"> ==================================</span>
+</span><span class='line'><span class="cm">*/</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//result() 返回对象数组</span>
+</span><span class='line'><span class="nv">$data</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">result</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//result_array() 返回数据 </span>
+</span><span class='line'><span class="nv">$data</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">result_array</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//row() 只返回一行对象数组</span>
+</span><span class='line'><span class="nv">$data</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">row</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//num_rows() 返回查询结果行数</span>
+</span><span class='line'><span class="nv">$data</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">num_rows</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//num_fields() 返回查询请求的字段个数</span>
+</span><span class='line'><span class="nv">$data</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">num_fields</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//row_array() 只返回一行数组</span>
+</span><span class='line'><span class="nv">$data</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">row_array</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//free_result() 释放当前查询所占用的内存并删除关联资源标识</span>
+</span><span class='line'><span class="nv">$data</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">free_result</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm"> ==================================</span>
+</span><span class='line'><span class="cm"> 插入操作</span>
+</span><span class='line'><span class="cm"> ==================================</span>
+</span><span class='line'><span class="cm">*/</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//上次插入操作生成的ID</span>
+</span><span class='line'><span class="k">echo</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert_id</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//写入和更新操作被影响的行数</span>
+</span><span class='line'><span class="k">echo</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">affected_rows</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//返回指定表的总行数</span>
+</span><span class='line'><span class="k">echo</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">count_all</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//输出当前的数据库版本号</span>
+</span><span class='line'><span class="k">echo</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">version</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//输出当前的数据库平台</span>
+</span><span class='line'><span class="k">echo</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">platform</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//返回最后运行的查询语句</span>
+</span><span class='line'><span class="k">echo</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">last_query</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//插入数据，被插入的数据会被自动转换和过滤，例如：</span>
+</span><span class='line'><span class="c1">//$data = array(&#39;name&#39; =&gt; $name, &#39;email&#39; =&gt; $email, &#39;url&#39; =&gt; $url);</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert_string</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm"> ==================================</span>
+</span><span class='line'><span class="cm"> 更新操作</span>
+</span><span class='line'><span class="cm"> ==================================</span>
+</span><span class='line'><span class="cm">*/</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//更新数据，被更新的数据会被自动转换和过滤，例如：</span>
+</span><span class='line'><span class="c1">//$data = array(&#39;name&#39; =&gt; $name, &#39;email&#39; =&gt; $email, &#39;url&#39; =&gt; $url);</span>
+</span><span class='line'><span class="c1">//$where = &quot;author_id = 1 AND status = &#39;active&#39;&quot;;</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">update_string</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="nv">$where</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm"> ==================================</span>
+</span><span class='line'><span class="cm"> 选择数据</span>
+</span><span class='line'><span class="cm"> ==================================</span>
+</span><span class='line'><span class="cm">*/</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//获取表的全部数据</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//第二个参数为输出条数，第三个参数为开始位置</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//获取数据，第一个参数为表名，第二个为获取条件，第三个为条数</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get_where</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="o">=&gt;</span><span class="nv">$id</span><span class="p">),</span> <span class="nv">$offset</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//select方式获取数据</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title, content, date&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//获取字段的最大值，第二个参数为别名，相当于max(age) AS nianling</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select_max</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select_max</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;nianling&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//获取字段的最小值</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select_min</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select_min</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;nianling&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//获取字段的和</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select_sum</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select_sum</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;nianling&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//自定义from表</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title, content, date&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//查询条件 WHERE name = &#39;Joe&#39; AND title = &#39;boss&#39; AND status = &#39;active&#39;</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="nv">$title</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="nv">$status</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//范围查询</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where_in</span><span class="p">(</span><span class="s1">&#39;item1&#39;</span><span class="p">,</span> <span class="s1">&#39;item2&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where_not_in</span><span class="p">(</span><span class="s1">&#39;item1&#39;</span><span class="p">,</span> <span class="s1">&#39;item2&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//匹配，第三个参数为匹配模式 title LIKE &#39;%match%&#39;</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;before/after/both&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">not_like</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//分组 GROUP BY title, date</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">group_by</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//限制条数</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/ci-db-operation/'>http://starsea.github.io/posts/ci-db-operation/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[intro-homebrew]]></title>
+    <link href="http://starsea.github.io/posts/intro-homebrew/"/>
+    <updated>2014-07-23T18:25:03+08:00</updated>
+    <id>http://starsea.github.io/posts/intro-homebrew</id>
+    <content type="html"><![CDATA[<p>brew 命令备份: <a href="http://liwenqiu.me/blog/2011/12/17/intro-homebrew/">http://liwenqiu.me/blog/2011/12/17/intro-homebrew/</a><p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/intro-homebrew/'><a href="http://starsea.github.io/posts/intro-homebrew/">http://starsea.github.io/posts/intro-homebrew/</a></a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[centos 安装后需要做的很多事情]]></title>

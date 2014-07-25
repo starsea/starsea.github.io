@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mac | Starsea's Note]]></title>
+  <link href="http://starsea.github.io/categories/mac/atom.xml" rel="self"/>
+  <link href="http://starsea.github.io/"/>
+  <updated>2014-07-25T16:05:31+08:00</updated>
+  <id>http://starsea.github.io/</id>
+  <author>
+    <name><![CDATA[starsea]]></name>
+    <email><![CDATA[starsea820@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[intro-homebrew]]></title>
+    <link href="http://starsea.github.io/posts/intro-homebrew/"/>
+    <updated>2014-07-23T18:25:03+08:00</updated>
+    <id>http://starsea.github.io/posts/intro-homebrew</id>
+    <content type="html"><![CDATA[<p>brew 命令备份: <a href="http://liwenqiu.me/blog/2011/12/17/intro-homebrew/">http://liwenqiu.me/blog/2011/12/17/intro-homebrew/</a></p>
+]]></content>
+  </entry>
+  
+</feed>

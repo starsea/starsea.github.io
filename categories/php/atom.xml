@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: php | Starsea's Note]]></title>
+  <link href="http://starsea.github.io/categories/php/atom.xml" rel="self"/>
+  <link href="http://starsea.github.io/"/>
+  <updated>2014-07-25T16:05:31+08:00</updated>
+  <id>http://starsea.github.io/</id>
+  <author>
+    <name><![CDATA[starsea]]></name>
+    <email><![CDATA[starsea820@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[CI 常用 DB 操作]]></title>
+    <link href="http://starsea.github.io/posts/ci-db-operation/"/>
+    <updated>2014-07-25T15:59:40+08:00</updated>
+    <id>http://starsea.github.io/posts/ci-db-operation</id>
+    <content type="html"><![CDATA[<p>CI&hellip;.蛋疼菊紧</p>
+
+<!--more-->
+
+
+<p>```php
+/<em>
+ ==================================
+ 查询
+ $query = $this->db_query(&ldquo;SELECT * FROM table&rdquo;);
+ ==================================
+</em>/</p>
+
+<p>//result() 返回对象数组
+$data = $query->result();</p>
+
+<p>//result_array() 返回数据
+$data = $query->result_array();</p>
+
+<p>//row() 只返回一行对象数组
+$data = $query->row();</p>
+
+<p>//num_rows() 返回查询结果行数
+$data = $query->num_rows();</p>
+
+<p>//num_fields() 返回查询请求的字段个数
+$data = $query->num_fields();</p>
+
+<p>//row_array() 只返回一行数组
+$data = $query->row_array();</p>
+
+<p>//free_result() 释放当前查询所占用的内存并删除关联资源标识
+$data = $query->free_result();</p>
+
+<p>/<em>
+ ==================================
+ 插入操作
+ ==================================
+</em>/</p>
+
+<p>//上次插入操作生成的ID
+echo $this->db->insert_id();</p>
+
+<p>//写入和更新操作被影响的行数
+echo $this->db->affected_rows();</p>
+
+<p>//返回指定表的总行数
+echo $this->db->count_all(&lsquo;table_name&rsquo;);</p>
+
+<p>//输出当前的数据库版本号
+echo $this->db->version();</p>
+
+<p>//输出当前的数据库平台
+echo $this->db->platform();</p>
+
+<p>//返回最后运行的查询语句
+echo $this->db->last_query();</p>
+
+<p>//插入数据，被插入的数据会被自动转换和过滤，例如：
+//$data = array(&lsquo;name&rsquo; => $name, &lsquo;email&rsquo; => $email, &lsquo;url&rsquo; => $url);
+$this->db->insert_string(&lsquo;table_name&rsquo;, $data);</p>
+
+<p>/<em>
+ ==================================
+ 更新操作
+ ==================================
+</em>/</p>
+
+<p>//更新数据，被更新的数据会被自动转换和过滤，例如：
+//$data = array(&lsquo;name&rsquo; => $name, &lsquo;email&rsquo; => $email, &lsquo;url&rsquo; => $url);
+//$where = &ldquo;author_id = 1 AND status = &lsquo;active&rsquo;&rdquo;;
+$this->db->update_string(&lsquo;table_name&rsquo;, $data, $where);</p>
+
+<p>/<em>
+ ==================================
+ 选择数据
+ ==================================
+</em>/</p>
+
+<p>//获取表的全部数据
+$this->db->get(&lsquo;table_name&rsquo;);</p>
+
+<p>//第二个参数为输出条数，第三个参数为开始位置
+$this->db->get(&lsquo;table_name&rsquo;, 10, 20);</p>
+
+<p>//获取数据，第一个参数为表名，第二个为获取条件，第三个为条数
+$this->db->get_where(&lsquo;table_name&rsquo;, array(&lsquo;id&rsquo;=>$id), $offset);</p>
+
+<p>//select方式获取数据
+$this->db->select(&lsquo;title, content, date&rsquo;);
+$data = $this->db->get(&lsquo;table_name&rsquo;);</p>
+
+<p>//获取字段的最大值，第二个参数为别名，相当于max(age) AS nianling
+$this->db->select_max(&lsquo;age&rsquo;);
+$this->db->select_max(&lsquo;age&rsquo;, &lsquo;nianling&rsquo;);</p>
+
+<p>//获取字段的最小值
+$this->db->select_min(&lsquo;age&rsquo;);
+$this->db->select_min(&lsquo;age&rsquo;, &lsquo;nianling&rsquo;);</p>
+
+<p>//获取字段的和
+$this->db->select_sum(&lsquo;age&rsquo;);
+$this->db->select_sum(&lsquo;age&rsquo;, &lsquo;nianling&rsquo;);</p>
+
+<p>//自定义from表
+$this->db->select(&lsquo;title, content, date&rsquo;);
+$this->db->from(&lsquo;table_name&rsquo;);</p>
+
+<p>//查询条件 WHERE name = &lsquo;Joe&rsquo; AND title = &lsquo;boss&rsquo; AND status = &lsquo;active&rsquo;
+$this->db->where(&lsquo;name&rsquo;, $name);
+$this->db->where(&lsquo;title&rsquo;, $title);
+$this->db->where(&lsquo;status&rsquo;, $status);</p>
+
+<p>//范围查询
+$this->db->where_in(&lsquo;item1&rsquo;, &lsquo;item2&rsquo;);
+$this->db->where_not_in(&lsquo;item1&rsquo;, &lsquo;item2&rsquo;);</p>
+
+<p>//匹配，第三个参数为匹配模式 title LIKE &lsquo;%match%&rsquo;
+$this->db->like(&lsquo;title&rsquo;, &lsquo;match&rsquo;, &lsquo;before/after/both&rsquo;);
+$this->db->not_like();</p>
+
+<p>//分组 GROUP BY title, date
+$this->db->group_by(&lsquo;title&rsquo;, &lsquo;date&rsquo;);</p>
+
+<p>//限制条数
+$this->db->limit(0, 20);
+```</p>
+]]></content>
+  </entry>
+  
+</feed>
