@@ -7,10 +7,8 @@
 	<meta name="author" content="starsea">
 
 	
-	<meta name="description" content="设置参数
-git config —global user.name 'starsea' system 编辑 /etc/gitconfig
-global 编辑 ~/.gitconfig
-不带参数 编辑 .git/config 以上依次覆盖配置参数 本篇文章将记录 git config diff &hellip;">
+	<meta name="description" content="安装方法就不多说了 详情见参考文献 说下注意初学者难理解的地方 整个项目分为两个部分 一部分是博客的源码 也就是source分支(除开_deploy目录之外的其他所有文件)
+还有一部分是网站的静态资源(打开网站你看到的全部都是静态资源 所有的页面都是纯html页面) 这部分属于master分支 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -79,6 +77,96 @@ global 编辑 ~/.gitconfig
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/posts/install-octopress-on-mac-os-x-10-dot-9/">
+		
+			Install Octopress on Mac Os X 10.9</a>
+	</h2>
+	<div class="entry-content">
+		<p>安装方法就不多说了 详情见参考文献 说下注意初学者难理解的地方</p>
+
+<p>整个项目分为两个部分 一部分是博客的源码 也就是source分支(除开<code>_deploy</code>目录之外的其他所有文件)<br/>
+还有一部分是网站的静态资源(打开网站你看到的全部都是静态资源 所有的页面都是纯html页面) 这部分属于master分支 也就是<code>_deploy</code>整个目录 你可以这样看看</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>haidx@mbp:~/repo/octopress<span class="o">]</span><span class="nv">$ </span><span class="nb">cd </span>_deploy/
+</span><span class='line'><span class="o">[</span>haidx@mbp:~/repo/octopress/_deploy<span class="o">]</span><span class="nv">$ </span>git status
+</span><span class='line'><span class="c"># On branch master</span>
+</span><span class='line'>nothing to commit, working directory clean
+</span><span class='line'><span class="o">[</span>haidx@mbp:~/repo/octopress/_deploy<span class="o">]</span><span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>安装好之后 运行 <code>rake new_post["myTitle"]</code> 会自动生成一个 markdown 文件</p>
+
+<p>文章生成在目录下的<code>source/_posts</code>目录下。文章是markdown格式的。可以通过 <code>Mou</code> 软件来编辑保存。</p>
+
+<p><code>rake generate</code> 根据 <code>_config.yml</code> 和 <code>source/_posts</code>下的 markdown 文件生成网站所有需要的静态资源.</p>
+
+<p><code>rake deploy</code> 这个命令是把网站所有生成的静态资源放到 _deploy 目录下,然后把该目录下得所有文件推送到github的 master 分支.</p>
+
+<p>发布之后运行<code>git status</code>之后发现还是有很多修改文件 , 没错 因为 <code>rake deploy</code> 并没有 push source 分支过去. 如有需要 可以手动 push</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git add .
+</span><span class='line'>git commit -m <span class="s1">&#39;Initial source commit&#39;</span>
+</span><span class='line'>git push origin <span class="nb">source</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>[参考]</p>
+
+<ul>
+<li><a href="http://yang3wei.github.io/blog/2013/01/28/zhuan-zai-zai-github-shang-shi-yong-octopress/">zhuan-zai-zai-github-shang-shi-yong-octopress</a></li>
+<li><a href="http://www.ikitweb.com/blog/2014/04/11/install-ocotpress-on-mac-and-host-website-on-github/">install-ocotpress-on-mac-and-host-website-on-github</a></li>
+<li><a href="http://blog.csdn.net/jackystudio/article/details/16353865">像黑客一样写博客</a></li>
+<li><a href="http://blog.segmentfault.com/yaashion_xiang/1190000000364677">http://blog.segmentfault.com/yaashion_xiang/1190000000364677</a></li>
+<li><a href="http://biaobiaoqi.me/blog/2013/07/10/decorate-octopress/">http://biaobiaoqi.me/blog/2013/07/10/decorate-octopress/</a></li>
+</ul>
+
+
+<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/install-octopress-on-mac-os-x-10-dot-9/'>http://starsea.github.io/posts/install-octopress-on-mac-os-x-10-dot-9/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-09T14:53:37+08:00" pubdate data-updated="true">May 9<span>th</span>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/octopress/'>octopress</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">

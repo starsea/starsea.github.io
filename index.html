@@ -7,7 +7,17 @@
 	<meta name="author" content="starsea">
 
 	
-	<meta name="description" content=" 很多东西都是用 python 写的 比如 brew octopress gae&hellip; 有些东西经常用到, 每次都要查资料 看来有必要记录一些相关的知识. Read on &rarr; Jul 25th, 2014 python ">
+	<meta name="description" content="系统自带的 python&hellip; 1
+2
+3
+4
+5
+6
+7
+8
+9
+md5sum /usr/bin/python2.6
+md5sum /usr/bin/python wget http://python.org/ftp/python/2.7.3/Python-2.7.3.tar.bz2 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -76,6 +86,126 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/posts/update-python26-to-python27-on-centos6-dot-4/">
+		
+			update-python26-to-python27-on-centos6.4</a>
+	</h2>
+	<div class="entry-content">
+		<p>系统自带的 python&hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>md5sum /usr/bin/python2.6
+</span><span class='line'>md5sum /usr/bin/python
+</span><span class='line'>
+</span><span class='line'>wget http://python.org/ftp/python/2.7.3/Python-2.7.3.tar.bz2
+</span><span class='line'>tar -jxvf Python-2.7.3.tar.bz2
+</span><span class='line'><span class="nb">cd </span>Python-2.7.3
+</span><span class='line'>./configure
+</span><span class='line'>make
+</span><span class='line'>sudo make install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里有个好消息就是 centos6.4 并不会把 /usr/local/python 指向 /usr/local/bin/python 记得在上家公司 centos5.x 版本的时候是会产生这个问题的 从而导致 yum 工作(yum 只能在特定版本下工作 5.x 是 py2.4 6.4是 py2.6).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>vagrant@localhost ~<span class="o">]</span><span class="nv">$ </span>ll /usr/local/bin
+</span><span class='line'>总用量 6056
+</span><span class='line'>-rwxrwxr-x 1 root root     101 7月  25 13:52 2to3
+</span><span class='line'>-rwxrwxr-x 1 root root      99 7月  25 13:52 idle
+</span><span class='line'>lrwxrwxrwx 1 root root      37 7月  17 03:01 nginx -&gt; /usr/local/webserver/nginx/sbin/nginx
+</span><span class='line'>-rwxrwxr-x 1 root root      84 7月  25 13:52 pydoc
+</span><span class='line'>lrwxrwxrwx 1 root root       7 7月  25 14:00 python -&gt; python2
+</span><span class='line'>lrwxrwxrwx 1 root root       9 7月  25 14:00 python2 -&gt; python2.7
+</span><span class='line'>-rwxr-xr-x 1 root root 6162265 7月  25 14:00 python2.7
+</span><span class='line'>-rwxr-xr-x 1 root root    1624 7月  25 14:00 python2.7-config
+</span><span class='line'>lrwxrwxrwx 1 root root      16 7月  25 14:00 python2-config -&gt; python2.7-config
+</span><span class='line'>lrwxrwxrwx 1 root root      14 7月  25 14:00 python-config -&gt; python2-config
+</span><span class='line'>-rwxrwxr-x 1 root root   18547 7月  25 13:52 smtpd.py
+</span><span class='line'><span class="o">[</span>vagrant@localhost ~<span class="o">]</span><span class="err">$</span>
+</span><span class='line'><span class="o">[</span>vagrant@localhost ~<span class="o">]</span><span class="nv">$ </span>ll /usr/local/bin
+</span><span class='line'>总用量 6056
+</span><span class='line'>-rwxrwxr-x 1 root root     101 7月  25 13:52 2to3
+</span><span class='line'>-rwxrwxr-x 1 root root      99 7月  25 13:52 idle
+</span><span class='line'>lrwxrwxrwx 1 root root      37 7月  17 03:01 nginx -&gt; /usr/local/webserver/nginx/sbin/nginx
+</span><span class='line'>-rwxrwxr-x 1 root root      84 7月  25 13:52 pydoc
+</span><span class='line'>lrwxrwxrwx 1 root root       7 7月  25 14:00 python -&gt; python2
+</span><span class='line'>lrwxrwxrwx 1 root root       9 7月  25 14:00 python2 -&gt; python2.7
+</span><span class='line'>-rwxr-xr-x 1 root root 6162265 7月  25 14:00 python2.7
+</span><span class='line'>-rwxr-xr-x 1 root root    1624 7月  25 14:00 python2.7-config
+</span><span class='line'>lrwxrwxrwx 1 root root      16 7月  25 14:00 python2-config -&gt; python2.7-config
+</span><span class='line'>lrwxrwxrwx 1 root root      14 7月  25 14:00 python-config -&gt; python2-config
+</span><span class='line'>-rwxrwxr-x 1 root root   18547 7月  25 13:52 smtpd.py
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/update-python26-to-python27-on-centos6-dot-4/'>http://starsea.github.io/posts/update-python26-to-python27-on-centos6-dot-4/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-25T22:04:13+08:00" pubdate data-updated="true">Jul 25<span>th</span>, 2014</time></div>
+	<div class="tags">
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -510,96 +640,6 @@ persistent equivalents.</p>
 
 
 	<a class='category' href='/categories/git/'>Git</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/posts/install-octopress-on-mac-os-x-10-dot-9/">
-		
-			Install Octopress on Mac Os X 10.9</a>
-	</h2>
-	<div class="entry-content">
-		<p>安装方法就不多说了 详情见参考文献 说下注意初学者难理解的地方</p>
-
-<p>整个项目分为两个部分 一部分是博客的源码 也就是source分支(除开<code>_deploy</code>目录之外的其他所有文件)<br/>
-还有一部分是网站的静态资源(打开网站你看到的全部都是静态资源 所有的页面都是纯html页面) 这部分属于master分支 也就是<code>_deploy</code>整个目录 你可以这样看看</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>haidx@mbp:~/repo/octopress<span class="o">]</span><span class="nv">$ </span><span class="nb">cd </span>_deploy/
-</span><span class='line'><span class="o">[</span>haidx@mbp:~/repo/octopress/_deploy<span class="o">]</span><span class="nv">$ </span>git status
-</span><span class='line'><span class="c"># On branch master</span>
-</span><span class='line'>nothing to commit, working directory clean
-</span><span class='line'><span class="o">[</span>haidx@mbp:~/repo/octopress/_deploy<span class="o">]</span><span class="err">$</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>安装好之后 运行 <code>rake new_post["myTitle"]</code> 会自动生成一个 markdown 文件</p>
-
-<p>文章生成在目录下的<code>source/_posts</code>目录下。文章是markdown格式的。可以通过 <code>Mou</code> 软件来编辑保存。</p>
-
-<p><code>rake generate</code> 根据 <code>_config.yml</code> 和 <code>source/_posts</code>下的 markdown 文件生成网站所有需要的静态资源.</p>
-
-<p><code>rake deploy</code> 这个命令是把网站所有生成的静态资源放到 _deploy 目录下,然后把该目录下得所有文件推送到github的 master 分支.</p>
-
-<p>发布之后运行<code>git status</code>之后发现还是有很多修改文件 , 没错 因为 <code>rake deploy</code> 并没有 push source 分支过去. 如有需要 可以手动 push</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git add .
-</span><span class='line'>git commit -m <span class="s1">&#39;Initial source commit&#39;</span>
-</span><span class='line'>git push origin <span class="nb">source</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>[参考]</p>
-
-<ul>
-<li><a href="http://yang3wei.github.io/blog/2013/01/28/zhuan-zai-zai-github-shang-shi-yong-octopress/">zhuan-zai-zai-github-shang-shi-yong-octopress</a></li>
-<li><a href="http://www.ikitweb.com/blog/2014/04/11/install-ocotpress-on-mac-and-host-website-on-github/">install-ocotpress-on-mac-and-host-website-on-github</a></li>
-<li><a href="http://blog.csdn.net/jackystudio/article/details/16353865">像黑客一样写博客</a></li>
-<li><a href="http://blog.segmentfault.com/yaashion_xiang/1190000000364677">http://blog.segmentfault.com/yaashion_xiang/1190000000364677</a></li>
-<li><a href="http://biaobiaoqi.me/blog/2013/07/10/decorate-octopress/">http://biaobiaoqi.me/blog/2013/07/10/decorate-octopress/</a></li>
-</ul>
-
-
-<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/install-octopress-on-mac-os-x-10-dot-9/'>http://starsea.github.io/posts/install-octopress-on-mac-os-x-10-dot-9/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-09T14:53:37+08:00" pubdate data-updated="true">May 9<span>th</span>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/octopress/'>octopress</a>
 
 
 </div>
