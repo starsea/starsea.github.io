@@ -1,0 +1,117 @@
+---
+layout: post
+title: "python 常识"
+date: 2014-07-25 17:43:18 +0800
+comments: true
+categories:  python
+---
+很多东西都是用 `python` 写的 比如 `brew` `octopress` `gae`... 有些东西经常用到, 每次都要查资料 看来有必要记录一些相关的知识.
+
+<!--more-->
+##egg
+egg...传说中的蟒蛇蛋,是目前最流行的python应用打包部署方式.
+
+```bash
+[haidx@mbp:~/repo/octopress]$ locate *.egg | head -n 1  | xargs -n 1 file
+/Users/haidx/goagent-3.1.5/local/dnslib-0.8.3.egg: Zip archive data, at least v2.0 to extract
+```
+执行上述命令发现其实就是一个 zip 打包文件.
+
+
+```bash
+[haidx@mbp:~/repo/octopress]$ unzip -l  /Users/haidx/goagent-3.1.5/local/dnslib-0.8.3.egg
+Archive:  /Users/haidx/goagent-3.1.5/local/dnslib-0.8.3.egg
+  Length     Date   Time    Name
+ --------    ----   ----    ----
+        0  01-22-14 09:07   dnslib/
+     1024  10-20-12 01:08   dnslib/bimap.py
+     2045  09-13-12 12:51   dnslib/bit.py
+     1824  10-20-12 02:24   dnslib/buffer.py
+    28011  04-27-13 08:33   dnslib/dns.py
+     3953  09-13-12 12:51   dnslib/label.py
+        0  01-22-14 09:07   dnslib/server/
+     1096  09-13-12 12:51   dnslib/server/circuits_server.py
+     1337  10-20-12 01:29   dnslib/server/gevent_server.py
+     2263  11-11-12 03:43   dnslib/server/udp_proxy.py
+     1389  11-11-12 03:44   dnslib/server/udp_server.py
+        0  10-19-12 17:30   dnslib/server/__init__.py
+       19  09-13-12 12:51   dnslib/__init__.py
+        0  01-22-14 09:07   EGG-INFO/
+        1  01-21-14 17:05   EGG-INFO/dependency_links.txt
+     6709  01-21-14 17:05   EGG-INFO/PKG-INFO
+      386  01-21-14 17:05   EGG-INFO/SOURCES.txt
+        7  01-21-14 17:05   EGG-INFO/top_level.txt
+        1  01-21-14 17:05   EGG-INFO/zip-safe
+ --------                   -------
+    50065                   19 files
+```
+EGG-INFO 一般有五个信息文件.其他的文件都是更加 setup.py 里的 `name` 寻找要打包的文件夹的名称 然后用 packages 指定的`find_packages` 打包
+
+####如何移除 egg 包
+
+非常简单 找到easy-install.pth
+```bash
+[haidx@mbp:~/tmp/pytest/egg-demo]$ locate easy-install.pth
+/Library/Python/2.7/site-packages/easy-install.pth
+/Library/Python/2.7/site-packages/easy-install.pth.bak
+/usr/local/lib/python2.7/site-packages/easy-install.pth
+
+[haidx@mbp:~/tmp/pytest/egg-demo]$ cat /usr/local/lib/python2.7/site-packages/easy-install.pth
+import sys; sys.__plen = len(sys.path)
+./setuptools-3.6-py2.7.egg
+./pip-1.5.5-py2.7.egg
+./rdbtools-0.1.6-py2.7.egg
+import sys; new=sys.path[sys.__plen:]; del sys.path[sys.__plen:]; p=getattr(sys,'__egginsert',0); sys.path[p:p]=new; sys.__egginsert = p+len(new)
+```
+
+首先将包含此egg的行从easy-install.pth中删除，然后删除egg文件夹即可  
+这里我用的 brew 安装的 所以在 /user/local 下 上面那个 Library 下的是系统自带的 python.
+
+
+
+##easy_install
+
+当需要安装第三方python包时，可能会用到 `easy_install`命令它是由 PEAK(Python Enterprise Application Kit) 开发的 `setuptools` 包里带的一个命令，它用来安装egg包。
+
+如果已经把egg文件下载到了本地，则easy_install xxx.egg就ok了，如果有依赖，则会自动下载安装，省心了。如果没有下载下来，网络安装更爽，直接 easy_install 包名，此时喝点咖啡休息一下，回过神来时已经安装好了。唯一一点不好的感觉是，easy_install现在还不支持自动卸载，网上流传的用 easy_install -m xxx来卸载，是不行了，这个命令式用来安装同一个包的多个版本的。
+
+
+## setuptools 和 easy_install
+
+
+setuptools:setuptools 是一组由PEAK(Python Enterprise Application Kit)开发的 Python 的 distutils 工具的增强工具，可以让程序员更方便的创建和发布 Python的egg 包，特别是那些对其它包具有依赖性的状况。 由 setuptools 创建和发布的包看起来和基于 distutils 发布的包没什么不同。最终用户不需要事先安装 setuptools 甚至根本不需要知道 setuptools 的存在，而程序员也不需要附上完整的 setuptools，只需要包含一个大小约 8K 的ez_setup.py脚本作为启动模块，就可以在最终用户没有安装适当版本的 setuptools 时让这些包自动下载和安装 setuptools。
+
+
+easy_install: 常使用python的人员，当需要安装第三方python包时,可能会用到这个.
+**easy_install是由PEAK(Python Enterprise Application Kit)开发的setuptools包里带的一个命令**
+它用来自动的从 http://pypi.python.org/simple/ 来安装egg包，相当于perl中的cpan或PPM。
+
+**so..我们需要先装 setuptools  才有 easy_install**
+
+我们到虚拟机试下(centos 6.2)
+
+```bash
+sudo yum install python-setuptools
+```
+如果仓库里没有的话 我们可以手动** wget 当前 python 版本对应的 setuptools 的 egg 然后 sh 安装**  [这里可以找到地址][setuptools]
+```bash
+[vagrant@localhost ~]$ python -V
+Python 2.6.6
+[vagrant@localhost ~]$ wget http://pypi.python.org/packages/2.6/s/setuptools/setuptools-0.6c11-py2.6.egg#md5=bfa92100bd772d5a213eedd356d64086
+[vagrant@localhost ~]$ sudo sh setuptools-0.6c11-py2.6.egg
+```
+
+##pip
+...不写了 看参考文档倒数第二条.
+
+
+参考文献:
+
+* [egg 学习笔记](http://www.worldhello.net/2010/12/08/2178.html#id8)
+* [python的egg包的安装和制作](http://www.cnblogs.com/kungfupanda/p/3343113.html)
+* http://www.ibm.com/developerworks/cn/linux/l-cppeak3.html
+* [python中包管理工具(easy_install和pip的用法)](http://blog.csdn.net/shanliangliuxing/article/details/10114911) *这个总结的相当好...看了这个都不准备继续写了....*
+* http://stackoverflow.com/questions/3220404/why-use-pip-over-easy-install
+
+
+[setuptools]: https://pypi.python.org/packages/2.6/s/setuptools/

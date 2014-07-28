@@ -24,6 +24,8 @@ or host + persistent_id or unix socket + timeout.
 This feature is not available in threaded versions. `pconnect` and `popen` then working like their non
 persistent equivalents.
 
+<!--more-->
+
 ##### *Parameters*
 
 *host*: string. can be a host, or the path to a unix domain socket  
@@ -89,10 +91,7 @@ try {
 * pconnect 会在连接池里建立连接 不受close 的影响. close 只影响当前实列是否继续使用该连接 当然 php 脚本结束后 变量销毁 辣么连接肯定已经归还到了连接池.
 * connect 在使用的时候会建立一个连接 脚本结束后 或者 使用 close 会销毁连接.
 * close 并不会销毁 resource ... = = 只是断开连接而已... unset 变量才会销毁...
-* 所以并不是使用了 pconnect 就不要 close 了,如果当前脚本执行时间很长 辣么会一直占用一个连接的.详情请看鸟哥blog
-
-
-http://www.laruence.com/2012/07/25/2662.html
+* 所以并不是使用了 pconnect 就不要 close 了,如果当前脚本执行时间很长 辣么会一直占用一个连接的.详情请看[鸟哥blog](http://www.laruence.com/2012/07/25/2662.html)
 
 
 

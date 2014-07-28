@@ -3,7 +3,7 @@ layout: post
 title: "在本地用 Satis 搭建 Composer Packages 镜像"
 date: 2014-05-16 10:35:27 +0800
 comments: true
-categories: Composer
+categories: composer
 ---
 这篇文章将教导你怎么在本地搭建一个`composer`镜像以节约大量的网络开销时间.
 
@@ -13,7 +13,8 @@ categories: Composer
 
 一张图胜过千言万语.
 
-![satis](https://cdn.tutsplus.com/net/uploads/2014/01/Architecture.png)
+{% img /images/posts/composer.png %}
+
 
 如果在本地找到了包,那么讲从本地安装,如果没有,那么将默认从 `packagist.org` 安装.
 <!--more-->
@@ -57,6 +58,7 @@ Installing dependencies from lock file
 symfony/console suggests installing symfony/event-dispatcher ()
 Generating autoload files
 ```
+//todo 未完待续
 
 
 
