@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Composer | Starsea's Note]]></title>
+  <title><![CDATA[Category: composer | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/composer/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-07-25T23:19:59+08:00</updated>
+  <updated>2014-07-28T20:41:00+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -26,7 +26,7 @@
 
 <p>一张图胜过千言万语.</p>
 
-<p><img src="https://cdn.tutsplus.com/net/uploads/2014/01/Architecture.png" alt="satis" /></p>
+<p><img src="/images/posts/composer.png"></p>
 
 <p>如果在本地找到了包,那么讲从本地安装,如果没有,那么将默认从 <code>packagist.org</code> 安装.</p>
 
@@ -74,7 +74,8 @@ Loading from cache</p></li>
 
 <p>symfony/console suggests installing symfony/event-dispatcher ()
 Generating autoload files
-```</p>
+```
+//todo 未完待续</p>
 
 <h2>参考文献</h2>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/linux/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-07-25T23:19:59+08:00</updated>
+  <updated>2014-07-28T20:41:00+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -14,23 +14,72 @@
 
   
   <entry>
+    <title type="html"><![CDATA[fix-ab-bug-on-mac-os-x]]></title>
+    <link href="http://starsea.github.io/posts/fix-ab-bug-on-mac-os-x/"/>
+    <updated>2014-07-26T16:27:23+08:00</updated>
+    <id>http://starsea.github.io/posts/fix-ab-bug-on-mac-os-x</id>
+    <content type="html"><![CDATA[<p>在 mac 下用 ab 压东西只要并发大了经常报错</p>
+
+<p><code>
+apr_socket_recv: Connection reset by peer (54)
+</code>
+好像是 ab 的 bug 那我就重新编译一个吧</p>
+
+<p><code>bash
+cd ~/opt
+wget http://apache.mirrors.pair.com/httpd/httpd-2.4.10.tar.gz
+tar zxvf httpd-2.4.10.tar.gz
+cd httpd-2.4.10
+./configure
+</code>
+编译 apache 的时候会碰到下面情况
+<code>
+checking for APR-util... yes
+checking for gcc... /Applications/Xcode.app/Contents/Developer/Toolchains/OSX10.9.xctoolchain/usr/bin/cc
+checking whether the C compiler works... no
+configure: error: in `/Users/haidx/opt/httpd-2.4.10':
+configure: error: C compiler cannot create executables
+See `config.log' for more details
+</code>
+厄..ls 查看了下 这个目录根本不存在嘛 所以哪里来的 gcc..扯犊子</p>
+
+<p>查了下<a href="https://code.google.com/p/modwsgi/issues/detail?id=312">资料</a>发现是 os x 10.8->10.9 升级后 xcode 路径不一致</p>
+
+<p>解决方案:
+<code>bash
+$ cd /Applications/Xcode.app/Contents/Developer/Toolchains/
+$ sudo ln -s XcodeDefault.xctoolchain OSX10.9.xctoolchain
+</code>
+然后编译通过了. done.
+<code>
+cd support
+make
+./ab -c 100 -n 10000 "url"
+</code></p>
+
+<p><a href="http://www.jsxubar.info/apache-ab-test-error.html">http://www.jsxubar.info/apache-ab-test-error.html</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[centos 安装后需要做的很多事情]]></title>
     <link href="http://starsea.github.io/posts/install-centos-on-mac-vagrant/"/>
     <updated>2014-07-17T00:21:23+08:00</updated>
     <id>http://starsea.github.io/posts/install-centos-on-mac-vagrant</id>
     <content type="html"><![CDATA[<p>装上 vagrant 了.但是 centos 是 minimal 版的,所以需要做很多东西(不是 mini 版的也需要做很多事 囧rz).其实很多事情都是玩 vps 的时候做过的,但是人老了记性不好,每次都要 google. 所以我觉得还是记录下来比较好.</p>
 
-<p>先添加源吧..啥也不说了 直接上<a href="http://mirrors.aliyun.com/help/centos" title="阿里云开源镜像">阿里云</a>的开源镜像吧..网易萎了..
-<code>bash
+<p>先添加源吧..啥也不说了 直接上<a href="http://mirrors.aliyun.com/help/centos" title="阿里云开源镜像">阿里云</a>的开源镜像吧..网易萎了..</p>
+
+<!--more-->
+
+
+<p><code>bash
 mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 cd /etc/yum.repos.d
 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo
 yum clean all
 yum makecache
 </code></p>
-
-<!--more-->
-
 
 <h3>sudo command 找不到命令</h3>
 
@@ -94,6 +143,17 @@ alias sudo="sudo env PATH=$PATH"
 <li><a href="http://pickerwengs.blogspot.com/2011/10/sudo-command-not-found.html">sudo-command-not-found</a></li>
 </ul>
 
+
+<h3>locate: command not found</h3>
+
+<p>没有 locate&hellip;
+```bash</p>
+
+<h1>yum -y install mlocate</h1>
+
+<h1>updatedb</h1>
+
+<p>```</p>
 ]]></content>
   </entry>
   

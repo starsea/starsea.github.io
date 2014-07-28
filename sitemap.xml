@@ -20,7 +20,7 @@
         <loc>
             http://starsea.github.io/posts/setting-up-a-local-mirror-for-composer-packages-with-satis/
         </loc>
-        <lastmod>2014-07-15T13:10:20+08:00</lastmod>
+        <lastmod>2014-07-28T20:41:00+08:00</lastmod>
     </url>
     <url>
         <loc>
@@ -34,7 +34,7 @@
     </url>
     <url>
         <loc>http://starsea.github.io/posts/install-centos-on-mac-vagrant/</loc>
-        <lastmod>2014-07-20T02:41:08+08:00</lastmod>
+        <lastmod>2014-07-28T20:27:53+08:00</lastmod>
     </url>
     <url>
         <loc>http://starsea.github.io/posts/intro-homebrew/</loc>
@@ -50,7 +50,11 @@
     </url>
     <url>
         <loc>http://starsea.github.io/posts/update-python26-to-python27-on-centos6-dot-4/</loc>
-        <lastmod>2014-07-25T22:16:39+08:00</lastmod>
+        <lastmod>2014-07-26T01:20:34+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://starsea.github.io/posts/fix-ab-bug-on-mac-os-x/</loc>
+        <lastmod>2014-07-27T23:11:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://starsea.github.io/about/</loc>
@@ -58,11 +62,11 @@
     </url>
     <url>
         <loc>http://starsea.github.io/blog/archives/</loc>
-        <lastmod>2014-07-25T22:16:39+08:00</lastmod>
+        <lastmod>2014-07-28T20:41:00+08:00</lastmod>
     </url>
     <url>
         <loc>http://starsea.github.io/</loc>
-        <lastmod>2014-07-25T22:16:39+08:00</lastmod>
+        <lastmod>2014-07-28T20:41:00+08:00</lastmod>
     </url>
     <url>
         <loc>http://starsea.github.io/robots.txt</loc>
