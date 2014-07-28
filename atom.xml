@@ -4,7 +4,7 @@
   <title><![CDATA[Starsea's Note]]></title>
   <link href="http://starsea.github.io/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-07-28T20:41:00+08:00</updated>
+  <updated>2014-07-28T21:11:24+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -14,7 +14,93 @@
 
   
   <entry>
-    <title type="html"><![CDATA[fix-ab-bug-on-mac-os-x]]></title>
+    <title type="html"><![CDATA[CentOS yum 源的配置与使用]]></title>
+    <link href="http://starsea.github.io/posts/yum-detail-centos/"/>
+    <updated>2014-07-28T21:03:08+08:00</updated>
+    <id>http://starsea.github.io/posts/yum-detail-centos</id>
+    <content type="html"><![CDATA[<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>root@localhost yum.repos.d<span class="o">]</span><span class="c"># rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm</span>
+</span><span class='line'>Retrieving http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+</span><span class='line'>warning: /var/tmp/rpm-tmp.ZlOIWb: Header V3 DSA/SHA1 Signature, key ID 00f97f56: NOKEY
+</span><span class='line'>error: Failed dependencies:
+</span><span class='line'>  epel-release &gt;<span class="o">=</span> 6 is needed by remi-release-6.5-1.el6.remi.noarch
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>remi 源需要 epel-release(>6)&hellip;好吧看来还是要按照 epel 啊..</p>
+
+<p>安装 epel</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>root@localhost yum.repos.d<span class="o">]</span><span class="c"># rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm</span>
+</span><span class='line'>Retrieving http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+</span><span class='line'>warning: /var/tmp/rpm-tmp.vpGlLN: Header V3 RSA/SHA256 Signature, key ID 0608b895: NOKEY
+</span><span class='line'>Preparing...                <span class="c">########################################### [100%]</span>
+</span><span class='line'>   1:epel-release           <span class="c">########################################### [100%]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>导入key：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>再次安装remi</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+</span><span class='line'><span class="nv">$ </span>rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-remi
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>关于设置级别事情 肯定要安装 priorities</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>yum install yum-priorities
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>首先我们要清楚 remi 源到底有什么东西 <a href="http://rpms.famillecollet.com/enterprise/6.4/remi">这里</a>可以看到每个<code>repository entry</code>对应有哪些东西..点进去就知道了&hellip;我们基本上就是 php mysql..等相关东西..由于我安装这东西就是为了用最新版的 php(orz 虚拟机懒得编译了)</p>
+
+<p>note:</p>
+
+<p>优先级由 1 ~ 99 的 99 个数表示，1 的优先级最高。优先级小的源即使有某软件的较新版本，如果优先级高的源中没有，在启用该插件的情况下，系统也无法安装/升级到该较新版本。图形界面的 YUM 工具一般默认就已经包含了优先级插件。</p>
+
+<p>这里我将 remi 和 remi-php55 都设置 <code>priority=1</code> base 设置为2 epel 设置为5</p>
+
+<p>当然如果在没开启 remi 的情况(enable=0)下你也可以这么做</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>yum --enablerepo<span class="o">=</span>remi-php55,remi install php
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><a href="http://wiki.centos.org/PackageManagement/Yum/Priorities">Priorities wiki</a></li>
+<li><a href="http://cnzhx.net/blog/remi-repository/">http://cnzhx.net/blog/remi-repository/</a></li>
+<li><a href="http://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html">http://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html</a></li>
+<li><a href="http://www.trackself.com/archives/2397.html">yum 详细安装</a></li>
+</ul>
+
+
+<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/yum-detail-centos/'>http://starsea.github.io/posts/yum-detail-centos/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[fix-a-ab-bug-on-mac-os-x]]></title>
     <link href="http://starsea.github.io/posts/fix-ab-bug-on-mac-os-x/"/>
     <updated>2014-07-26T16:27:23+08:00</updated>
     <id>http://starsea.github.io/posts/fix-ab-bug-on-mac-os-x</id>
@@ -80,7 +166,12 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><a href="http://www.jsxubar.info/apache-ab-test-error.html">http://www.jsxubar.info/apache-ab-test-error.html</a></p>
+<p>(update: 2014.07.31)</p>
+
+<p>ps: 其实还是有问题&hellip;系统内核不知道怎么调..不说了都是泪还是别再 mac 下压吧&hellip;</p>
+
+<p>参考:
+* <a href="http://www.jsxubar.info/apache-ab-test-error.html">http://www.jsxubar.info/apache-ab-test-error.html</a></p>
 
 <p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/fix-ab-bug-on-mac-os-x/'>http://starsea.github.io/posts/fix-ab-bug-on-mac-os-x/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
 
