@@ -4,7 +4,7 @@
   <title><![CDATA[Category: redis | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/redis/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-07-29T00:19:43+08:00</updated>
+  <updated>2014-07-29T13:17:20+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -99,7 +99,7 @@ var_dump($redis->get(&lsquo;k1&rsquo;));</p>
 
 <p>得到如下结果</p>
 
-<p><img class="/images/posts/<a" src="href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#81;&#x51;&#x32;&#48;&#49;&#x34;&#x30;&#x37;&#48;&#57;&#x2d;&#x31;&#x40;&#50;&#120;&#x2e;&#112;&#110;&#x67;">&#x51;&#x51;&#50;&#x30;&#49;&#x34;&#48;&#x37;&#48;&#57;&#x2d;&#49;&#64;&#x32;&#120;&#46;&#x70;&#x6e;&#x67;</a>"></p>
+<p><img class="/images/posts/<a" src="href="&#109;&#x61;&#x69;&#108;&#116;&#x6f;&#x3a;&#81;&#x51;&#x32;&#x30;&#49;&#52;&#48;&#x37;&#x30;&#x39;&#x2d;&#49;&#x40;&#x32;&#120;&#46;&#112;&#x6e;&#x67;">&#81;&#x51;&#50;&#48;&#49;&#52;&#x30;&#55;&#x30;&#57;&#x2d;&#49;&#64;&#50;&#x78;&#46;&#x70;&#110;&#103;</a>"></p>
 
 <p>13行去 getkey 的时候抛出一个错误 说是连接已经关闭. 没错 其实这里当前 $redis 变量本身已经释放连接池的占用 其他实列可以使用该链接了. (连接池的连接上限数目和 php-fpm 的进程数目有关系)</p>
 
