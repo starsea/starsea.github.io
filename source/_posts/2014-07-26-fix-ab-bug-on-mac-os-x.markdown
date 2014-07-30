@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "fix-ab-bug-on-mac-os-x"
+title: "fix-a-ab-bug-on-mac-os-x"
 date: 2014-07-26 16:27:23 +0800
 comments: true
 categories: linux
@@ -45,7 +45,12 @@ make
 ./ab -c 100 -n 10000 "url"
 ```
 
-http://www.jsxubar.info/apache-ab-test-error.html
+(update: 2014.07.31)
+
+ps: 其实还是有问题...系统内核不知道怎么调..不说了都是泪还是别再 mac 下压吧...
+
+参考:
+* http://www.jsxubar.info/apache-ab-test-error.html
 
 
 

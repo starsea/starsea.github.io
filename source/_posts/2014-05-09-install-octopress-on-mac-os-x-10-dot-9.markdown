@@ -23,6 +23,8 @@ categories: octopress
 
 文章生成在目录下的`source/_posts`目录下。文章是markdown格式的。可以通过 `Mou` 软件来编辑保存。
 
+`rake new_page['about']` 用来新建页面 页面源路径为 `source\about\index.markdown`
+
 `rake generate` 根据 `_config.yml` 和 `source/_posts`下的 markdown 文件生成网站所有需要的静态资源.
 
 `rake deploy` 这个命令是把网站所有生成的静态资源放到 _deploy 目录下,然后把该目录下得所有文件推送到github的 master 分支.
