@@ -27,6 +27,7 @@ ab -n 5000 -c 200 http://thisobj.com/ 这里表示总共对目标网址发起500
 <nav id="main-nav"><ul class="main">
 	<li><a href="/">Blog</a></li>
 	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/about">About</a></li>
 </ul>
 </nav>
 <nav id="mobile-nav">
@@ -35,6 +36,7 @@ ab -n 5000 -c 200 http://thisobj.com/ 这里表示总共对目标网址发起500
 		<div class="container"><ul class="main">
 	<li><a href="/">Blog</a></li>
 	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/about">About</a></li>
 </ul>
 </div>
 	</div>
@@ -221,6 +223,8 @@ ab -n 5000 -c 200 http://thisobj.com/ 这里表示总共对目标网址发起500
 
 <p>文章生成在目录下的<code>source/_posts</code>目录下。文章是markdown格式的。可以通过 <code>Mou</code> 软件来编辑保存。</p>
 
+<p><code>rake new_page['about']</code> 用来新建页面 页面源路径为 <code>source\about\index.markdown</code></p>
+
 <p><code>rake generate</code> 根据 <code>_config.yml</code> 和 <code>source/_posts</code>下的 markdown 文件生成网站所有需要的静态资源.</p>
 
 <p><code>rake deploy</code> 这个命令是把网站所有生成的静态资源放到 _deploy 目录下,然后把该目录下得所有文件推送到github的 master 分支.</p>
@@ -349,7 +353,7 @@ ab -n 5000 -c 200 http://thisobj.com/ 这里表示总共对目标网址发起500
 
     starsea
 
-</footer>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1252952909'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s23.cnzz.com/stat.php%3Fid%3D1252952909' type='text/javascript'%3E%3C/script%3E"));</script></footer>
 	<script src="/javascripts/slash.js"></script>
 <script src="/javascripts/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">

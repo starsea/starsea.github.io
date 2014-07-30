@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/octopress/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-07-29T13:17:20+08:00</updated>
+  <updated>2014-07-30T23:00:03+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -37,6 +37,8 @@ nothing to commit, working directory clean
 <p>安装好之后 运行 <code>rake new_post["myTitle"]</code> 会自动生成一个 markdown 文件</p>
 
 <p>文章生成在目录下的<code>source/_posts</code>目录下。文章是markdown格式的。可以通过 <code>Mou</code> 软件来编辑保存。</p>
+
+<p><code>rake new_page['about']</code> 用来新建页面 页面源路径为 <code>source\about\index.markdown</code></p>
 
 <p><code>rake generate</code> 根据 <code>_config.yml</code> 和 <code>source/_posts</code>下的 markdown 文件生成网站所有需要的静态资源.</p>
 
