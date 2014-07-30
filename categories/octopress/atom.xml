@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/octopress/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-07-30T23:25:14+08:00</updated>
+  <updated>2014-07-31T00:21:04+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress 主题定制]]></title>
+    <link href="http://starsea.github.io/posts/fix-theme/"/>
+    <updated>2014-07-30T23:32:51+08:00</updated>
+    <id>http://starsea.github.io/posts/fix-theme</id>
+    <content type="html"><![CDATA[<p>七夕快到了啊&hellip;备个份&hellip;</p>
+
+<h3>统计cnzz</h3>
+
+<p><code>
+source/_includes/custom/footer.html
+</code></p>
+
+<h3>导航栏+新页面</h3>
+
+<p><code>bash
+rake new_page['about']
+vim source/about/index.markdown
+vim source/_includes/custom/navigation.html
+</code></p>
+
+<h3>修改样式</h3>
+
+<p>```css</p>
+
+<h1>vim sass/custom/_styles.scss</h1>
+
+<p>.post-footer {
+  border-left: solid 10px gray;
+  padding-left: 5px;
+}
+```</p>
+
+<h3>cdn</h3>
+
+<p>```html
+vi source/_includes/head.html</p>
+
+<h1>注释掉 google 的 jquery 替换七牛云 你懂得</h1>
+
+<script async="true" src="//cdn.staticfile.org/jquery/1.7.2/jquery.min.js"></script>
+
+
+<p>```
+* <a href="http://www.staticfile.org/">七牛云存储 开放静态文件 CDN</a>
+* <a href="http://jscdn.upai.com/">又拍云</a>
+* <a href="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js">渣浪</a></p>
+
+<h5>如何用 curl 测速</h5>
+
+<p><code>bash
+curl -o /dev/null -s -w %{time_connect}:%{time_starttransfer}:%{time_total}     http://www.baidu.com
+0.514:0.647:0.688
+</code></p>
+
+<p><code>
+计时器   描述
+time_connect    建立到服务器的 TCP 连接所用的时间
+time_starttransfer  在发出请求之后,Web 服务器返回数据的第一个字节所用的时间
+time_total  完成请求所用的时间
+time_namelookup DNS解析时间,从请求开始到DNS解析完毕所用时间(记得关掉 Linux 的 nscd 的服务测试)
+speed_download  下载速度，单位-字节每秒。
+</code>
+<a href="http://www.php-oa.com/2008/03/15/curl.html">传送门</a></p>
+
+<h4>还傻得很</h4>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[install octopress on mac os x 10.9]]></title>

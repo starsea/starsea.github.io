@@ -4,7 +4,7 @@
   <title><![CDATA[Starsea's Note]]></title>
   <link href="http://starsea.github.io/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-07-30T23:25:14+08:00</updated>
+  <updated>2014-07-31T00:21:04+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -12,6 +12,98 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress 主题定制]]></title>
+    <link href="http://starsea.github.io/posts/fix-theme/"/>
+    <updated>2014-07-30T23:32:51+08:00</updated>
+    <id>http://starsea.github.io/posts/fix-theme</id>
+    <content type="html"><![CDATA[<p>七夕快到了啊&hellip;备个份&hellip;</p>
+
+<h3>统计cnzz</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>source/_includes/custom/footer.html</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>导航栏+新页面</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake new_page<span class="o">[</span><span class="s1">&#39;about&#39;</span><span class="o">]</span>
+</span><span class='line'>vim <span class="nb">source</span>/about/index.markdown
+</span><span class='line'>vim <span class="nb">source</span>/_includes/custom/navigation.html
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>修改样式</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="err">#</span> <span class="nt">vim</span> <span class="nt">sass</span><span class="o">/</span><span class="nt">custom</span><span class="o">/</span><span class="nt">_styles</span><span class="nc">.scss</span>
+</span><span class='line'><span class="nc">.post-footer</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">border-left</span><span class="o">:</span> <span class="k">solid</span> <span class="m">10px</span> <span class="nb">gray</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">padding-left</span><span class="o">:</span> <span class="m">5px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>cdn</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>vi source/_includes/head.html
+</span><span class='line'>#注释掉 google 的 jquery 替换七牛云 你懂得
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">async=</span><span class="s">&quot;true&quot;</span> <span class="na">src=</span><span class="s">&quot;//cdn.staticfile.org/jquery/1.7.2/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><a href="http://www.staticfile.org/">七牛云存储 开放静态文件 CDN</a></li>
+<li><a href="http://jscdn.upai.com/">又拍云</a></li>
+<li><a href="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js">渣浪</a></li>
+</ul>
+
+
+<h5>如何用 curl 测速</h5>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl -o /dev/null -s -w %<span class="o">{</span>time_connect<span class="o">}</span>:%<span class="o">{</span>time_starttransfer<span class="o">}</span>:%<span class="o">{</span>time_total<span class="o">}</span>     http://www.baidu.com
+</span><span class='line'>0.514:0.647:0.688
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>计时器    描述
+</span><span class='line'>time_connect  建立到服务器的 TCP 连接所用的时间
+</span><span class='line'>time_starttransfer    在发出请求之后,Web 服务器返回数据的第一个字节所用的时间
+</span><span class='line'>time_total    完成请求所用的时间
+</span><span class='line'>time_namelookup   DNS解析时间,从请求开始到DNS解析完毕所用时间<span class="o">(</span>记得关掉 Linux 的 nscd 的服务测试<span class="o">)</span>
+</span><span class='line'>speed_download    下载速度，单位-字节每秒。
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://www.php-oa.com/2008/03/15/curl.html">传送门</a></p>
+
+<h4>还傻得很</h4>
+
+<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/fix-theme/'>http://starsea.github.io/posts/fix-theme/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[CentOS yum 源的配置与使用]]></title>
