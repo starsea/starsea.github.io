@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/octopress/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-07-31T23:22:40+08:00</updated>
+  <updated>2014-07-31T23:44:22+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -62,7 +62,7 @@ vi source/_includes/head.html</p>
 <p>```
 * <a href="http://www.staticfile.org/">七牛云存储 开放静态文件 CDN</a>
 * <a href="http://jscdn.upai.com/">又拍云</a>
-* <a href="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js">渣浪</a></p>
+* <a href="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js">渣浪云</a></p>
 
 <h5>如何用 curl 测速</h5>
 
@@ -82,7 +82,100 @@ time_namelookup DNS解析时间,从请求开始到DNS解析完毕所用时间(�
 speed_download  下载速度，单位-字节每秒。
 </code></p>
 
-<h2>#</h2>
+<h3>保护文章</h3>
+
+<p>有时候我们可能有些文章不希望别人访问 但是自己能访问到. 官方给出的 published: false 编译后任何人都访问不到&hellip; 所以我们只能自己做了.</p>
+
+<p>简单思路是在首页和归档页上不展现私有文章  另外新开一个页面展示所有私人文章.</p>
+
+<p>复杂思路是编译的时候把文章根据某个 key 按照某个可逆算法 编译.<a href="http://www.renn999.cc/archives/906/">here</a></p>
+
+<p>鄙人不会 ruby 还是做简单的把</p>
+
+<p><code>
+source/index.html
+source/blog/archives/index.html
+source/_layouts/category_index.html
+</code></p>
+
+<p>编辑者两个文件 添加 unless 和 less 两行所在部分
+```
+
+<code>``
+然后打开你所需要的隐藏文章的 md 文件 在顶部信息加入</code>private : true` 这样这两个页面就不会展示隐藏文章了.</p>
+
+<h4>新开页面</h4>
+
+<p>在 <code>source</code> 下创建文件夹 <code>private</code> 在里面创建一个文件命名为 <code>index.html</code>
+添加代码</p>
+
+<h2>```</h2>
+
+<p>layout: default</p>
+
+<h2>title: Blog Private Archives</h2>
+
+<p>
+</p>
+
+<pre><code>
+
+
+	
+	
+	<section class="archives"><h1 class="year">2014</h1>
+
+<article>
+	<h2 class="title"><a href="/posts/fix-theme/">Octopress 主题定制</a></h2>
+	<div class="meta">
+		<div class="date">Jul 30</div>
+		<div class="tags">
+
+
+	<a class='category' href='/categories/octopress/'>octopress</a>
+
+
+</div>
+	    
+	    <div class="comments"><a href="/posts/fix-theme/#disqus_thread">Comments</a></div>
+	    
+	</div>
+</article>
+	
+</code></pre>
+
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+这样我们就能够通过 <a href="http://localhost:4000/private">http://localhost:4000/private</a> 访问我们所有的私人文章了 当然这个入口可不能告诉任何人&hellip;</p>
 ]]></content>
   </entry>
   

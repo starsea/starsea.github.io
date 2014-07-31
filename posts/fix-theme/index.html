@@ -138,7 +138,7 @@ vim source/about/index.markdown &hellip;">
 <ul>
 <li><a href="http://www.staticfile.org/">七牛云存储 开放静态文件 CDN</a></li>
 <li><a href="http://jscdn.upai.com/">又拍云</a></li>
-<li><a href="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js">渣浪</a></li>
+<li><a href="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js">渣浪云</a></li>
 </ul>
 
 
@@ -170,7 +170,73 @@ vim source/about/index.markdown &hellip;">
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>#</h2>
+<h3>保护文章</h3>
+
+<p>有时候我们可能有些文章不希望别人访问 但是自己能访问到. 官方给出的 published: false 编译后任何人都访问不到&hellip; 所以我们只能自己做了.</p>
+
+<p>简单思路是在首页和归档页上不展现私有文章  另外新开一个页面展示所有私人文章.</p>
+
+<p>复杂思路是编译的时候把文章根据某个 key 按照某个可逆算法 编译.<a href="http://www.renn999.cc/archives/906/">here</a></p>
+
+<p>鄙人不会 ruby 还是做简单的把</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">source</span>/index.html
+</span><span class='line'><span class="nb">source</span>/blog/archives/index.html
+</span><span class='line'><span class="nb">source</span>/_layouts/category_index.html
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>编辑者两个文件 添加 unless 和 less 两行所在部分</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">{</span>% <span class="k">for </span>post in paginator.posts %<span class="o">}</span>
+</span><span class='line'><span class="o">{</span>% unless post.private %<span class="o">}</span>
+</span><span class='line'><span class="o">{</span>% assign <span class="nv">content</span> <span class="o">=</span> post.content %<span class="o">}</span>
+</span><span class='line'>    &lt;article <span class="nv">class</span><span class="o">=</span><span class="s2">&quot;post&quot;</span>&gt;<span class="o">{</span>% include article.html %<span class="o">}</span>&lt;/article&gt;
+</span><span class='line'><span class="o">{</span>% endunless %<span class="o">}</span>
+</span><span class='line'><span class="o">{</span>% endfor %<span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后打开你所需要的隐藏文章的 md 文件 在顶部信息加入 <code>private : true</code> 这样这两个页面就不会展示隐藏文章了.</p>
+
+<h4>新开页面</h4>
+
+<p>在 <code>source</code> 下创建文件夹 <code>private</code> 在里面创建一个文件命名为 <code>index.html</code>
+添加代码</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>---
+</span><span class='line'>layout: default
+</span><span class='line'>title: Blog Private Archives
+</span><span class='line'>---
+</span><span class='line'>
+</span><span class='line'><span class="o">{</span>% <span class="k">for </span>post in site.posts reverse %<span class="o">}</span>
+</span><span class='line'><span class="o">{</span>% <span class="k">if </span>post.private !<span class="o">=</span> null %<span class="o">}</span>
+</span><span class='line'>    <span class="o">{</span>% include archive_post.html %<span class="o">}</span>
+</span><span class='line'><span class="o">{</span>% endif %<span class="o">}</span>
+</span><span class='line'><span class="o">{</span>% endfor %<span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样我们就能够通过 <a href="http://localhost:4000/private">http://localhost:4000/private</a> 访问我们所有的私人文章了 当然这个入口可不能告诉任何人&hellip;</p>
 
 <p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/fix-theme/'>http://starsea.github.io/posts/fix-theme/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
 
