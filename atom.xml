@@ -4,7 +4,7 @@
   <title><![CDATA[Starsea's Note]]></title>
   <link href="http://starsea.github.io/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-07-31T23:44:22+08:00</updated>
+  <updated>2014-08-01T00:02:29+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -160,14 +160,22 @@
 </span><span class='line'>---
 </span><span class='line'>
 </span><span class='line'><span class="o">{</span>% <span class="k">for </span>post in site.posts reverse %<span class="o">}</span>
-</span><span class='line'><span class="o">{</span>% <span class="k">if </span>post.private !<span class="o">=</span> null %<span class="o">}</span>
+</span><span class='line'><span class="o">{</span>% <span class="k">if </span>post.private %<span class="o">}</span>
 </span><span class='line'>    <span class="o">{</span>% include archive_post.html %<span class="o">}</span>
 </span><span class='line'><span class="o">{</span>% endif %<span class="o">}</span>
 </span><span class='line'><span class="o">{</span>% endfor %<span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>ps: 注意这里要用 <code>if</code> &hellip;.
+<code>unless post.private</code>  === <code>if post.private != true</code></p>
+
 <p>这样我们就能够通过 <a href="http://localhost:4000/private">http://localhost:4000/private</a> 访问我们所有的私人文章了 当然这个入口可不能告诉任何人&hellip;</p>
+
+<ul>
+<li><a href="https://github.com/Shopify/liquid/wiki/Liquid-for-Designers">模板语法</a></li>
+</ul>
+
 
 <p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/fix-theme/'>http://starsea.github.io/posts/fix-theme/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
 
