@@ -5,6 +5,7 @@ date: 2014-07-25 22:04:13 +0800
 comments: true
 categories: 
 ---
+<!--more-->
 
 系统自带的 python...
 

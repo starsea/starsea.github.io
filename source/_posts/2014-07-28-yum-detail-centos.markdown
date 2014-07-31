@@ -14,6 +14,8 @@ warning: /var/tmp/rpm-tmp.ZlOIWb: Header V3 DSA/SHA1 Signature, key ID 00f97f56:
 error: Failed dependencies:
 	epel-release >= 6 is needed by remi-release-6.5-1.el6.remi.noarch
 ```
+<!--more-->
+
 remi 源需要 epel-release(>6)...好吧看来还是要按照 epel 啊..
 
 安装 epel

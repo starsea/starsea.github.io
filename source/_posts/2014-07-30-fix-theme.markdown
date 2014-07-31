@@ -1,0 +1,64 @@
+---
+layout: post
+title: "Octopress 主题定制"
+date: 2014-07-30 23:32:51 +0800
+comments: true
+categories: octopress
+---
+
+七夕快到了啊...备个份...
+
+<!--more-->
+
+###统计cnzz
+```
+source/_includes/custom/footer.html
+```
+
+
+###导航栏+新页面
+```bash
+rake new_page['about']
+vim source/about/index.markdown
+vim source/_includes/custom/navigation.html
+```
+
+###修改样式
+```css
+# vim sass/custom/_styles.scss
+.post-footer {
+  border-left: solid 10px gray;
+  padding-left: 5px;
+}
+```
+
+###cdn
+```html
+vi source/_includes/head.html
+#注释掉 google 的 jquery 替换七牛云 你懂得
+<script async="true" src="//cdn.staticfile.org/jquery/1.7.2/jquery.min.js"></script>
+```
+* [七牛云存储 开放静态文件 CDN](http://www.staticfile.org/)
+* [又拍云](http://jscdn.upai.com/)
+* [渣浪](http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js)
+
+#####如何用 curl 测速
+
+[传送门](http://www.php-oa.com/2008/03/15/curl.html)
+
+```bash
+curl -o /dev/null -s -w %{time_connect}:%{time_starttransfer}:%{time_total}     http://www.baidu.com
+0.514:0.647:0.688
+```
+
+```
+计时器	描述
+time_connect	建立到服务器的 TCP 连接所用的时间
+time_starttransfer	在发出请求之后,Web 服务器返回数据的第一个字节所用的时间
+time_total	完成请求所用的时间
+time_namelookup	DNS解析时间,从请求开始到DNS解析完毕所用时间(记得关掉 Linux 的 nscd 的服务测试)
+speed_download	下载速度，单位-字节每秒。
+```
+
+
+###

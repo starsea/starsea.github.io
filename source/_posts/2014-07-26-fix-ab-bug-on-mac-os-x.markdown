@@ -13,6 +13,8 @@ apr_socket_recv: Connection reset by peer (54)
 ```
 好像是 ab 的 bug 那我就重新编译一个吧
 
+<!--more-->
+
 ```bash
 cd ~/opt
 wget http://apache.mirrors.pair.com/httpd/httpd-2.4.10.tar.gz
