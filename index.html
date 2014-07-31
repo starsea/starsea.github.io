@@ -7,12 +7,7 @@
 	<meta name="author" content="starsea">
 
 	
-	<meta name="description" content="七夕快到了啊&hellip;备个份&hellip; 统计cnzz 1
-source/_includes/custom/footer.html 导航栏+新页面 1
-2
-3
-rake new_page[&#39;about&#39;]
-vim source/about/index.markdown &hellip;">
+	<meta name="description" content=" 七夕快到了啊&hellip;备个份&hellip; Read on &rarr; Jul 30th, 2014 octopress Comments ">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -98,91 +93,9 @@ vim source/about/index.markdown &hellip;">
 	<div class="entry-content">
 		<p>七夕快到了啊&hellip;备个份&hellip;</p>
 
-<h3>统计cnzz</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>source/_includes/custom/footer.html</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>导航栏+新页面</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake new_page<span class="o">[</span><span class="s1">&#39;about&#39;</span><span class="o">]</span>
-</span><span class='line'>vim <span class="nb">source</span>/about/index.markdown
-</span><span class='line'>vim <span class="nb">source</span>/_includes/custom/navigation.html
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>修改样式</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="err">#</span> <span class="nt">vim</span> <span class="nt">sass</span><span class="o">/</span><span class="nt">custom</span><span class="o">/</span><span class="nt">_styles</span><span class="nc">.scss</span>
-</span><span class='line'><span class="nc">.post-footer</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">border-left</span><span class="o">:</span> <span class="k">solid</span> <span class="m">10px</span> <span class="nb">gray</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">padding-left</span><span class="o">:</span> <span class="m">5px</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>cdn</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>vi source/_includes/head.html
-</span><span class='line'>#注释掉 google 的 jquery 替换七牛云 你懂得
-</span><span class='line'><span class="nt">&lt;script </span><span class="na">async=</span><span class="s">&quot;true&quot;</span> <span class="na">src=</span><span class="s">&quot;//cdn.staticfile.org/jquery/1.7.2/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><a href="http://www.staticfile.org/">七牛云存储 开放静态文件 CDN</a></li>
-<li><a href="http://jscdn.upai.com/">又拍云</a></li>
-<li><a href="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js">渣浪</a></li>
-</ul>
-
-
-<h5>如何用 curl 测速</h5>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl -o /dev/null -s -w %<span class="o">{</span>time_connect<span class="o">}</span>:%<span class="o">{</span>time_starttransfer<span class="o">}</span>:%<span class="o">{</span>time_total<span class="o">}</span>     http://www.baidu.com
-</span><span class='line'>0.514:0.647:0.688
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>计时器    描述
-</span><span class='line'>time_connect  建立到服务器的 TCP 连接所用的时间
-</span><span class='line'>time_starttransfer    在发出请求之后,Web 服务器返回数据的第一个字节所用的时间
-</span><span class='line'>time_total    完成请求所用的时间
-</span><span class='line'>time_namelookup   DNS解析时间,从请求开始到DNS解析完毕所用时间<span class="o">(</span>记得关掉 Linux 的 nscd 的服务测试<span class="o">)</span>
-</span><span class='line'>speed_download    下载速度，单位-字节每秒。
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><a href="http://www.php-oa.com/2008/03/15/curl.html">传送门</a></p>
-
-<h4>还傻得很</h4>
-
-<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/fix-theme/'>http://starsea.github.io/posts/fix-theme/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
-
 
 		
-		
+		<a href="/posts/fix-theme/" class="more-link">Read on &rarr;</a>
 	</div>
 
 
@@ -235,74 +148,9 @@ vim source/about/index.markdown &hellip;">
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>remi 源需要 epel-release(>6)&hellip;好吧看来还是要按照 epel 啊..</p>
-
-<p>安装 epel</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>root@localhost yum.repos.d<span class="o">]</span><span class="c"># rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm</span>
-</span><span class='line'>Retrieving http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-</span><span class='line'>warning: /var/tmp/rpm-tmp.vpGlLN: Header V3 RSA/SHA256 Signature, key ID 0608b895: NOKEY
-</span><span class='line'>Preparing...                <span class="c">########################################### [100%]</span>
-</span><span class='line'>   1:epel-release           <span class="c">########################################### [100%]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>导入key：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>再次安装remi</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
-</span><span class='line'><span class="nv">$ </span>rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-remi
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>关于设置级别事情 肯定要安装 priorities</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>yum install yum-priorities
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>首先我们要清楚 remi 源到底有什么东西 <a href="http://rpms.famillecollet.com/enterprise/6.4/remi">这里</a>可以看到每个<code>repository entry</code>对应有哪些东西..点进去就知道了&hellip;我们基本上就是 php mysql..等相关东西..由于我安装这东西就是为了用最新版的 php(orz 虚拟机懒得编译了)</p>
-
-<p>note:</p>
-
-<p>优先级由 1 ~ 99 的 99 个数表示，1 的优先级最高。优先级小的源即使有某软件的较新版本，如果优先级高的源中没有，在启用该插件的情况下，系统也无法安装/升级到该较新版本。图形界面的 YUM 工具一般默认就已经包含了优先级插件。</p>
-
-<p>这里我将 remi 和 remi-php55 都设置 <code>priority=1</code> base 设置为2 epel 设置为5</p>
-
-<p>当然如果在没开启 remi 的情况(enable=0)下你也可以这么做</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>yum --enablerepo<span class="o">=</span>remi-php55,remi install php
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><a href="http://wiki.centos.org/PackageManagement/Yum/Priorities">Priorities wiki</a></li>
-<li><a href="http://cnzhx.net/blog/remi-repository/">http://cnzhx.net/blog/remi-repository/</a></li>
-<li><a href="http://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html">http://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html</a></li>
-<li><a href="http://www.trackself.com/archives/2397.html">yum 详细安装</a></li>
-</ul>
-
-
-<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/yum-detail-centos/'>http://starsea.github.io/posts/yum-detail-centos/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
-
 
 		
-		
+		<a href="/posts/yum-detail-centos/" class="more-link">Read on &rarr;</a>
 	</div>
 
 
@@ -350,72 +198,9 @@ vim source/about/index.markdown &hellip;">
 
 <p>好像是 ab 的 bug 那我就重新编译一个吧</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/opt
-</span><span class='line'>wget http://apache.mirrors.pair.com/httpd/httpd-2.4.10.tar.gz
-</span><span class='line'>tar zxvf httpd-2.4.10.tar.gz
-</span><span class='line'><span class="nb">cd </span>httpd-2.4.10
-</span><span class='line'>./configure
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>编译 apache 的时候会碰到下面情况</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>checking <span class="k">for </span>APR-util... yes
-</span><span class='line'>checking <span class="k">for </span>gcc... /Applications/Xcode.app/Contents/Developer/Toolchains/OSX10.9.xctoolchain/usr/bin/cc
-</span><span class='line'>checking whether the C compiler works... no
-</span><span class='line'>configure: error: in <span class="sb">`</span>/Users/haidx/opt/httpd-2.4.10<span class="s1">&#39;:</span>
-</span><span class='line'><span class="s1">configure: error: C compiler cannot create executables</span>
-</span><span class='line'><span class="s1">See `config.log&#39;</span> <span class="k">for </span>more details
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>厄..ls 查看了下 这个目录根本不存在嘛 所以哪里来的 gcc..扯犊子</p>
-
-<p>查了下<a href="https://code.google.com/p/modwsgi/issues/detail?id=312">资料</a>发现是 os x 10.8->10.9 升级后 xcode 路径不一致</p>
-
-<p>解决方案:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /Applications/Xcode.app/Contents/Developer/Toolchains/
-</span><span class='line'><span class="nv">$ </span>sudo ln -s XcodeDefault.xctoolchain OSX10.9.xctoolchain
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然后编译通过了. done.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>support
-</span><span class='line'>make
-</span><span class='line'>./ab -c 100 -n 10000 <span class="s2">&quot;url&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>(update: 2014.07.31)</p>
-
-<p>ps: 其实还是有问题&hellip;系统内核不知道怎么调..不说了都是泪还是别再 mac 下压吧&hellip;</p>
-
-<p>参考:
-* <a href="http://www.jsxubar.info/apache-ab-test-error.html">http://www.jsxubar.info/apache-ab-test-error.html</a></p>
-
-<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/fix-ab-bug-on-mac-os-x/'>http://starsea.github.io/posts/fix-ab-bug-on-mac-os-x/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
-
 
 		
-		
+		<a href="/posts/fix-ab-bug-on-mac-os-x/" class="more-link">Read on &rarr;</a>
 	</div>
 
 
@@ -455,93 +240,9 @@ vim source/about/index.markdown &hellip;">
 			update-python26-to-python27-on-centos6.4</a>
 	</h2>
 	<div class="entry-content">
-		<p>系统自带的 python&hellip;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>md5sum /usr/bin/python2.6
-</span><span class='line'>md5sum /usr/bin/python
-</span><span class='line'>
-</span><span class='line'>wget http://python.org/ftp/python/2.7.3/Python-2.7.3.tar.bz2
-</span><span class='line'>tar -jxvf Python-2.7.3.tar.bz2
-</span><span class='line'><span class="nb">cd </span>Python-2.7.3
-</span><span class='line'>./configure
-</span><span class='line'>make
-</span><span class='line'>sudo make install
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这里有个好消息就是 centos6.4 并不会把 /usr/local/python 指向 /usr/local/bin/python 记得在上家公司 centos5.x 版本的时候是会产生这个问题的 从而导致 yum 工作(yum 只能在特定版本下工作 5.x 是 py2.4 6.4是 py2.6).</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>vagrant@localhost ~<span class="o">]</span><span class="nv">$ </span>ll /usr/local/bin
-</span><span class='line'>总用量 6056
-</span><span class='line'>-rwxrwxr-x 1 root root     101 7月  25 13:52 2to3
-</span><span class='line'>-rwxrwxr-x 1 root root      99 7月  25 13:52 idle
-</span><span class='line'>lrwxrwxrwx 1 root root      37 7月  17 03:01 nginx -&gt; /usr/local/webserver/nginx/sbin/nginx
-</span><span class='line'>-rwxrwxr-x 1 root root      84 7月  25 13:52 pydoc
-</span><span class='line'>lrwxrwxrwx 1 root root       7 7月  25 14:00 python -&gt; python2
-</span><span class='line'>lrwxrwxrwx 1 root root       9 7月  25 14:00 python2 -&gt; python2.7
-</span><span class='line'>-rwxr-xr-x 1 root root 6162265 7月  25 14:00 python2.7
-</span><span class='line'>-rwxr-xr-x 1 root root    1624 7月  25 14:00 python2.7-config
-</span><span class='line'>lrwxrwxrwx 1 root root      16 7月  25 14:00 python2-config -&gt; python2.7-config
-</span><span class='line'>lrwxrwxrwx 1 root root      14 7月  25 14:00 python-config -&gt; python2-config
-</span><span class='line'>-rwxrwxr-x 1 root root   18547 7月  25 13:52 smtpd.py
-</span><span class='line'><span class="o">[</span>vagrant@localhost ~<span class="o">]</span><span class="err">$</span>
-</span><span class='line'><span class="o">[</span>vagrant@localhost ~<span class="o">]</span><span class="nv">$ </span>ll /usr/local/bin
-</span><span class='line'>总用量 6056
-</span><span class='line'>-rwxrwxr-x 1 root root     101 7月  25 13:52 2to3
-</span><span class='line'>-rwxrwxr-x 1 root root      99 7月  25 13:52 idle
-</span><span class='line'>lrwxrwxrwx 1 root root      37 7月  17 03:01 nginx -&gt; /usr/local/webserver/nginx/sbin/nginx
-</span><span class='line'>-rwxrwxr-x 1 root root      84 7月  25 13:52 pydoc
-</span><span class='line'>lrwxrwxrwx 1 root root       7 7月  25 14:00 python -&gt; python2
-</span><span class='line'>lrwxrwxrwx 1 root root       9 7月  25 14:00 python2 -&gt; python2.7
-</span><span class='line'>-rwxr-xr-x 1 root root 6162265 7月  25 14:00 python2.7
-</span><span class='line'>-rwxr-xr-x 1 root root    1624 7月  25 14:00 python2.7-config
-</span><span class='line'>lrwxrwxrwx 1 root root      16 7月  25 14:00 python2-config -&gt; python2.7-config
-</span><span class='line'>lrwxrwxrwx 1 root root      14 7月  25 14:00 python-config -&gt; python2-config
-</span><span class='line'>-rwxrwxr-x 1 root root   18547 7月  25 13:52 smtpd.py
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/update-python26-to-python27-on-centos6-dot-4/'>http://starsea.github.io/posts/update-python26-to-python27-on-centos6-dot-4/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
-
-
 		
 		
+		<a href="/posts/update-python26-to-python27-on-centos6-dot-4/" class="more-link">Read on &rarr;</a>
 	</div>
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/octopress/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-07-31T00:21:04+08:00</updated>
+  <updated>2014-07-31T11:23:57+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -19,6 +19,9 @@
     <updated>2014-07-30T23:32:51+08:00</updated>
     <id>http://starsea.github.io/posts/fix-theme</id>
     <content type="html"><![CDATA[<p>七夕快到了啊&hellip;备个份&hellip;</p>
+
+<!--more-->
+
 
 <h3>统计cnzz</h3>
 
@@ -63,6 +66,8 @@ vi source/_includes/head.html</p>
 
 <h5>如何用 curl 测速</h5>
 
+<p><a href="http://www.php-oa.com/2008/03/15/curl.html">传送门</a></p>
+
 <p><code>bash
 curl -o /dev/null -s -w %{time_connect}:%{time_starttransfer}:%{time_total}     http://www.baidu.com
 0.514:0.647:0.688
@@ -75,10 +80,9 @@ time_starttransfer  在发出请求之后,Web 服务器返回数据的第一个�
 time_total  完成请求所用的时间
 time_namelookup DNS解析时间,从请求开始到DNS解析完毕所用时间(记得关掉 Linux 的 nscd 的服务测试)
 speed_download  下载速度，单位-字节每秒。
-</code>
-<a href="http://www.php-oa.com/2008/03/15/curl.html">传送门</a></p>
+</code></p>
 
-<h4>还傻得很</h4>
+<h2>#</h2>
 ]]></content>
   </entry>
   

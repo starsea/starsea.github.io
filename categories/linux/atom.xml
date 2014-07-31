@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/linux/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-07-31T00:21:04+08:00</updated>
+  <updated>2014-07-31T11:23:57+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -27,8 +27,12 @@ error: Failed dependencies:</p>
 <pre><code>epel-release &gt;= 6 is needed by remi-release-6.5-1.el6.remi.noarch
 </code></pre>
 
-<p>```
-remi 源需要 epel-release(>6)&hellip;好吧看来还是要按照 epel 啊..</p>
+<p>```</p>
+
+<!--more-->
+
+
+<p>remi 源需要 epel-release(>6)&hellip;好吧看来还是要按照 epel 啊..</p>
 
 <p>安装 epel
 <code>bash
@@ -87,6 +91,9 @@ yum --enablerepo=remi-php55,remi install php
 apr_socket_recv: Connection reset by peer (54)
 </code>
 好像是 ab 的 bug 那我就重新编译一个吧</p>
+
+<!--more-->
+
 
 <p><code>bash
 cd ~/opt
