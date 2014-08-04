@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/linux/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-08-04T11:44:05+08:00</updated>
+  <updated>2014-08-04T12:42:51+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -193,9 +193,32 @@ nameserver 8.8.8.8
 <code>``
 重启 network 之后就能看到 dns 修改了.注意如果这里如果直接修改</code>/etc/resolv.conf<code>那么重启电脑 or 重启 network , resolv.conf 会恢复原状.因为它是根据</code>ifcfg-eth0`来生成的..</p>
 
-<p>linux修改hosts后刷新DNS缓存 <code>/etc/rc.d/init.d/nscd restart</code> (在有这个服务且开启了得前提下&hellip;)</p>
+<h4>如何刷新 dns cache</h4>
 
-<p>顺便说下 os x 刷洗dns cache <code>sudo killall -HUP mDNSResponder</code>&hellip;</p>
+<p>Linux下DNS缓存实现通常有两种方式:</p>
+
+<ul>
+<li>一种是用DNS缓存程序NSCD(name service cache daemon)负责管理DNS缓存。</li>
+<li>一种实现DNS缓存则是用Bind来架设Caching Name Server来实现。</li>
+</ul>
+
+
+<p>如果是清除NSCD上的Cache，可重新启动NSCD服务来达成清除DNS Cache的效果。用这个命令:
+<code># service nscd restart</code>
+或是
+<code>#/etc/init.d/nscd restart</code></p>
+
+<p>如果是清除BIND服务器上的CACHE，用这个命令:
+<code># rndc flush</code></p>
+
+<p>如果你的DNS服务器是用dnsmasq实现的，用下面这个命令:
+<code>$ sudo /etc/init.d/dnsmasq restart</code></p>
+
+<p>注：DNSmasq是一个轻巧的，容易使用的DNS服务工具，它可以应用在内部网和Internet连接的时候的IP地址NAT转换，也可以用做小型网络的DNS服务。</p>
+
+<p>Mac os x 刷新dns cache <code>sudo killall -HUP mDNSResponder</code>&hellip;</p>
+
+<p>DNS 参阅: <a href="http://www.91ri.org/3112.html">here</a></p>
 
 <h3>sudo command 找不到命令</h3>
 
