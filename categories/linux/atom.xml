@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/linux/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-08-04T11:42:27+08:00</updated>
+  <updated>2014-08-04T11:43:05+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -167,7 +167,7 @@ Trying other mirror.
 http://mirrors.aliyun.com/centos/6.5/updates/x86_64/repodata/repomd.xml: [Errno 14] PYCURL ERROR 6 - "Couldn't resolve host 'mirrors.aliyun.com'"
 </code>
 奇怪的是在真机上能直接打开上述地址  怀疑是 dns 解析问题
-```shell
+```bash
 [root@vagrant-centos65 yum.repos.d]# vim /etc/sysconfig/network-scripts/ifcfg-eth0</p>
 
 <h1>在这个文件最下面添加</h1>
