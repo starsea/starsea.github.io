@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mac | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/mac/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-08-04T11:43:05+08:00</updated>
+  <updated>2014-08-04T11:44:05+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -29,7 +29,7 @@
     <id>http://starsea.github.io/posts/use-vagrant-build-linux-environment-to-develop-on-mac-os-x</id>
     <content type="html"><![CDATA[<h4>vagrant 常用命令</h4>
 
-<p><code>shell
+<p><code>bash
 $ vagrant box add {your_box_name} {mirror_uri}#我一般用先用迅雷下好
 $ cd {your_destination_directory} #一个目录初始化一台虚拟机
 $ vagrant init {your_box_name} #初始化
@@ -44,7 +44,7 @@ ps: <code>vagrant init</code>不加 box 的名字 默认会初始化一个叫 ba
 
 <h4>关于 box 的一些操作</h4>
 
-<p>``` shell
+<p>``` bash
 [haidx@mbp:~/vagrant/centos64_test]$ vagrant box &mdash;help
 Usage: vagrant box <subcommand> [<args>]</p>
 
