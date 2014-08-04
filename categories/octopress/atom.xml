@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/octopress/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-08-01T00:02:29+08:00</updated>
+  <updated>2014-08-04T11:42:27+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -100,7 +100,15 @@ source/_layouts/category_index.html
 
 <p>编辑者两个文件 添加 unless 和 less 两行所在部分
 ```
+{% for post in paginator.posts %}
+{% unless post.private %}
+{% assign content = post.content %}</p>
 
+<pre><code>&lt;article class="post"&gt;{% include article.html %}&lt;/article&gt;
+</code></pre>
+
+<p>{% endunless %}
+{% endfor %}
 <code>``
 然后打开你所需要的隐藏文章的 md 文件 在顶部信息加入</code>private : true` 这样这两个页面就不会展示隐藏文章了.</p>
 
@@ -115,67 +123,16 @@ source/_layouts/category_index.html
 
 <h2>title: Blog Private Archives</h2>
 
-<p>
-</p>
+<p>{% for post in site.posts reverse %}
+{% if post.private %}</p>
 
-<pre><code>
-
-
-	
-	
-	<section class="archives"><h1 class="year">2014</h1>
-
-<article>
-	<h2 class="title"><a href="/posts/fix-theme/">Octopress 主题定制</a></h2>
-	<div class="meta">
-		<div class="date">Jul 30</div>
-		<div class="tags">
-
-
-	<a class='category' href='/categories/octopress/'>octopress</a>
-
-
-</div>
-	    
-	    <div class="comments"><a href="/posts/fix-theme/#disqus_thread">Comments</a></div>
-	    
-	</div>
-</article>
-	
+<pre><code>{% include archive_post.html %}
 </code></pre>
 
-<p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p>{% endif %}
+{% endfor %}
 <code>``
-ps: 注意这里要用</code>if<code>....
+ps: 注意这里要用</code>if<code>..
 </code>unless post.private<code> ===</code>if post.private != true`</p>
 
 <p>这样我们就能够通过 <a href="http://localhost:4000/private">http://localhost:4000/private</a> 访问我们所有的私人文章了 当然这个入口可不能告诉任何人&hellip;</p>

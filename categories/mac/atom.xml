@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mac | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/mac/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-08-01T00:02:29+08:00</updated>
+  <updated>2014-08-04T11:42:27+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -19,6 +19,54 @@
     <updated>2014-07-23T18:25:03+08:00</updated>
     <id>http://starsea.github.io/posts/intro-homebrew</id>
     <content type="html"><![CDATA[<p>brew 命令备份: <a href="http://liwenqiu.me/blog/2011/12/17/intro-homebrew/">http://liwenqiu.me/blog/2011/12/17/intro-homebrew/</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[use vagrant build linux environment to develop on mac os x]]></title>
+    <link href="http://starsea.github.io/posts/use-vagrant-build-linux-environment-to-develop-on-mac-os-x/"/>
+    <updated>2014-07-06T00:51:03+08:00</updated>
+    <id>http://starsea.github.io/posts/use-vagrant-build-linux-environment-to-develop-on-mac-os-x</id>
+    <content type="html"><![CDATA[<h4>vagrant 常用命令</h4>
+
+<p><code>shell
+$ vagrant box add {your_box_name} {mirror_uri}#我一般用先用迅雷下好
+$ cd {your_destination_directory} #一个目录初始化一台虚拟机
+$ vagrant init {your_box_name} #初始化
+$ vagrant up  # 启动虚拟机
+$ vagrant halt  # 关闭虚拟机
+$ vagrant reload  # 重启虚拟机
+$ vagrant ssh  # SSH 登录虚拟机
+$ vagrant status  # 查看虚拟机运行状态
+$ vagrant destroy  # 销毁当前虚拟机
+</code>
+ps: <code>vagrant init</code>不加 box 的名字 默认会初始化一个叫 base 的 box,但是其实 base box 是不存在的..这个时候需要把当前目录删掉 重新来过.</p>
+
+<h4>关于 box 的一些操作</h4>
+
+<p>``` shell
+[haidx@mbp:~/vagrant/centos64_test]$ vagrant box &mdash;help
+Usage: vagrant box <subcommand> [<args>]</p>
+
+<p>Available subcommands:</p>
+
+<pre><code> add
+ list
+ outdated
+ remove
+ repackage
+ update
+</code></pre>
+
+<p>For help on any individual subcommand run <code>vagrant box &lt;subcommand&gt; -h</code></p>
+
+<p>[haidx@mbp:~/vagrant/centos64_test]$ vagrant box list
+centos64     (virtualbox, 0)
+centos64test (virtualbox, 0)
+[haidx@mbp:~/vagrant/centos64_test]$ vagrant box remove centos64test
+Removing box &lsquo;centos64test&rsquo; (v0) with provider &lsquo;virtualbox&rsquo;&hellip;</p>
+
+<p>```</p>
 ]]></content>
   </entry>
   
