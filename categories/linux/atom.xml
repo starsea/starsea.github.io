@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/linux/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-08-04T12:42:51+08:00</updated>
+  <updated>2014-08-04T18:44:05+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -293,6 +293,46 @@ alias sudo="sudo env PATH=$PATH"
 <h1>updatedb</h1>
 
 <p>```</p>
+
+<h3>系统时间问题</h3>
+
+<p>时区数据文件在 /usr/share/zoneinfo 内，在该目录内会找到 /usr/share/zoneinfo/America/New_York 这个时区档。 而时区配置文件在 /etc/sysconfig/clock ，且目前的时间格式在 /etc/localtime ，所以你应该这样做：
+```bash
+[root@vagrant-centos65 ~]# date #查看当前时间
+Mon Aug  4 10:21:42 UTC 2014</p>
+
+<h1>utc时间 少了8小时 应该是时区不对</h1>
+
+<p>[root@vagrant-centos65 ~]# cat /etc/sysconfig/clock
+ZONE=&ldquo;Etc/UTC&rdquo;
+[root@vagrant-centos65 ~]# echo &ldquo;ZONE=\"Asia/Shanghai\&rdquo;&ldquo; > /etc/sysconfig/clock
+[root@vagrant-centos65 ~]# cat /etc/sysconfig/clock
+ZONE="Asia/Shanghai&rdquo;
+[root@vagrant-centos65 ~]# cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+cp: overwrite `/etc/localtime'? y
+[root@vagrant-centos65 ~]# date
+Mon Aug  4 18:25:28 CST 2014
+<code>
+有时候可能对系统时间精度要求比较高 那么这个时候我们需要进行时间同步
+</code>bash</p>
+
+<h1>yum -y install ntp</h1>
+
+<h1>ntpdate cn.pool.ntp.org</h1>
+
+<h1>/etc/init.d/ntpd start</h1>
+
+<h1>chkconfig ntpd on</h1>
+
+<p>[root@vagrant-centos65 ~]# date; hwclock -r
+Mon Aug  4 18:42:25 CST 2014
+Mon 04 Aug 2014 06:42:24 PM CST  -0.048707 seconds</p>
+
+<h1>软硬件时间一样 如果不一样 需要执行 hwclock -w 写入 bios</h1>
+
+<p>```</p>
+
+<p>很多关于时区请看<a href="http://vbird.dic.ksu.edu.tw/linux_server/0440ntp.php">鸟哥文档</a></p>
 ]]></content>
   </entry>
   

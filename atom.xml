@@ -4,7 +4,7 @@
   <title><![CDATA[Starsea's Note]]></title>
   <link href="http://starsea.github.io/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-08-04T12:42:51+08:00</updated>
+  <updated>2014-08-04T18:44:05+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -1086,7 +1086,61 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<h3>系统时间问题</h3>
 
+<p>时区数据文件在 /usr/share/zoneinfo 内，在该目录内会找到 /usr/share/zoneinfo/America/New_York 这个时区档。 而时区配置文件在 /etc/sysconfig/clock ，且目前的时间格式在 /etc/localtime ，所以你应该这样做：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>root@vagrant-centos65 ~<span class="o">]</span><span class="c"># date #查看当前时间</span>
+</span><span class='line'>Mon Aug  4 10:21:42 UTC 2014
+</span><span class='line'><span class="c"># utc时间 少了8小时 应该是时区不对</span>
+</span><span class='line'><span class="o">[</span>root@vagrant-centos65 ~<span class="o">]</span><span class="c"># cat /etc/sysconfig/clock</span>
+</span><span class='line'><span class="nv">ZONE</span><span class="o">=</span><span class="s2">&quot;Etc/UTC&quot;</span>
+</span><span class='line'><span class="o">[</span>root@vagrant-centos65 ~<span class="o">]</span><span class="c"># echo &quot;ZONE=\&quot;Asia/Shanghai\&quot;&quot; &gt; /etc/sysconfig/clock</span>
+</span><span class='line'><span class="o">[</span>root@vagrant-centos65 ~<span class="o">]</span><span class="c"># cat /etc/sysconfig/clock</span>
+</span><span class='line'><span class="nv">ZONE</span><span class="o">=</span><span class="s2">&quot;Asia/Shanghai&quot;</span>
+</span><span class='line'><span class="o">[</span>root@vagrant-centos65 ~<span class="o">]</span><span class="c"># cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span>
+</span><span class='line'>cp: overwrite <span class="sb">`</span>/etc/localtime<span class="err">&#39;</span>? y
+</span><span class='line'><span class="o">[</span>root@vagrant-centos65 ~<span class="o">]</span><span class="c"># date</span>
+</span><span class='line'>Mon Aug  4 18:25:28 CST 2014
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>有时候可能对系统时间精度要求比较高 那么这个时候我们需要进行时间同步</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># yum -y install ntp</span>
+</span><span class='line'><span class="c"># ntpdate cn.pool.ntp.org</span>
+</span><span class='line'><span class="c"># /etc/init.d/ntpd start</span>
+</span><span class='line'><span class="c"># chkconfig ntpd on</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>root@vagrant-centos65 ~<span class="o">]</span><span class="c"># date; hwclock -r</span>
+</span><span class='line'>Mon Aug  4 18:42:25 CST 2014
+</span><span class='line'>Mon 04 Aug 2014 06:42:24 PM CST  -0.048707 seconds
+</span><span class='line'><span class="c">#软硬件时间一样 如果不一样 需要执行 hwclock -w 写入 bios</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>很多关于时区请看<a href="http://vbird.dic.ksu.edu.tw/linux_server/0440ntp.php">鸟哥文档</a></p>
 
 <p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/the-things-need-todo-after-install-centos64/'>http://starsea.github.io/posts/the-things-need-todo-after-install-centos64/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
 
