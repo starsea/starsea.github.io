@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/linux/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-08-04T18:44:05+08:00</updated>
+  <updated>2014-08-13T14:10:52+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -137,7 +137,7 @@ make
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[centos 安装后需要做的很多事情]]></title>
+    <title type="html"><![CDATA[安装 Centos mini 之后需要做的一些事情]]></title>
     <link href="http://starsea.github.io/posts/the-things-need-todo-after-install-centos64/"/>
     <updated>2014-07-17T00:21:23+08:00</updated>
     <id>http://starsea.github.io/posts/the-things-need-todo-after-install-centos64</id>
@@ -333,6 +333,13 @@ Mon 04 Aug 2014 06:42:24 PM CST  -0.048707 seconds</p>
 <p>```</p>
 
 <p>很多关于时区请看<a href="http://vbird.dic.ksu.edu.tw/linux_server/0440ntp.php">鸟哥文档</a></p>
+
+<h3>安装man pages</h3>
+
+<p><code>bash
+yum install man-pages
+man 7 ascii
+</code></p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Starsea's Note]]></title>
   <link href="http://starsea.github.io/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-08-04T18:44:05+08:00</updated>
+  <updated>2014-08-13T14:10:52+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -886,7 +886,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[centos 安装后需要做的很多事情]]></title>
+    <title type="html"><![CDATA[安装 Centos mini 之后需要做的一些事情]]></title>
     <link href="http://starsea.github.io/posts/the-things-need-todo-after-install-centos64/"/>
     <updated>2014-07-17T00:21:23+08:00</updated>
     <id>http://starsea.github.io/posts/the-things-need-todo-after-install-centos64</id>
@@ -1141,6 +1141,17 @@
 
 
 <p>很多关于时区请看<a href="http://vbird.dic.ksu.edu.tw/linux_server/0440ntp.php">鸟哥文档</a></p>
+
+<h3>安装man pages</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>yum install man-pages
+</span><span class='line'>man 7 ascii
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 
 <p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/the-things-need-todo-after-install-centos64/'>http://starsea.github.io/posts/the-things-need-todo-after-install-centos64/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
 
