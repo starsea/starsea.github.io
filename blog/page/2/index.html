@@ -7,7 +7,7 @@
 	<meta name="author" content="starsea">
 
 	
-	<meta name="description" content="这篇文章将教导你怎么在本地搭建一个composer镜像以节约大量的网络开销时间. What Is Satis? Sitis是我们将要用来对我们的项目镜像各种仓库的应用程序名字.它就像一个代理坐落在 Internet 和你的 Composer 之间. &hellip;">
+	<meta name="description" content="redis连接的时候有 connect 和 pconnect 两种 , 今天做项目时候用的 pconnect 手动 close 之后用 redis-cli info | grep conn 发现连接数并没有释放,感到奇怪,查询了很多资料后得到如下结论. 首先看看官方文档 pconnect, &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,182 @@
 		
 	
 	<div id="content" class="inner">
+
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/posts/redis-pconnect/">
+		
+			Redis的连接释放问题</a>
+	</h2>
+	<div class="entry-content">
+		<p>redis连接的时候有 connect 和 pconnect 两种 , 今天做项目时候用的 pconnect 手动 close 之后用 <code>redis-cli info | grep conn</code> 发现连接数并没有释放,感到奇怪,查询了很多资料后得到如下结论.</p>
+
+<p>首先看看官方文档</p>
+
+<h3>pconnect, popen</h3>
+
+<hr />
+
+<p><em><strong>Description</strong></em>: Connects to a Redis instance or reuse a connection already established with <code>pconnect</code>/<code>popen</code>.</p>
+
+<p>The connection will not be closed on <code>close</code> or end of request until the php process ends.
+So be patient on to many open FD&rsquo;s (specially on redis server side) when using persistent
+connections on many servers connecting to one redis server.</p>
+
+<p>Also more than one persistent connection can be made identified by either host + port + timeout
+or host + persistent_id or unix socket + timeout.</p>
+
+<p>This feature is not available in threaded versions. <code>pconnect</code> and <code>popen</code> then working like their non
+persistent equivalents.</p>
+
+
+		
+		<a href="/posts/redis-pconnect/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-09T22:12:53+08:00" pubdate data-updated="true">Jul 9<span>th</span>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/redis/'>redis</a>
+
+
+</div>
+	
+	<div class="comments"><a href="/posts/redis-pconnect/#disqus_thread">Comments</a></div>
+	
+</div>
+</article>
+
+
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/posts/use-vagrant-build-linux-environment-to-develop-on-mac-os-x/">
+		
+			Use Vagrant Build Linux Environment to Develop on Mac Os X</a>
+	</h2>
+	<div class="entry-content">
+		<h4>vagrant 常用命令</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant box add <span class="o">{</span>your_box_name<span class="o">}</span> <span class="o">{</span>mirror_uri<span class="o">}</span><span class="c">#我一般用先用迅雷下好</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> <span class="o">{</span>your_destination_directory<span class="o">}</span> <span class="c">#一个目录初始化一台虚拟机</span>
+</span><span class='line'><span class="nv">$ </span>vagrant init <span class="o">{</span>your_box_name<span class="o">}</span> <span class="c">#初始化</span>
+</span><span class='line'><span class="nv">$ </span>vagrant up  <span class="c"># 启动虚拟机</span>
+</span><span class='line'><span class="nv">$ </span>vagrant halt  <span class="c"># 关闭虚拟机</span>
+</span><span class='line'><span class="nv">$ </span>vagrant reload  <span class="c"># 重启虚拟机</span>
+</span><span class='line'><span class="nv">$ </span>vagrant ssh  <span class="c"># SSH 登录虚拟机</span>
+</span><span class='line'><span class="nv">$ </span>vagrant status  <span class="c"># 查看虚拟机运行状态</span>
+</span><span class='line'><span class="nv">$ </span>vagrant destroy  <span class="c"># 销毁当前虚拟机</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ps: <code>vagrant init</code>不加 box 的名字 默认会初始化一个叫 base 的 box,但是其实 base box 是不存在的..这个时候需要把当前目录删掉 重新来过.</p>
+
+<h4>关于 box 的一些操作</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>haidx@mbp:~/vagrant/centos64_test<span class="o">]</span><span class="nv">$ </span>vagrant box --help
+</span><span class='line'>Usage: vagrant box &lt;subcommand&gt; <span class="o">[</span>&lt;args&gt;<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>Available subcommands:
+</span><span class='line'>     add
+</span><span class='line'>     list
+</span><span class='line'>     outdated
+</span><span class='line'>     remove
+</span><span class='line'>     repackage
+</span><span class='line'>     update
+</span><span class='line'>
+</span><span class='line'>For <span class="nb">help </span>on any individual subcommand run <span class="sb">`</span>vagrant box &lt;subcommand&gt; -h<span class="sb">`</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>haidx@mbp:~/vagrant/centos64_test<span class="o">]</span><span class="nv">$ </span>vagrant box list
+</span><span class='line'>centos64     <span class="o">(</span>virtualbox, 0<span class="o">)</span>
+</span><span class='line'>centos64test <span class="o">(</span>virtualbox, 0<span class="o">)</span>
+</span><span class='line'><span class="o">[</span>haidx@mbp:~/vagrant/centos64_test<span class="o">]</span><span class="nv">$ </span>vagrant box remove centos64test
+</span><span class='line'>Removing box <span class="s1">&#39;centos64test&#39;</span> <span class="o">(</span>v0<span class="o">)</span> with provider <span class="s1">&#39;virtualbox&#39;</span>...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/use-vagrant-build-linux-environment-to-develop-on-mac-os-x/'>http://starsea.github.io/posts/use-vagrant-build-linux-environment-to-develop-on-mac-os-x/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-06T00:51:03+08:00" pubdate data-updated="true">Jul 6<span>th</span>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/mac/'>mac</a>
+
+
+</div>
+	
+	<div class="comments"><a href="/posts/use-vagrant-build-linux-environment-to-develop-on-mac-os-x/#disqus_thread">Comments</a></div>
+	
+</div>
+</article>
+
 
 
 

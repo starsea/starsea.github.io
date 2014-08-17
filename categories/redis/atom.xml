@@ -4,7 +4,7 @@
   <title><![CDATA[Category: redis | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/redis/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-08-13T14:10:52+08:00</updated>
+  <updated>2014-08-17T21:48:17+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -12,6 +12,176 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[redis-hash-table-vs-json-encode]]></title>
+    <link href="http://starsea.github.io/posts/redis-hash-table-vs-json-encode/"/>
+    <updated>2014-08-17T21:23:35+08:00</updated>
+    <id>http://starsea.github.io/posts/redis-hash-table-vs-json-encode</id>
+    <content type="html"><![CDATA[<p>redis 支持多种数据结构  有时候我们在做项目的时候可能会考虑到底是用 hash 还是用普同的 k-v 结构(存储 json)</p>
+
+<p>这里我们排除哪种结构对于程序来说更好 单从速度上来比较下</p>
+
+<p>```php
+&lt;?php
+/<em>*
+ *
+ * @desc 用来比较 redis hash  和 json_decode 的代价
+ </em>/</p>
+
+<p>function microtime_float()
+{</p>
+
+<pre><code>list($usec, $sec) = explode(" ", microtime());
+return ((float)$usec + (float)$sec);
+</code></pre>
+
+<p>}</p>
+
+<p>$redis = new Redis();
+$redis->connect(&lsquo;127.0.0.1&rsquo;, 6379);
+$raw = array(</p>
+
+<pre><code>'uid'        =&gt; 1,
+'nickName'   =&gt; 2,
+'role'       =&gt; 3,
+'joinTime'   =&gt; 4,
+'score'      =&gt; 0,
+'uploadTime' =&gt; 0,
+'award'      =&gt; 'zzzzzzzzz'
+</code></pre>
+
+<p>);</p>
+
+<p>var_dump($redis->get(&lsquo;test&rsquo;));</p>
+
+<p>$t5 = microtime_float();
+for ($i = 0; $i &lt; 100000; $i++) {</p>
+
+<pre><code>$redis-&gt;hMset('t' . $i, $raw);
+</code></pre>
+
+<p>}</p>
+
+<p>$t6 = microtime_float();</p>
+
+<p>for ($i = 0; $i &lt; 100000; $i++) {</p>
+
+<pre><code>$redis-&gt;set('t' . $i . '_json', json_encode($raw));
+</code></pre>
+
+<p>}</p>
+
+<p>$t7 = microtime_float();</p>
+
+<p>$t1 = microtime_float();
+for ($i = 0; $i &lt; 100000; $i++) {</p>
+
+<pre><code>$redis-&gt;hGetAll('t' . $i);
+</code></pre>
+
+<p>}
+$t2 = microtime_float();</p>
+
+<p>for ($i = 0; $i &lt; 100000; $i++) {</p>
+
+<pre><code>json_decode($redis-&gt;get('t' . $i . '_json'), true);
+</code></pre>
+
+<p>}
+$t3 = microtime_float();</p>
+
+<p>echo &lsquo;sethash &rsquo; . ($t6 &ndash; $t5) . PHP_EOL;
+echo &lsquo;setjson &rsquo; . ($t7 &ndash; $t6) . PHP_EOL;</p>
+
+<p>echo &lsquo;gethash &rsquo; . ($t2 &ndash; $t1) . PHP_EOL;</p>
+
+<p>echo &lsquo;getjson &rsquo; . ($t3 &ndash; $t2) . PHP_EOL;</p>
+
+<p><code>
+查看下执行结果
+</code>bash
+[haidx@mbp:/usr/local/var/www/test]$ php json.php
+bool(false)
+sethash 9.2558209896088
+setjson 7.8669381141663
+gethash 7.9401888847351
+getjson 7.5358710289001
+You have new mail in /var/mail/haidx
+[haidx@mbp:/usr/local/var/www/test]$ redis-memory-for-key t36275
+Key             &ldquo;t36275&rdquo;
+Bytes               170
+Type                hash
+Encoding            ziplist
+Number of Elements      7
+Length of Largest Element   10
+[haidx@mbp:/usr/local/var/www/test]$ php json.php
+bool(false)
+sethash 8.133064031601
+setjson 8.2587089538574
+gethash 7.9228899478912
+getjson 7.515007019043
+```
+第一次set 的时候redis db 是空的. 没多大区别</p>
+
+<p>下面我们用真实的 hash table 测试一下
+```php
+$raw = array(</p>
+
+<pre><code>'uid'        =&gt; 1,
+'nickName'   =&gt; 2,
+'role'       =&gt; 3,
+'joinTime'   =&gt; 4,
+'score'      =&gt; 0,
+'uploadTime' =&gt; 0,
+'award'      =&gt; 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz'
+</code></pre>
+
+<p>);
+```</p>
+
+<p>```bash
+[haidx@mbp:/usr/local/var/www/test]$ php json.php
+bool(false)
+sethash 7.7665259838104
+setjson 7.3227639198303
+gethash 8.2078440189362
+getjson 7.5661609172821
+[haidx@mbp:/usr/local/var/www/test]$ php json.php
+bool(false)
+sethash 8.0299470424652
+setjson 7.6386320590973
+gethash 8.1137571334839
+getjson 7.9209759235382
+[haidx@mbp:/usr/local/var/www/test]$ php json.php
+bool(false)
+sethash 8.6087439060211
+setjson 7.4942181110382
+gethash 7.9777708053589
+getjson 7.8165891170502
+[haidx@mbp:/usr/local/var/www/test]$ php json.php
+bool(false)
+sethash 8.1856729984283
+setjson 8.3040089607239
+gethash 8.8928000926971
+getjson 8.1433188915253
+[haidx@mbp:/usr/local/var/www/test]$ !re
+redis-memory-for-key t36275
+Key             &ldquo;t36275&rdquo;
+Bytes               925.0
+Type                hash
+Encoding            hashtable
+Number of Elements      7
+Length of Largest Element   91</p>
+
+<p>[haidx@mbp:/usr/local/var/www/test]$ redis-memory-for-key t36275_json
+Key             &ldquo;t36275_json&rdquo;
+Bytes               272
+Type                string
+```
+看来从 get set 上的速度来看真的没什么差别.json占的字节少一点. 所以想用什么还是根据需求吧.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[redis的连接释放问题]]></title>
@@ -99,7 +269,7 @@ var_dump($redis->get(&lsquo;k1&rsquo;));</p>
 
 <p>得到如下结果</p>
 
-<p><img class="/images/posts/<a" src="href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#x51;&#81;&#50;&#48;&#49;&#x34;&#48;&#55;&#x30;&#57;&#x2d;&#x31;&#64;&#50;&#x78;&#46;&#x70;&#x6e;&#103;">&#81;&#x51;&#x32;&#48;&#49;&#x34;&#x30;&#55;&#48;&#57;&#45;&#49;&#x40;&#50;&#120;&#x2e;&#x70;&#x6e;&#103;</a>"></p>
+<p><img class="/images/posts/<a" src="href="&#109;&#x61;&#x69;&#x6c;&#x74;&#111;&#58;&#x51;&#81;&#50;&#48;&#49;&#x34;&#48;&#x37;&#48;&#x39;&#x2d;&#49;&#64;&#x32;&#x78;&#46;&#112;&#x6e;&#103;">&#x51;&#81;&#x32;&#x30;&#49;&#x34;&#48;&#55;&#48;&#57;&#45;&#49;&#x40;&#50;&#120;&#x2e;&#x70;&#x6e;&#103;</a>"></p>
 
 <p>13行去 getkey 的时候抛出一个错误 说是连接已经关闭. 没错 其实这里当前 $redis 变量本身已经释放连接池的占用 其他实列可以使用该链接了. (连接池的连接上限数目和 php-fpm 的进程数目有关系)</p>
 
