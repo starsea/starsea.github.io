@@ -7,27 +7,7 @@
 	<meta name="author" content="starsea">
 
 	
-	<meta name="description" content="redis 支持多种数据结构 有时候我们在做项目的时候可能会考虑到底是用 hash 还是用普同的 k-v 结构(存储 json) 这里我们排除哪种结构对于程序来说更好 单从速度上来比较下 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21 &hellip;">
+	<meta name="description" content=" 本文是参考《redis中文手册》，将示例代码用php来实现，注意php-redis与redis_cli的区别（主要是返回值类型和参数用法）。 Read on &rarr; Aug 21st, 2014 redis Comments ">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -107,6 +87,52 @@
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/posts/php-redis-manual-cn/">
+		
+			PHP Redis 中文手册增强版</a>
+	</h2>
+	<div class="entry-content">
+		<p>本文是参考《redis中文手册》，将示例代码用php来实现，注意php-redis与redis_cli的区别（主要是返回值类型和参数用法）。</p>
+
+
+		
+		<a href="/posts/php-redis-manual-cn/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-21T10:51:56+08:00" pubdate data-updated="true">Aug 21<span>st</span>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/redis/'>redis</a>
+
+
+</div>
+	
+	<div class="comments"><a href="/posts/php-redis-manual-cn/#disqus_thread">Comments</a></div>
+	
+</div>
+</article>
+
+
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/posts/redis-hash-table-vs-json-encode/">
 		
 			Redis-hash-table-vs-json-encode</a>
@@ -116,287 +142,9 @@
 
 <p>这里我们排除哪种结构对于程序来说更好 单从速度上来比较下</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
-</span><span class='line'><span class="sd">/**</span>
-</span><span class='line'><span class="sd"> *</span>
-</span><span class='line'><span class="sd"> * @desc 用来比较 redis hash  和 json_decode 的代价</span>
-</span><span class='line'><span class="sd"> */</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">function</span> <span class="nf">microtime_float</span><span class="p">()</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">list</span><span class="p">(</span><span class="nv">$usec</span><span class="p">,</span> <span class="nv">$sec</span><span class="p">)</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="nb">microtime</span><span class="p">());</span>
-</span><span class='line'>    <span class="k">return</span> <span class="p">((</span><span class="nx">float</span><span class="p">)</span><span class="nv">$usec</span> <span class="o">+</span> <span class="p">(</span><span class="nx">float</span><span class="p">)</span><span class="nv">$sec</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$redis</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Redis</span><span class="p">();</span>
-</span><span class='line'><span class="nv">$redis</span><span class="o">-&gt;</span><span class="na">connect</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">6379</span><span class="p">);</span>
-</span><span class='line'><span class="nv">$raw</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
-</span><span class='line'>    <span class="s1">&#39;uid&#39;</span>        <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;nickName&#39;</span>   <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;role&#39;</span>       <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;joinTime&#39;</span>   <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;score&#39;</span>      <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;uploadTime&#39;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;award&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;zzzzzzzzz&#39;</span>
-</span><span class='line'><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$redis</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$t5</span> <span class="o">=</span> <span class="nx">microtime_float</span><span class="p">();</span>
-</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">100000</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nv">$redis</span><span class="o">-&gt;</span><span class="na">hMset</span><span class="p">(</span><span class="s1">&#39;t&#39;</span> <span class="o">.</span> <span class="nv">$i</span><span class="p">,</span> <span class="nv">$raw</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$t6</span> <span class="o">=</span> <span class="nx">microtime_float</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">100000</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nv">$redis</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;t&#39;</span> <span class="o">.</span> <span class="nv">$i</span> <span class="o">.</span> <span class="s1">&#39;_json&#39;</span><span class="p">,</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$raw</span><span class="p">));</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$t7</span> <span class="o">=</span> <span class="nx">microtime_float</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$t1</span> <span class="o">=</span> <span class="nx">microtime_float</span><span class="p">();</span>
-</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">100000</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nv">$redis</span><span class="o">-&gt;</span><span class="na">hGetAll</span><span class="p">(</span><span class="s1">&#39;t&#39;</span> <span class="o">.</span> <span class="nv">$i</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="nv">$t2</span> <span class="o">=</span> <span class="nx">microtime_float</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">100000</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$redis</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;t&#39;</span> <span class="o">.</span> <span class="nv">$i</span> <span class="o">.</span> <span class="s1">&#39;_json&#39;</span><span class="p">),</span> <span class="k">true</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="nv">$t3</span> <span class="o">=</span> <span class="nx">microtime_float</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="k">echo</span> <span class="s1">&#39;sethash &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$t6</span> <span class="o">-</span> <span class="nv">$t5</span><span class="p">)</span> <span class="o">.</span> <span class="nx">PHP_EOL</span><span class="p">;</span>
-</span><span class='line'><span class="k">echo</span> <span class="s1">&#39;setjson &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$t7</span> <span class="o">-</span> <span class="nv">$t6</span><span class="p">)</span> <span class="o">.</span> <span class="nx">PHP_EOL</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">echo</span> <span class="s1">&#39;gethash &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$t2</span> <span class="o">-</span> <span class="nv">$t1</span><span class="p">)</span> <span class="o">.</span> <span class="nx">PHP_EOL</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">echo</span> <span class="s1">&#39;getjson &#39;</span> <span class="o">.</span> <span class="p">(</span><span class="nv">$t3</span> <span class="o">-</span> <span class="nv">$t2</span><span class="p">)</span> <span class="o">.</span> <span class="nx">PHP_EOL</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>查看下执行结果</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>haidx@mbp:/usr/local/var/www/test<span class="o">]</span><span class="nv">$ </span>php json.php
-</span><span class='line'>bool<span class="o">(</span><span class="nb">false</span><span class="o">)</span>
-</span><span class='line'>sethash 9.2558209896088
-</span><span class='line'>setjson 7.8669381141663
-</span><span class='line'>gethash 7.9401888847351
-</span><span class='line'>getjson 7.5358710289001
-</span><span class='line'>You have new mail in /var/mail/haidx
-</span><span class='line'><span class="o">[</span>haidx@mbp:/usr/local/var/www/test<span class="o">]</span><span class="nv">$ </span>redis-memory-for-key t36275
-</span><span class='line'>Key               <span class="s2">&quot;t36275&quot;</span>
-</span><span class='line'>Bytes             170
-</span><span class='line'>Type              <span class="nb">hash</span>
-</span><span class='line'>Encoding          ziplist
-</span><span class='line'>Number of Elements        7
-</span><span class='line'>Length of Largest Element 10
-</span><span class='line'><span class="o">[</span>haidx@mbp:/usr/local/var/www/test<span class="o">]</span><span class="nv">$ </span>php json.php
-</span><span class='line'>bool<span class="o">(</span><span class="nb">false</span><span class="o">)</span>
-</span><span class='line'>sethash 8.133064031601
-</span><span class='line'>setjson 8.2587089538574
-</span><span class='line'>gethash 7.9228899478912
-</span><span class='line'>getjson 7.515007019043
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>第一次set 的时候redis db 是空的. 没多大区别</p>
-
-<p>下面我们用真实的 hash table 测试一下</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$raw</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
-</span><span class='line'>    <span class="s1">&#39;uid&#39;</span>        <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;nickName&#39;</span>   <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;role&#39;</span>       <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;joinTime&#39;</span>   <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;score&#39;</span>      <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;uploadTime&#39;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;award&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz&#39;</span>
-</span><span class='line'><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>haidx@mbp:/usr/local/var/www/test<span class="o">]</span><span class="nv">$ </span>php json.php
-</span><span class='line'>bool<span class="o">(</span><span class="nb">false</span><span class="o">)</span>
-</span><span class='line'>sethash 7.7665259838104
-</span><span class='line'>setjson 7.3227639198303
-</span><span class='line'>gethash 8.2078440189362
-</span><span class='line'>getjson 7.5661609172821
-</span><span class='line'><span class="o">[</span>haidx@mbp:/usr/local/var/www/test<span class="o">]</span><span class="nv">$ </span>php json.php
-</span><span class='line'>bool<span class="o">(</span><span class="nb">false</span><span class="o">)</span>
-</span><span class='line'>sethash 8.0299470424652
-</span><span class='line'>setjson 7.6386320590973
-</span><span class='line'>gethash 8.1137571334839
-</span><span class='line'>getjson 7.9209759235382
-</span><span class='line'><span class="o">[</span>haidx@mbp:/usr/local/var/www/test<span class="o">]</span><span class="nv">$ </span>php json.php
-</span><span class='line'>bool<span class="o">(</span><span class="nb">false</span><span class="o">)</span>
-</span><span class='line'>sethash 8.6087439060211
-</span><span class='line'>setjson 7.4942181110382
-</span><span class='line'>gethash 7.9777708053589
-</span><span class='line'>getjson 7.8165891170502
-</span><span class='line'><span class="o">[</span>haidx@mbp:/usr/local/var/www/test<span class="o">]</span><span class="nv">$ </span>php json.php
-</span><span class='line'>bool<span class="o">(</span><span class="nb">false</span><span class="o">)</span>
-</span><span class='line'>sethash 8.1856729984283
-</span><span class='line'>setjson 8.3040089607239
-</span><span class='line'>gethash 8.8928000926971
-</span><span class='line'>getjson 8.1433188915253
-</span><span class='line'><span class="o">[</span>haidx@mbp:/usr/local/var/www/test<span class="o">]</span><span class="nv">$ </span>!re
-</span><span class='line'>redis-memory-for-key t36275
-</span><span class='line'>Key               <span class="s2">&quot;t36275&quot;</span>
-</span><span class='line'>Bytes             925.0
-</span><span class='line'>Type              <span class="nb">hash</span>
-</span><span class='line'>Encoding          hashtable
-</span><span class='line'>Number of Elements        7
-</span><span class='line'>Length of Largest Element 91
-</span><span class='line'>
-</span><span class='line'><span class="o">[</span>haidx@mbp:/usr/local/var/www/test<span class="o">]</span><span class="nv">$ </span>redis-memory-for-key t36275_json
-</span><span class='line'>Key               <span class="s2">&quot;t36275_json&quot;</span>
-</span><span class='line'>Bytes             272
-</span><span class='line'>Type              string
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>看来从 get set 上的速度来看真的没什么差别.json占的字节少一点. 所以想用什么还是根据需求吧.</p>
-
-<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/redis-hash-table-vs-json-encode/'>http://starsea.github.io/posts/redis-hash-table-vs-json-encode/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
-
 
 		
-		
+		<a href="/posts/redis-hash-table-vs-json-encode/" class="more-link">Read on &rarr;</a>
 	</div>
 
 
@@ -753,54 +501,6 @@
 </div>
 	
 	<div class="comments"><a href="/posts/intro-homebrew/#disqus_thread">Comments</a></div>
-	
-</div>
-</article>
-
-
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/posts/the-things-need-todo-after-install-centos64/">
-		
-			安装 Centos Mini 之后需要做的一些事情</a>
-	</h2>
-	<div class="entry-content">
-		<p>装上 vagrant 了.但是 centos 是 minimal 版的,所以需要做很多东西(不是 mini 版的也需要做很多事 囧rz).其实很多事情都是玩 vps 的时候做过的,但是人老了记性不好,每次都要 google. 所以我觉得还是记录下来比较好.</p>
-
-<p>先添加源吧..啥也不说了 直接上<a href="http://mirrors.aliyun.com/help/centos" title="阿里云开源镜像">阿里云</a>的开源镜像吧..网易萎了..</p>
-
-
-		
-		<a href="/posts/the-things-need-todo-after-install-centos64/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-17T00:21:23+08:00" pubdate data-updated="true">Jul 17<span>th</span>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/linux/'>linux</a>
-
-
-</div>
-	
-	<div class="comments"><a href="/posts/the-things-need-todo-after-install-centos64/#disqus_thread">Comments</a></div>
 	
 </div>
 </article>
