@@ -3,5 +3,7 @@ layout: default
 ---
 
 {% for post in site.categories[page.category] %}
+{% unless post.private %}
 	{% include archive_post.html %}
+{% endunless %}
 {% endfor %}

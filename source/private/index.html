@@ -4,7 +4,7 @@ title: Blog Private Archives
 ---
 
 {% for post in site.posts reverse %}
-{% if post.private != null %}
+{% if post.private %}
     {% include archive_post.html %}
 {% endif %}
 {% endfor %}

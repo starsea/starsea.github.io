@@ -4,8 +4,10 @@ layout: default
 
 {% assign index = true %}
 {% for post in paginator.posts %}
+{% unless post.private %}
 {% assign content = post.content %}
     <article class="post">{% include article.html %}</article>
+{% endunless %}
 {% endfor %}
 <nav id="pagenavi">
     {% if paginator.previous_page %}

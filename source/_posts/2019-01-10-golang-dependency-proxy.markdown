@@ -6,7 +6,6 @@ comments: true
 categories: golang
 ---
 
-#Golang 拾遗（一）之依赖处理
 
 ##Git Clone
 
@@ -22,6 +21,8 @@ go get 会把库安装到Gopath 下
 比如我的GOPATH 是 `~/work/xinyue/go`  执行命令 `go get github.com/BurntSushi/toml`
 
 那么库会被安装到 `~/work/xinyue/go/src/github.com/BurntSushi/toml`
+
+<!-- more -->
 
 ###本质
 Go Get 本质是调用git 我们可以通过制定git配置的代理来配置一些东西
