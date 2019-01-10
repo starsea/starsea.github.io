@@ -4,6 +4,7 @@ title: "Octopress 主题定制"
 date: 2014-07-30 23:32:51 +0800
 comments: true
 categories: octopress
+private : true
 ---
 
 七夕快到了啊...备个份...
@@ -40,7 +41,7 @@ vi source/_includes/head.html
 ```
 * [七牛云存储 开放静态文件 CDN](http://www.staticfile.org/)
 * [又拍云](http://jscdn.upai.com/)
-* [渣浪](http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js)
+* [渣浪云](http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js)
 
 #####如何用 curl 测速
 
@@ -60,5 +61,61 @@ time_namelookup	DNS解析时间,从请求开始到DNS解析完毕所用时间(�
 speed_download	下载速度，单位-字节每秒。
 ```
 
+###保护文章
 
-###
+有时候我们可能有些文章不希望别人访问 但是自己能访问到. 官方给出的 published: false 编译后任何人都访问不到... 所以我们只能自己做了.
+
+简单思路是在首页和归档页上不展现私有文章  另外新开一个页面展示所有私人文章.
+
+复杂思路是编译的时候把文章根据某个 key 按照某个可逆算法 编译.[here](http://www.renn999.cc/archives/906/)
+
+鄙人不会 ruby 还是做简单的把
+
+```
+source/index.html
+source/blog/archives/index.html
+source/_layouts/category_index.html
+```
+
+编辑者两个文件 添加 unless 和 less 两行所在部分
+```
+{% for post in paginator.posts %}
+{% unless post.private %}
+{% assign content = post.content %}
+    <article class="post">{% include article.html %}</article>
+{% endunless %}
+{% endfor %}
+```
+然后打开你所需要的隐藏文章的 md 文件 在顶部信息加入 `private : true` 这样这两个页面就不会展示隐藏文章了.
+
+####新开页面
+在 `source` 下创建文件夹 `private` 在里面创建一个文件命名为 `index.html`
+添加代码
+
+```
+---
+layout: default
+title: Blog Private Archives
+---
+
+{% for post in site.posts reverse %}
+{% if post.private %}
+    {% include archive_post.html %}
+{% endif %}
+{% endfor %}
+```
+ps: 注意这里要用 `if` ..
+`unless post.private`  === `if post.private != true`
+
+这样我们就能够通过 http://localhost:4000/private 访问我们所有的私人文章了 当然这个入口可不能告诉任何人...
+
+* [模板语法](https://github.com/Shopify/liquid/wiki/Liquid-for-Designers)
+
+
+
+
+
+
+
+
+

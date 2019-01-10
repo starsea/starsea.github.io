@@ -1,0 +1,10 @@
+---
+layout: default
+title: Blog Private Archives
+---
+
+{% for post in site.posts reverse %}
+{% if post.private != null %}
+    {% include archive_post.html %}
+{% endif %}
+{% endfor %}
