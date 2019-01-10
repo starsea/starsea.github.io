@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: linux | Starsea's Note]]></title>
+  <title><![CDATA[Category: Linux | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/linux/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-09-18T17:30:06+08:00</updated>
+  <updated>2019-01-10T20:17:17+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -14,332 +14,104 @@
 
   
   <entry>
-    <title type="html"><![CDATA[CentOS yum 源的配置与使用]]></title>
-    <link href="http://starsea.github.io/posts/yum-detail-centos/"/>
-    <updated>2014-07-28T21:03:08+08:00</updated>
-    <id>http://starsea.github.io/posts/yum-detail-centos</id>
-    <content type="html"><![CDATA[<p>```bash
-[root@localhost yum.repos.d]# rpm -Uvh <a href="http://rpms.famillecollet.com/enterprise/remi-release-6.rpm">http://rpms.famillecollet.com/enterprise/remi-release-6.rpm</a>
-Retrieving <a href="http://rpms.famillecollet.com/enterprise/remi-release-6.rpm">http://rpms.famillecollet.com/enterprise/remi-release-6.rpm</a>
-warning: /var/tmp/rpm-tmp.ZlOIWb: Header V3 DSA/SHA1 Signature, key ID 00f97f56: NOKEY
-error: Failed dependencies:</p>
+    <title type="html"><![CDATA[ab 压力测试]]></title>
+    <link href="http://starsea.github.io/posts/ab-ya-li-ce-shi/"/>
+    <updated>2014-05-15T15:23:02+08:00</updated>
+    <id>http://starsea.github.io/posts/ab-ya-li-ce-shi</id>
+    <content type="html"><![CDATA[<p>想必很多人都知道 <code>ab</code> 是干啥的,网上也有很多介绍用 <code>ab</code> 做压力测试的文章,但是大多对其结果介绍的都是稀里糊涂的.这里我们简单介绍下 <code>ab</code> .</p>
 
-<pre><code>epel-release &gt;= 6 is needed by remi-release-6.5-1.el6.remi.noarch
+<h2>Usage</h2>
+
+<p><code>bash
+ab -n 5000 -c 200 http://thisobj.com/
+</code>
+这里表示总共对目标网址发起5000个请求 并发为200 那么也就是说 <code>一共会发起25次,每次并发200的请求.</code></p>
+
+<!--more-->
+
+
+<h2>Run</h2>
+
+<p>```bash
+[haidx@mbp:~/Documents]$ ab -n 5000 -c 200 <a href="http://thisobj.com/">http://thisobj.com/</a>
+This is ApacheBench, Version 2.3 &lt;$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, <a href="http://www.zeustech.net/">http://www.zeustech.net/</a>
+Licensed to The Apache Software Foundation, <a href="http://www.apache.org/">http://www.apache.org/</a></p>
+
+<p>Benchmarking thisobj.com (be patient)
+Completed 500 requests
+Completed 1000 requests
+Completed 1500 requests
+Completed 2000 requests
+Completed 2500 requests
+Completed 3000 requests
+Completed 3500 requests
+Completed 4000 requests
+Completed 4500 requests
+Completed 5000 requests
+Finished 5000 requests</p>
+
+<p>Server Software:        nginx/1.7.0
+Server Hostname:        thisobj.com
+Server Port:            80</p>
+
+<p>Document Path:          /
+Document Length:        16635 bytes</p>
+
+<p>Concurrency Level:      200
+Time taken for tests:   451.574 seconds
+Complete requests:      5000
+Failed requests:        232
+   (Connect: 0, Receive: 0, Length: 232, Exceptions: 0)
+Write errors:           0
+Non-2xx responses:      232
+Total transferred:      80371251 bytes
+HTML transferred:       79357714 bytes
+Requests per second:    11.07 [#/sec] (mean)
+Time per request:       18062.978 [ms] (mean)
+Time per request:       90.315 [ms] (mean, across all concurrent requests)
+Transfer rate:          173.81 [Kbytes/sec] received</p>
+
+<p>Connection Times (ms)</p>
+
+<pre><code>          min  mean[+/-sd] median   max
 </code></pre>
 
-<p>```</p>
+<p>Connect:       71   98  64.6     79    1243
+Processing:   316 17286 11229.2  13360   75174
+Waiting:      244 17189 11246.3  13268   75174
+Total:        389 17384 11230.9  13453   75299</p>
 
-<!--more-->
-
-
-<p>remi 源需要 epel-release(>6)&hellip;好吧看来还是要按照 epel 啊..</p>
-
-<p>安装 epel
-<code>bash
-[root@localhost yum.repos.d]# rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-Retrieving http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-warning: /var/tmp/rpm-tmp.vpGlLN: Header V3 RSA/SHA256 Signature, key ID 0608b895: NOKEY
-Preparing...                ########################################### [100%]
-   1:epel-release           ########################################### [100%]
-</code></p>
-
-<p>导入key：
-<code>bash
-rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
-</code>
-再次安装remi
-<code>bash
-$ rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
-$ rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-remi
-</code>
-关于设置级别事情 肯定要安装 priorities
-<code>
-yum install yum-priorities
-</code></p>
-
-<p>首先我们要清楚 remi 源到底有什么东西 <a href="http://rpms.famillecollet.com/enterprise/6.4/remi">这里</a>可以看到每个<code>repository entry</code>对应有哪些东西..点进去就知道了&hellip;我们基本上就是 php mysql..等相关东西..由于我安装这东西就是为了用最新版的 php(orz 虚拟机懒得编译了)</p>
-
-<p>note:</p>
-
-<p>优先级由 1 ~ 99 的 99 个数表示，1 的优先级最高。优先级小的源即使有某软件的较新版本，如果优先级高的源中没有，在启用该插件的情况下，系统也无法安装/升级到该较新版本。图形界面的 YUM 工具一般默认就已经包含了优先级插件。</p>
-
-<p>这里我将 remi 和 remi-php55 都设置 <code>priority=1</code> base 设置为2 epel 设置为5</p>
-
-<p>当然如果在没开启 remi 的情况(enable=0)下你也可以这么做
-<code>
-yum --enablerepo=remi-php55,remi install php
-</code></p>
-
-<ul>
-<li><a href="http://wiki.centos.org/PackageManagement/Yum/Priorities">Priorities wiki</a></li>
-<li><a href="http://cnzhx.net/blog/remi-repository/">http://cnzhx.net/blog/remi-repository/</a></li>
-<li><a href="http://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html">http://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html</a></li>
-<li><a href="http://www.trackself.com/archives/2397.html">yum 详细安装</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[fix-a-ab-bug-on-mac-os-x]]></title>
-    <link href="http://starsea.github.io/posts/fix-ab-bug-on-mac-os-x/"/>
-    <updated>2014-07-26T16:27:23+08:00</updated>
-    <id>http://starsea.github.io/posts/fix-ab-bug-on-mac-os-x</id>
-    <content type="html"><![CDATA[<p>在 mac 下用 ab 压东西只要并发大了经常报错</p>
-
-<p><code>
-apr_socket_recv: Connection reset by peer (54)
-</code>
-好像是 ab 的 bug 那我就重新编译一个吧</p>
-
-<!--more-->
-
-
-<p><code>bash
-cd ~/opt
-wget http://apache.mirrors.pair.com/httpd/httpd-2.4.10.tar.gz
-tar zxvf httpd-2.4.10.tar.gz
-cd httpd-2.4.10
-./configure
-</code>
-编译 apache 的时候会碰到下面情况
-<code>
-checking for APR-util... yes
-checking for gcc... /Applications/Xcode.app/Contents/Developer/Toolchains/OSX10.9.xctoolchain/usr/bin/cc
-checking whether the C compiler works... no
-configure: error: in `/Users/haidx/opt/httpd-2.4.10':
-configure: error: C compiler cannot create executables
-See `config.log' for more details
-</code>
-厄..ls 查看了下 这个目录根本不存在嘛 所以哪里来的 gcc..扯犊子</p>
-
-<p>查了下<a href="https://code.google.com/p/modwsgi/issues/detail?id=312">资料</a>发现是 os x 10.8->10.9 升级后 xcode 路径不一致</p>
-
-<p>解决方案:
-<code>bash
-$ cd /Applications/Xcode.app/Contents/Developer/Toolchains/
-$ sudo ln -s XcodeDefault.xctoolchain OSX10.9.xctoolchain
-</code>
-然后编译通过了. done.
-<code>
-cd support
-make
-./ab -c 100 -n 10000 "url"
-</code></p>
-
-<p>(update: 2014.07.31)</p>
-
-<p>ps: 其实还是有问题&hellip;系统内核不知道怎么调..不说了都是泪还是别再 mac 下压吧&hellip;</p>
-
-<p>参考:
-* <a href="http://www.jsxubar.info/apache-ab-test-error.html">http://www.jsxubar.info/apache-ab-test-error.html</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[安装 Centos mini 之后需要做的一些事情]]></title>
-    <link href="http://starsea.github.io/posts/the-things-need-todo-after-install-centos64/"/>
-    <updated>2014-07-17T00:21:23+08:00</updated>
-    <id>http://starsea.github.io/posts/the-things-need-todo-after-install-centos64</id>
-    <content type="html"><![CDATA[<p>装上 vagrant 了.但是 centos 是 minimal 版的,所以需要做很多东西(不是 mini 版的也需要做很多事 囧rz).其实很多事情都是玩 vps 的时候做过的,但是人老了记性不好,每次都要 google. 所以我觉得还是记录下来比较好.</p>
-
-<p>先添加源吧..啥也不说了 直接上<a href="http://mirrors.aliyun.com/help/centos" title="阿里云开源镜像">阿里云</a>的开源镜像吧..网易萎了..</p>
-
-<!--more-->
-
-
-<p><code>bash
-mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
-cd /etc/yum.repos.d
-wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo
-yum clean all
-yum makecache
-</code></p>
-
-<h3>修改 dns</h3>
-
-<p>虚拟机 nat 转发的网络 经常会碰到这种情况 <code>PYCURL ERROR 6 - "Couldn't resolve host 'mirrors.aliyun.com</code>
-<code>
-http://mirrors.163.com/centos/6.5/updates/x86_64/repodata/repomd.xml: [Errno 14] PYCURL ERROR 6 - "Couldn't resolve host 'mirrors.163.com'"
-Trying other mirror.
-http://mirrors.btte.net/centos/6.5/updates/x86_64/repodata/repomd.xml: [Errno 14] PYCURL ERROR 6 - "Couldn't resolve host 'mirrors.btte.net'"
-Trying other mirror.
-http://mirrors.aliyun.com/centos/6.5/updates/x86_64/repodata/repomd.xml: [Errno 14] PYCURL ERROR 6 - "Couldn't resolve host 'mirrors.aliyun.com'"
-</code>
-奇怪的是在真机上能直接打开上述地址  怀疑是 dns 解析问题
-```bash
-[root@vagrant-centos65 yum.repos.d]# vim /etc/sysconfig/network-scripts/ifcfg-eth0</p>
-
-<h1>在这个文件最下面添加</h1>
-
-<p>DNS1=42.121.236.241
-DNS2=8.8.8.8</p>
-
-<p>[root@vagrant-centos65 yum.repos.d]# service network restart
-Shutting down interface eth0:                              [  OK  ]
-Shutting down loopback interface:                          [  OK  ]
-Bringing up loopback interface:                            [  OK  ]
-Bringing up interface eth0:
-Determining IP information for eth0&hellip; done.</p>
-
-<pre><code>                                                       [  OK  ]
-</code></pre>
-
-<p>[root@vagrant-centos65 yum.repos.d]# cat /etc/resolv.conf
-; generated by /sbin/dhclient-script
-search idreamsky.com vagrantup.com
-nameserver 42.121.236.241
-nameserver 8.8.8.8
+<p>Percentage of the requests served within a certain time (ms)
+  50%  13453
+  66%  15054
+  75%  15717
+  80%  17968
+  90%  27504
+  95%  44105
+  98%  60217
+  99%  60277
+ 100%  75299 (longest request)
 <code>``
-重启 network 之后就能看到 dns 修改了.注意如果这里如果直接修改</code>/etc/resolv.conf<code>那么重启电脑 or 重启 network , resolv.conf 会恢复原状.因为它是根据</code>ifcfg-eth0`来生成的..</p>
+这里最重要的就是这几个个参数了</code>Requests per second<code></code>Time per request`</p>
 
-<h4>如何刷新 dns cache</h4>
+<blockquote><p><code>Requests per second</code> 也就是我们常说的 <code>Rps</code> or <code>Qps</code> 表示每秒可以处理的请求个数.
+这里有两个 Time per request 第一个表示<strong>每一次</strong>请求所需要的平均时间, 由于我们这里一次请求包含25个并发,这里一个并发的时间就是第二个参数.(cpu是分时间片轮流执行请求的，多并发的情况下，一个并发上的请求时需要等待这么长时间才能得到下一个时间片。)</p></blockquote>
 
-<p>Linux下DNS缓存实现通常有两种方式:</p>
+<p>所以我们可以发现</p>
 
-<ul>
-<li>一种是用DNS缓存程序NSCD(name service cache daemon)负责管理DNS缓存。</li>
-<li>一种实现DNS缓存则是用Bind来架设Caching Name Server来实现。</li>
-</ul>
+<blockquote><p>rps = 1000 / (the first time pre request)</p>
 
+<p>the firest time pre requrest = the second time rpe request * 一个请求包含的并发数</p></blockquote>
 
-<p>如果是清除NSCD上的Cache，可重新启动NSCD服务来达成清除DNS Cache的效果。用这个命令:
-<code># service nscd restart</code>
-或是
-<code>#/etc/init.d/nscd restart</code></p>
-
-<p>如果是清除BIND服务器上的CACHE，用这个命令:
-<code># rndc flush</code></p>
-
-<p>如果你的DNS服务器是用dnsmasq实现的，用下面这个命令:
-<code>$ sudo /etc/init.d/dnsmasq restart</code></p>
-
-<p>注：DNSmasq是一个轻巧的，容易使用的DNS服务工具，它可以应用在内部网和Internet连接的时候的IP地址NAT转换，也可以用做小型网络的DNS服务。</p>
-
-<p>Mac os x 刷新dns cache <code>sudo killall -HUP mDNSResponder</code>&hellip;</p>
-
-<p>DNS 参阅: <a href="http://www.91ri.org/3112.html">here</a></p>
-
-<h3>sudo command 找不到命令</h3>
-
-<p>编译 nginx 的时候把 nginx 放在了/usr/local/bin 下 用 sudo 执行的时候提示找到不到命令 很奇怪 切换到 root 去执行 nginx 却可以 看了下 root 的path 明明有包含这个路径&hellip;</p>
-
-<p>查了下资料后发现是 sudo 的原因</p>
-
-<p>我们使用 <code>sudo visudo</code> 可以看到</p>
-
-<p>```bash</p>
-
-<h1>Preserving HOME has security implications since many programs</h1>
-
-<h1>use it when searching for configuration files. Note that HOME</h1>
-
-<h1>is already set when the the env_reset option is enabled, so</h1>
-
-<h1>this option is only effective for configurations where either</h1>
-
-<h1>env_reset is disabled or HOME is present in the env_keep list.</h1>
-
-<p>#
-Defaults    always_set_home</p>
-
-<p>Defaults    env_reset
-Defaults    env_keep =  &ldquo;COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR LS_COLORS&rdquo;
-Defaults    env_keep += &ldquo;MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE&rdquo;
-Defaults    env_keep += &ldquo;LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES&rdquo;
-Defaults    env_keep += &ldquo;LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE&rdquo;
-Defaults    env_keep += &ldquo;LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY&rdquo;</p>
-
-<p>#</p>
-
-<h1>Adding HOME to env_keep may enable a user to run unrestricted</h1>
-
-<h1>commands via sudo.</h1>
-
-<p>#</p>
-
-<h1>Defaults   env_keep += &ldquo;HOME&rdquo;</h1>
-
-<p>Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin
-<code>``
-这里每次调用 sudo 应用的环境变量是..</code>/sbin:/bin:/usr/sbin:/usr/bin` 难怪找不到..</p>
-
-<p>一个简单解决方案就是 <code>vi ~/.bashrc</code>
-<code>bash
-alias sudo="sudo env PATH=$PATH"
-</code></p>
-
-<p>因为系统预装的 sudo 在编译时缺省使用了 &mdash;with-secure-path 参数，因此当前用户使用 sudo 时环境变量 $PATH 被覆盖，通过添加上面那行别名设置，就会在执行 sudo 时把当前的 $PATH 的值再套用上，达到想要的效果。</p>
-
-<p>上面这种 alias 并不是最完美的方式 有时候我们可能会查看一些 sudo 的配置 比如 <code>sudo -l</code> 会翻译成 <code>sudo env PATH=$PATH -l</code> 但是这个命令是无效的&hellip;因为 -l 等参数必须放在env 前面..所以我们还是用<code>sudo visudo</code>手动修改 secure_path 的值把.</p>
-
-<p>当然，最根本的解决办法还是重新编译安装 sudo，编译时不使用 &mdash;with-secure-path 参数即可。有兴趣可以试下</p>
-
-<p>参阅:</p>
+<h3>参考文献</h3>
 
 <ul>
-<li><a href="http://www.ibm.com/developerworks/cn/aix/library/au-sudo/index.html">充分发挥 sudo 的作用</a></li>
-<li><a href="http://pickerwengs.blogspot.com/2011/10/sudo-command-not-found.html">sudo-command-not-found</a></li>
+<li><a href="http://xinwo.acg.ac/sbc-and-qps/">http://xinwo.acg.ac/sbc-and-qps/</a></li>
+<li><a href="http://www.nginx.cn/110.html">http://www.nginx.cn/110.html</a></li>
+<li><a href="http://www.ha97.com/4617.html">http://www.ha97.com/4617.html</a></li>
 </ul>
 
-
-<h3>locate: command not found</h3>
-
-<p>没有 locate&hellip;
-```bash</p>
-
-<h1>yum -y install mlocate</h1>
-
-<h1>updatedb</h1>
-
-<p>```</p>
-
-<h3>系统时间问题</h3>
-
-<p>时区数据文件在 /usr/share/zoneinfo 内，在该目录内会找到 /usr/share/zoneinfo/America/New_York 这个时区档。 而时区配置文件在 /etc/sysconfig/clock ，且目前的时间格式在 /etc/localtime ，所以你应该这样做：
-```bash
-[root@vagrant-centos65 ~]# date #查看当前时间
-Mon Aug  4 10:21:42 UTC 2014</p>
-
-<h1>utc时间 少了8小时 应该是时区不对</h1>
-
-<p>[root@vagrant-centos65 ~]# cat /etc/sysconfig/clock
-ZONE=&ldquo;Etc/UTC&rdquo;
-[root@vagrant-centos65 ~]# echo &ldquo;ZONE=\"Asia/Shanghai\&rdquo;&ldquo; > /etc/sysconfig/clock
-[root@vagrant-centos65 ~]# cat /etc/sysconfig/clock
-ZONE="Asia/Shanghai&rdquo;
-[root@vagrant-centos65 ~]# cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-cp: overwrite `/etc/localtime'? y
-[root@vagrant-centos65 ~]# date
-Mon Aug  4 18:25:28 CST 2014
-<code>
-有时候可能对系统时间精度要求比较高 那么这个时候我们需要进行时间同步
-</code>bash</p>
-
-<h1>yum -y install ntp</h1>
-
-<h1>ntpdate cn.pool.ntp.org</h1>
-
-<h1>/etc/init.d/ntpd start</h1>
-
-<h1>chkconfig ntpd on</h1>
-
-<p>[root@vagrant-centos65 ~]# date; hwclock -r
-Mon Aug  4 18:42:25 CST 2014
-Mon 04 Aug 2014 06:42:24 PM CST  -0.048707 seconds</p>
-
-<h1>软硬件时间一样 如果不一样 需要执行 hwclock -w 写入 bios</h1>
-
-<p>```</p>
-
-<p>很多关于时区请看<a href="http://vbird.dic.ksu.edu.tw/linux_server/0440ntp.php">鸟哥文档</a></p>
-
-<h3>安装man pages</h3>
-
-<p><code>bash
-yum install man-pages
-man 7 ascii
-</code></p>
 ]]></content>
   </entry>
   

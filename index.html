@@ -7,7 +7,7 @@
 	<meta name="author" content="starsea">
 
 	
-	<meta name="description" content=" 本文是参考《redis中文手册》，将示例代码用php来实现，注意php-redis与redis_cli的区别（主要是返回值类型和参数用法）。 Read on &rarr; Aug 21st, 2014 redis Comments ">
+	<meta name="description" content="Git Clone git clone ssh 调用的是 ssh git clone http 调用的是 git-remote-http git clone https 调用的是 git-remote-https Go Get go get 会把库安装到Gopath 下 比如我的GOPATH 是 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,133 @@
 		
 	
 	<div id="content" class="inner">
+
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/posts/golang-dependency-proxy/">
+		
+			Golang 拾遗（一）之依赖处理</a>
+	</h2>
+	<div class="entry-content">
+		<h2>Git Clone</h2>
+
+<p><code>git clone ssh</code> 调用的是 <code>ssh</code></p>
+
+<p><code>git clone http</code> 调用的是 <code>git-remote-http</code></p>
+
+<p><code>git clone https</code> 调用的是 <code>git-remote-https</code></p>
+
+<h2>Go Get</h2>
+
+<p>go get 会把库安装到Gopath 下</p>
+
+<p>比如我的GOPATH 是 <code>~/work/xinyue/go</code>  执行命令 <code>go get github.com/BurntSushi/toml</code></p>
+
+<p>那么库会被安装到 <code>~/work/xinyue/go/src/github.com/BurntSushi/toml</code></p>
+
+
+		
+		<a href="/posts/golang-dependency-proxy/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-01-10T19:39:53+08:00" pubdate data-updated="true">Jan 10<span>th</span>, 2019</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/golang/'>golang</a>
+
+
+</div>
+	
+	<div class="comments"><a href="/posts/golang-dependency-proxy/#disqus_thread">Comments</a></div>
+	
+</div>
+</article>
+
+
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/posts/how-twitter-uses-redis-to-scale-105tb-ram-39mm-qps-10000-ins/">
+		
+			How Twitter Uses Redis to Scale - 105TB RAM, 39MM QPS, 10,000+ Instances</a>
+	</h2>
+	<div class="entry-content">
+		<p>第一次翻译文章..见谅..</p>
+
+<p>Yao Yue 2010年加入 twitter 的缓存开发团队,她最近做了一场关于 redis 课程的精彩演讲: <a href="https://www.youtube.com/watch?v=rP9EKvWt0zo">Scaling Redis at Twitter.</a> 但不仅仅是 redis.</p>
+
+<p>Yao 已经在 twitter 工作几年了.她经历过很多事情. 她见证了缓存服务在 twitter 从一个项目到近上百个项目被使用的爆炸式增长. 成千上万的机器, 庞大的集群, TB 级的内存.</p>
+
+<p>It&rsquo;s clear from her talk that&rsquo;s she&rsquo;s coming from a place of real personal experience and that shines through in the practical way she explores issues. It&rsquo;s a talk well worth watching.</p>
+
+<p>正如你所预料的 twitter 使用了大量的缓存</p>
+
+<p>时间轴服务为一个数据中心使用 Hybrid List:
+* ~40TB allocated heap
+* ~30MM qps
+* &gt; 6,000 instances</p>
+
+<p>在一个数据中心使用 BTree:
+* ~65TB allocated heap
+* ~9MM qps
+* &gt; 4,000 instances</p>
+
+<p>You&rsquo;ll learn more about BTree and Hybrid List later in the post.</p>
+
+<p>两个要点:<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/how-twitter-uses-redis-to-scale-105tb-ram-39mm-qps-10000-ins/'><a href="http://starsea.github.io/posts/how-twitter-uses-redis-to-scale-105tb-ram-39mm-qps-10000-ins/">http://starsea.github.io/posts/how-twitter-uses-redis-to-scale-105tb-ram-39mm-qps-10000-ins/</a></a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-19T15:32:11+08:00" pubdate data-updated="true">Sep 19<span>th</span>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/redis/'>redis</a>
+
+
+</div>
+	
+	<div class="comments"><a href="/posts/how-twitter-uses-redis-to-scale-105tb-ram-39mm-qps-10000-ins/#disqus_thread">Comments</a></div>
+	
+</div>
+</article>
+
 
 
 
@@ -415,97 +542,6 @@
 </article>
 
 
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/posts/ci-db-operation/">
-		
-			CI 常用 DB 操作</a>
-	</h2>
-	<div class="entry-content">
-		<p>CI&hellip;.蛋疼菊紧</p>
-
-
-		
-		<a href="/posts/ci-db-operation/" class="more-link">Read on &rarr;</a>
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-25T15:59:40+08:00" pubdate data-updated="true">Jul 25<span>th</span>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/php/'>php</a>
-
-
-</div>
-	
-	<div class="comments"><a href="/posts/ci-db-operation/#disqus_thread">Comments</a></div>
-	
-</div>
-</article>
-
-
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/posts/intro-homebrew/">
-		
-			Intro-homebrew</a>
-	</h2>
-	<div class="entry-content">
-		<p>brew 命令备份: <a href="http://liwenqiu.me/blog/2011/12/17/intro-homebrew/">http://liwenqiu.me/blog/2011/12/17/intro-homebrew/</a><p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/intro-homebrew/'><a href="http://starsea.github.io/posts/intro-homebrew/">http://starsea.github.io/posts/intro-homebrew/</a></a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-23T18:25:03+08:00" pubdate data-updated="true">Jul 23<span>rd</span>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/mac/'>mac</a>
-
-
-</div>
-	
-	<div class="comments"><a href="/posts/intro-homebrew/#disqus_thread">Comments</a></div>
-	
-</div>
-</article>
-
-
 <nav id="pagenavi">
     
     
@@ -513,7 +549,7 @@
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2014
+	<footer id="footer" class="inner">Copyright &copy; 2019
 
     starsea
 

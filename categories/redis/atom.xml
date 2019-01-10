@@ -4,7 +4,7 @@
   <title><![CDATA[Category: redis | Starsea's Note]]></title>
   <link href="http://starsea.github.io/categories/redis/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-09-18T17:30:06+08:00</updated>
+  <updated>2019-01-10T20:17:17+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -12,6 +12,37 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How Twitter Uses Redis To Scale - 105TB RAM, 39MM QPS, 10,000+ Instances]]></title>
+    <link href="http://starsea.github.io/posts/how-twitter-uses-redis-to-scale-105tb-ram-39mm-qps-10000-ins/"/>
+    <updated>2014-09-19T15:32:11+08:00</updated>
+    <id>http://starsea.github.io/posts/how-twitter-uses-redis-to-scale-105tb-ram-39mm-qps-10000-ins</id>
+    <content type="html"><![CDATA[<p>第一次翻译文章..见谅..</p>
+
+<p>Yao Yue 2010年加入 twitter 的缓存开发团队,她最近做了一场关于 redis 课程的精彩演讲: <a href="https://www.youtube.com/watch?v=rP9EKvWt0zo">Scaling Redis at Twitter.</a> 但不仅仅是 redis.</p>
+
+<p>Yao 已经在 twitter 工作几年了.她经历过很多事情. 她见证了缓存服务在 twitter 从一个项目到近上百个项目被使用的爆炸式增长. 成千上万的机器, 庞大的集群, TB 级的内存.</p>
+
+<p>It&rsquo;s clear from her talk that&rsquo;s she&rsquo;s coming from a place of real personal experience and that shines through in the practical way she explores issues. It&rsquo;s a talk well worth watching.</p>
+
+<p>正如你所预料的 twitter 使用了大量的缓存</p>
+
+<p>时间轴服务为一个数据中心使用 Hybrid List:
+* ~40TB allocated heap
+* ~30MM qps
+* &gt; 6,000 instances</p>
+
+<p>在一个数据中心使用 BTree:
+* ~65TB allocated heap
+* ~9MM qps
+* &gt; 4,000 instances</p>
+
+<p>You&rsquo;ll learn more about BTree and Hybrid List later in the post.</p>
+
+<p>两个要点:</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[PHP Redis 中文手册增强版]]></title>
@@ -27,7 +58,7 @@
 
 <ul>
 <li>redis-cli 返回 nil 的 php-redis 都是 <code>false</code></li>
-<li><code>hash</code> 里面的数据取出来的都是<strong>字符串</strong> 不管你放的是 int 还是其他</li>
+<li><code>hash</code> 里面的数据取出来的都是<strong>字符串</strong> 不管你client存放的是 int 还是其他类型</li>
 <li><code>set</code> 存的数字都是 <code>double</code></li>
 <li><code>hmset</code> <code>hmget</code> <code>mset</code> <code>mget</code> 等 在 php-redis 中第二个参数都是数组 需要注意的是 lpush 不能用数组 只能一个一个 <code>$redis-&gt;lpush($key,$value)</code> 如果有需求可以考虑 <code>pipeline</code></li>
 </ul>
@@ -182,7 +213,7 @@
 
 <p>如果域field已经存在于哈希表中，旧值将被覆盖。</p>
 
-<p>**时间复杂度：</p>
+<p><strong>时间复杂度</strong>：</p>
 
 <ul>
 <li>O(1)</li>
@@ -470,7 +501,7 @@ var_dump($redis->get(&lsquo;k1&rsquo;));</p>
 
 <p>得到如下结果</p>
 
-<p><img class="/images/posts/<a" src="href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#81;&#x51;&#x32;&#x30;&#49;&#x34;&#x30;&#55;&#48;&#57;&#x2d;&#x31;&#x40;&#50;&#120;&#46;&#112;&#110;&#x67;">&#x51;&#x51;&#x32;&#x30;&#49;&#x34;&#48;&#x37;&#x30;&#57;&#45;&#49;&#64;&#x32;&#x78;&#x2e;&#112;&#110;&#103;</a>"></p>
+<p><img class="/images/posts/<a" src="href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#x51;&#x51;&#x32;&#x30;&#49;&#x34;&#x30;&#x37;&#x30;&#x39;&#x2d;&#x31;&#64;&#x32;&#120;&#x2e;&#x70;&#x6e;&#103;">&#81;&#81;&#50;&#48;&#x31;&#x34;&#x30;&#55;&#48;&#x39;&#x2d;&#49;&#64;&#x32;&#x78;&#x2e;&#x70;&#110;&#103;</a>"></p>
 
 <p>13行去 getkey 的时候抛出一个错误 说是连接已经关闭. 没错 其实这里当前 $redis 变量本身已经释放连接池的占用 其他实列可以使用该链接了. (连接池的连接上限数目和 php-fpm 的进程数目有关系)</p>
 

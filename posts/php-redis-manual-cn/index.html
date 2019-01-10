@@ -92,7 +92,7 @@ hash 里面的数据取出来的都是字符串 &hellip;">
 
 <ul>
 <li>redis-cli 返回 nil 的 php-redis 都是 <code>false</code></li>
-<li><code>hash</code> 里面的数据取出来的都是<strong>字符串</strong> 不管你放的是 int 还是其他</li>
+<li><code>hash</code> 里面的数据取出来的都是<strong>字符串</strong> 不管你client存放的是 int 还是其他类型</li>
 <li><code>set</code> 存的数字都是 <code>double</code></li>
 <li><code>hmset</code> <code>hmget</code> <code>mset</code> <code>mget</code> 等 在 php-redis 中第二个参数都是数组 需要注意的是 lpush 不能用数组 只能一个一个 <code>$redis-&gt;lpush($key,$value)</code> 如果有需求可以考虑 <code>pipeline</code></li>
 </ul>
@@ -247,7 +247,7 @@ hash 里面的数据取出来的都是字符串 &hellip;">
 
 <p>如果域field已经存在于哈希表中，旧值将被覆盖。</p>
 
-<p>**时间复杂度：</p>
+<p><strong>时间复杂度</strong>：</p>
 
 <ul>
 <li>O(1)</li>
@@ -329,7 +329,7 @@ hash 里面的数据取出来的都是字符串 &hellip;">
 </div>
 </section>
 </div>
-	<footer id="footer" class="inner">Copyright &copy; 2014
+	<footer id="footer" class="inner">Copyright &copy; 2019
 
     starsea
 

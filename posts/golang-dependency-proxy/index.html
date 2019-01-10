@@ -1,0 +1,285 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Golang 拾遗（一）之依赖处理 - Starsea's Note</title>
+	<meta name="author" content="starsea">
+
+	
+	<meta name="description" content="Git Clone git clone ssh 调用的是 ssh git clone http 调用的是 git-remote-http git clone https 调用的是 git-remote-https Go Get go get 会把库安装到Gopath 下 比如我的GOPATH 是 &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Starsea's Note" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <!--
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	-->
+    <script  src="//cdn.staticfile.org/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Starsea's Note</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/about">About</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="/about">About</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="https://www.google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:starsea.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+		<a class="github" href="https://github.com/starsea" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+	<form class="search" action="https://www.google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:starsea.github.io">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Golang 拾遗（一）之依赖处理</h2>
+	<div class="entry-content"><h2>Git Clone</h2>
+
+<p><code>git clone ssh</code> 调用的是 <code>ssh</code></p>
+
+<p><code>git clone http</code> 调用的是 <code>git-remote-http</code></p>
+
+<p><code>git clone https</code> 调用的是 <code>git-remote-https</code></p>
+
+<h2>Go Get</h2>
+
+<p>go get 会把库安装到Gopath 下</p>
+
+<p>比如我的GOPATH 是 <code>~/work/xinyue/go</code>  执行命令 <code>go get github.com/BurntSushi/toml</code></p>
+
+<p>那么库会被安装到 <code>~/work/xinyue/go/src/github.com/BurntSushi/toml</code></p>
+
+<!-- more -->
+
+
+<h3>本质</h3>
+
+<p>Go Get 本质是调用git 我们可以通过制定git配置的代理来配置一些东西</p>
+
+<p>vim ~/.gitconfig</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#Demo
+</span><span class='line'>[http "https://domain.com"]
+</span><span class='line'>  proxy = http://proxyUsername:proxyPassword@proxy.server.com:port
+</span><span class='line'>  sslVerify = false
+</span><span class='line'>  
+</span><span class='line'>[http "https://git.code.oa.com"]
+</span><span class='line'>      proxy = http://127.0.0.1:12639
+</span><span class='line'>[http "http://git.code.oa.com"]
+</span><span class='line'>      proxy = http://127.0.0.1:12639
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>有时候我们笔记本电脑有时候在家里办公 有时候在公司办公 需要经常切换网络环境 如果每次来还切换配置文件就很麻烦 幸好我们有可视化的软件 <code>proxifier</code></p>
+
+<h3>自动配置</h3>
+
+<p><code>Go Get</code> 调用<code>Git</code>  <code>Git</code> 其实调用的是 <code>git-remote-https</code> 这个二进制程序去抓取远程内容 我们配置规则即可</p>
+
+<p><img src="media/15468459121385/15471079183836.jpg" alt="" /></p>
+
+<p>如上所示 我们配置了两行规则 第一行当调用git.code.oa.com 的时候 走内网代理 其他的全部是走外网代理。</p>
+
+<h2>Glide</h2>
+
+<p>Glide 是Go用的最多的依赖管理工具 这里不做更多赘述</p>
+
+<p>唯一需要注意的是glide 默认用的是https 有时候我们访问一些仓库如果用https（比如公司的内网仓库）需要手动输入密码  我们希望指定能通过ssh免密</p>
+
+<p>可以通过git修改 ( 因为glide拉取git类型仓库的时候还是会去调用git )</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git config --global url."user@git.private.com:".insteadOf "https://git.private.com"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或者我们直接修改glide.yaml 文件 指定访问方式 比如</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>package: native
+</span><span class='line'>import:
+</span><span class='line'>- package: git.code.oa.com/up-common/go-http-core
+</span><span class='line'>  repo: git@git.code.oa.com:up-common/go-http-core.git
+</span><span class='line'>  vcs: git
+</span><span class='line'>  subpackages:
+</span><span class='line'>  - middleware/jce
+</span><span class='line'>- package: github.com/BurntSushi/toml
+</span><span class='line'>  version: ~0.3.1
+</span><span class='line'>- package: github.com/gin-gonic/gin
+</span><span class='line'>  version: ~1.3.0
+</span><span class='line'>- package: github.com/mcuadros/go-version
+</span><span class='line'>- package: gojce
+</span><span class='line'>  repo: git@git.code.oa.com:up-common/gojce.git
+</span><span class='line'>  vcs: git</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们所想Glide的代理怎么配置 //todo</p>
+
+<h2>参阅</h2>
+
+<ul>
+<li><a href="https://gist.github.com/evantoli/f8c23a37eb3558ab8765">https://gist.github.com/evantoli/f8c23a37eb3558ab8765</a> git proxy</li>
+<li><a href="https://github.com/Masterminds/glide/wiki/Go-Package-Manager-Comparison">https://github.com/Masterminds/glide/wiki/Go-Package-Manager-Comparison</a> Go包管理</li>
+<li><a href="https://github.com/Masterminds/glide/issues/836">https://github.com/Masterminds/glide/issues/836</a> glide ssh</li>
+</ul>
+
+
+<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/golang-dependency-proxy/'>http://starsea.github.io/posts/golang-dependency-proxy/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-01-10T19:39:53+08:00" pubdate data-updated="true">Jan 10<span>th</span>, 2019</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/golang/'>golang</a>
+
+
+</div>
+	
+	<div class="comments"><a href="#disqus_thread">Comments</a></div>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+		
+		
+		<a class="addthis_button_tweet"></a>
+		
+		
+		
+	</div>
+	
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2019
+
+    starsea
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1252952909'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s23.cnzz.com/stat.php%3Fid%3D1252952909' type='text/javascript'%3E%3C/script%3E"));</script></footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'starsea';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://starsea.github.io/posts/golang-dependency-proxy/';
+        var disqus_url = 'http://starsea.github.io/posts/golang-dependency-proxy/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//go.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+</body>
+</html>

@@ -4,7 +4,7 @@
   <title><![CDATA[Starsea's Note]]></title>
   <link href="http://starsea.github.io/atom.xml" rel="self"/>
   <link href="http://starsea.github.io/"/>
-  <updated>2014-09-18T17:30:06+08:00</updated>
+  <updated>2019-01-10T20:17:17+08:00</updated>
   <id>http://starsea.github.io/</id>
   <author>
     <name><![CDATA[starsea]]></name>
@@ -12,6 +12,160 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Golang 拾遗（一）之依赖处理]]></title>
+    <link href="http://starsea.github.io/posts/golang-dependency-proxy/"/>
+    <updated>2019-01-10T19:39:53+08:00</updated>
+    <id>http://starsea.github.io/posts/golang-dependency-proxy</id>
+    <content type="html"><![CDATA[<h2>Git Clone</h2>
+
+<p><code>git clone ssh</code> 调用的是 <code>ssh</code></p>
+
+<p><code>git clone http</code> 调用的是 <code>git-remote-http</code></p>
+
+<p><code>git clone https</code> 调用的是 <code>git-remote-https</code></p>
+
+<h2>Go Get</h2>
+
+<p>go get 会把库安装到Gopath 下</p>
+
+<p>比如我的GOPATH 是 <code>~/work/xinyue/go</code>  执行命令 <code>go get github.com/BurntSushi/toml</code></p>
+
+<p>那么库会被安装到 <code>~/work/xinyue/go/src/github.com/BurntSushi/toml</code></p>
+
+<!-- more -->
+
+
+<h3>本质</h3>
+
+<p>Go Get 本质是调用git 我们可以通过制定git配置的代理来配置一些东西</p>
+
+<p>vim ~/.gitconfig</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#Demo
+</span><span class='line'>[http "https://domain.com"]
+</span><span class='line'>  proxy = http://proxyUsername:proxyPassword@proxy.server.com:port
+</span><span class='line'>  sslVerify = false
+</span><span class='line'>  
+</span><span class='line'>[http "https://git.code.oa.com"]
+</span><span class='line'>      proxy = http://127.0.0.1:12639
+</span><span class='line'>[http "http://git.code.oa.com"]
+</span><span class='line'>      proxy = http://127.0.0.1:12639
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>有时候我们笔记本电脑有时候在家里办公 有时候在公司办公 需要经常切换网络环境 如果每次来还切换配置文件就很麻烦 幸好我们有可视化的软件 <code>proxifier</code></p>
+
+<h3>自动配置</h3>
+
+<p><code>Go Get</code> 调用<code>Git</code>  <code>Git</code> 其实调用的是 <code>git-remote-https</code> 这个二进制程序去抓取远程内容 我们配置规则即可</p>
+
+<p><img src="media/15468459121385/15471079183836.jpg" alt="" /></p>
+
+<p>如上所示 我们配置了两行规则 第一行当调用git.code.oa.com 的时候 走内网代理 其他的全部是走外网代理。</p>
+
+<h2>Glide</h2>
+
+<p>Glide 是Go用的最多的依赖管理工具 这里不做更多赘述</p>
+
+<p>唯一需要注意的是glide 默认用的是https 有时候我们访问一些仓库如果用https（比如公司的内网仓库）需要手动输入密码  我们希望指定能通过ssh免密</p>
+
+<p>可以通过git修改 ( 因为glide拉取git类型仓库的时候还是会去调用git )</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git config --global url."user@git.private.com:".insteadOf "https://git.private.com"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或者我们直接修改glide.yaml 文件 指定访问方式 比如</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>package: native
+</span><span class='line'>import:
+</span><span class='line'>- package: git.code.oa.com/up-common/go-http-core
+</span><span class='line'>  repo: git@git.code.oa.com:up-common/go-http-core.git
+</span><span class='line'>  vcs: git
+</span><span class='line'>  subpackages:
+</span><span class='line'>  - middleware/jce
+</span><span class='line'>- package: github.com/BurntSushi/toml
+</span><span class='line'>  version: ~0.3.1
+</span><span class='line'>- package: github.com/gin-gonic/gin
+</span><span class='line'>  version: ~1.3.0
+</span><span class='line'>- package: github.com/mcuadros/go-version
+</span><span class='line'>- package: gojce
+</span><span class='line'>  repo: git@git.code.oa.com:up-common/gojce.git
+</span><span class='line'>  vcs: git</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们所想Glide的代理怎么配置 //todo</p>
+
+<h2>参阅</h2>
+
+<ul>
+<li><a href="https://gist.github.com/evantoli/f8c23a37eb3558ab8765">https://gist.github.com/evantoli/f8c23a37eb3558ab8765</a> git proxy</li>
+<li><a href="https://github.com/Masterminds/glide/wiki/Go-Package-Manager-Comparison">https://github.com/Masterminds/glide/wiki/Go-Package-Manager-Comparison</a> Go包管理</li>
+<li><a href="https://github.com/Masterminds/glide/issues/836">https://github.com/Masterminds/glide/issues/836</a> glide ssh</li>
+</ul>
+
+
+<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/golang-dependency-proxy/'>http://starsea.github.io/posts/golang-dependency-proxy/</a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How Twitter Uses Redis To Scale - 105TB RAM, 39MM QPS, 10,000+ Instances]]></title>
+    <link href="http://starsea.github.io/posts/how-twitter-uses-redis-to-scale-105tb-ram-39mm-qps-10000-ins/"/>
+    <updated>2014-09-19T15:32:11+08:00</updated>
+    <id>http://starsea.github.io/posts/how-twitter-uses-redis-to-scale-105tb-ram-39mm-qps-10000-ins</id>
+    <content type="html"><![CDATA[<p>第一次翻译文章..见谅..</p>
+
+<p>Yao Yue 2010年加入 twitter 的缓存开发团队,她最近做了一场关于 redis 课程的精彩演讲: <a href="https://www.youtube.com/watch?v=rP9EKvWt0zo">Scaling Redis at Twitter.</a> 但不仅仅是 redis.</p>
+
+<p>Yao 已经在 twitter 工作几年了.她经历过很多事情. 她见证了缓存服务在 twitter 从一个项目到近上百个项目被使用的爆炸式增长. 成千上万的机器, 庞大的集群, TB 级的内存.</p>
+
+<p>It&rsquo;s clear from her talk that&rsquo;s she&rsquo;s coming from a place of real personal experience and that shines through in the practical way she explores issues. It&rsquo;s a talk well worth watching.</p>
+
+<p>正如你所预料的 twitter 使用了大量的缓存</p>
+
+<p>时间轴服务为一个数据中心使用 Hybrid List:
+* ~40TB allocated heap
+* ~30MM qps
+* &gt; 6,000 instances</p>
+
+<p>在一个数据中心使用 BTree:
+* ~65TB allocated heap
+* ~9MM qps
+* &gt; 4,000 instances</p>
+
+<p>You&rsquo;ll learn more about BTree and Hybrid List later in the post.</p>
+
+<p>两个要点:<p class='post-footer'>&nbsp;原文地址：<a href='http://starsea.github.io/posts/how-twitter-uses-redis-to-scale-105tb-ram-39mm-qps-10000-ins/'><a href="http://starsea.github.io/posts/how-twitter-uses-redis-to-scale-105tb-ram-39mm-qps-10000-ins/">http://starsea.github.io/posts/how-twitter-uses-redis-to-scale-105tb-ram-39mm-qps-10000-ins/</a></a><br/>&nbsp;版权声明：自由转载-非商用-非衍生-保持署名| <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh'>Creative Commons BY-NC-ND 3.0</a></p></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[PHP Redis 中文手册增强版]]></title>
@@ -27,7 +181,7 @@
 
 <ul>
 <li>redis-cli 返回 nil 的 php-redis 都是 <code>false</code></li>
-<li><code>hash</code> 里面的数据取出来的都是<strong>字符串</strong> 不管你放的是 int 还是其他</li>
+<li><code>hash</code> 里面的数据取出来的都是<strong>字符串</strong> 不管你client存放的是 int 还是其他类型</li>
 <li><code>set</code> 存的数字都是 <code>double</code></li>
 <li><code>hmset</code> <code>hmget</code> <code>mset</code> <code>mget</code> 等 在 php-redis 中第二个参数都是数组 需要注意的是 lpush 不能用数组 只能一个一个 <code>$redis-&gt;lpush($key,$value)</code> 如果有需求可以考虑 <code>pipeline</code></li>
 </ul>
@@ -182,7 +336,7 @@
 
 <p>如果域field已经存在于哈希表中，旧值将被覆盖。</p>
 
-<p>**时间复杂度：</p>
+<p><strong>时间复杂度</strong>：</p>
 
 <ul>
 <li>O(1)</li>
